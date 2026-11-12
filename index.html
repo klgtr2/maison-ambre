@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maison Ambre — Meubles, parfums d'ambiance et encens</title>
+  <meta name="description" content="Canapés, chaises, porte-manteaux, meubles de maison, parfums d'ambiance et encens, présentés comme des pièces de galerie.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Active les animations seulement si JavaScript fonctionne (sinon tout reste visible) -->
+  <script>
+    document.documentElement.classList.add('avec-js');
+    setTimeout(function () {
+      if (!window.MaisonAmbre) document.documentElement.classList.remove('avec-js');
+    }, 4000);
+  </script>
+
+  <!-- Police : Inter (remplaçant conseillé de circularXX dans la référence de style) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..500&display=swap">
+
+  <!-- Feuilles de style -->
+  <link rel="stylesheet" href="styles-base-entete.css">
+  <link rel="stylesheet" href="styles-hero-univers.css">
+  <link rel="stylesheet" href="styles-collection-boutique.css">
+  <link rel="stylesheet" href="styles-senteurs-avis-pied-de-page.css">
+  <link rel="stylesheet" href="animations-apparitions-survol.css">
+  <link rel="stylesheet" href="styles-responsive-mobile.css">
+
+  <!-- Scripts d'animation -->
+  <script src="script-chargement-curseur-entete.js" defer></script>
+  <script src="script-effets-scroll.js" defer></script>
+  <script src="script-boutique-interactions.js" defer></script>
+</head>
+<body>
+
+  <!-- ============ ICÔNES RÉUTILISÉES DANS LA PAGE ============ -->
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="icone-marque" viewBox="0 0 32 32"><path d="M6 29V15a10 10 0 0 1 20 0v14M16 29V19" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="icone-fleche" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icone-sac" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 7.5h13l-1 12.5h-11z"/><path d="M9 7.5a3 3 0 0 1 6 0"/></g></symbol>
+    <symbol id="icone-coeur" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.1 4.1 0 0 1 12 7.4a4.1 4.1 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z"/></symbol>
+  </svg>
+
+  <!-- ============ ÉCRAN DE CHARGEMENT ============ -->
+  <div class="chargement" aria-hidden="true">
+    <p class="chargement__logo">Maison Ambre</p>
+    <div class="chargement__barre"><span></span></div>
+    <p class="chargement__compteur">0 %</p>
+  </div>
+
+  <!-- Curseur personnalisé + barre de progression du scroll -->
+  <div class="curseur" aria-hidden="true">
+    <span class="curseur__anneau"><span class="curseur__texte">Voir</span></span>
+    <span class="curseur__point"></span>
+  </div>
+  <div class="barre-progression" aria-hidden="true"></div>
+
+  <!-- ============ EN-TÊTE ============ -->
+  <header class="entete">
+    <div class="entete__interieur">
+      <a href="#accueil" class="marque" aria-label="Maison Ambre, retour à l'accueil">
+        <svg class="icone"><use href="#icone-marque"/></svg>
+      </a>
+
+      <nav class="navigation" aria-label="Navigation principale">
+        <a href="#univers" class="nav-groupe">
+          <span class="nav-groupe__label">Boutique</span>
+          <span class="roulant"><span data-texte="Nos meubles">Nos meubles</span></span>
+        </a>
+        <a href="#senteurs" class="nav-groupe">
+          <span class="nav-groupe__label">Senteurs</span>
+          <span class="roulant"><span data-texte="Parfums &amp; encens">Parfums &amp; encens</span></span>
+        </a>
+        <a href="#contact" class="nav-groupe">
+          <span class="nav-groupe__label">Maison</span>
+          <span class="roulant"><span data-texte="Nous contacter">Nous contacter</span></span>
+        </a>
+      </nav>
+
+      <div class="entete__actions">
+        <button class="icone-bouton panier" type="button" aria-label="Panier, 0 article">
+          <svg class="icone"><use href="#icone-sac"/></svg>
+          <span class="panier__compteur">0</span>
+        </button>
+        <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu-mobile">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menu plein écran (mobile) -->
+  <div class="menu-mobile" id="menu-mobile">
+    <nav class="menu-mobile__liens" aria-label="Menu mobile">
+      <a href="#univers" style="--i:0">Nos univers</a>
+      <a href="#collection" style="--i:1">Collection</a>
+      <a href="#boutique" style="--i:2">Boutique</a>
+      <a href="#senteurs" style="--i:3">Parfums &amp; encens</a>
+      <a href="#newsletter" style="--i:4">Newsletter</a>
+      <a href="#contact" style="--i:5">Contact</a>
+    </nav>
+    <p class="menu-mobile__note">Livraison offerte dès 300 €</p>
+  </div>
+
+  <main>
+    <!-- ============ 1. HERO : les produits flottent dans le vide ============ -->
+    <section class="hero" id="accueil">
+      <div class="hero__scene" data-scene aria-hidden="true">
+        <div class="objet objet--centre" data-profondeur="0.25">
+          <img src="images/illustration-canape.svg" alt="">
+        </div>
+        <div class="objet" style="--x:13%; --y:26%; --taille:clamp(84px, 11vw, 170px); --rotation:-14deg; --duree:7s; --delai:.15s" data-profondeur="0.9">
+          <img src="images/illustration-chaise.svg" alt="">
+        </div>
+        <div class="objet" style="--x:87%; --y:22%; --taille:clamp(70px, 8.5vw, 130px); --rotation:12deg; --duree:8s; --delai:.25s" data-profondeur="1.1">
+          <img src="images/illustration-porte-manteau.svg" alt="">
+        </div>
+        <div class="objet" style="--x:25%; --y:84%; --taille:clamp(54px, 6vw, 96px); --rotation:10deg; --duree:6.5s; --delai:.35s" data-profondeur="0.7">
+          <img src="images/illustration-parfum-ambiance.svg" alt="">
+        </div>
+        <div class="objet" style="--x:76%; --y:86%; --taille:clamp(80px, 10vw, 150px); --rotation:-8deg; --duree:7.5s; --delai:.45s" data-profondeur="0.8">
+          <img src="images/illustration-encens.svg" alt="">
+        </div>
+        <div class="objet objet--loin" style="--x:5%; --y:64%; --taille:clamp(90px, 12vw, 190px); --rotation:8deg; --duree:9s; --delai:.55s" data-profondeur="1.3">
+          <img src="images/illustration-enfilade.svg" alt="">
+        </div>
+        <div class="objet" style="--x:62%; --y:6%; --taille:clamp(40px, 4.4vw, 70px); --rotation:-18deg; --duree:6s; --delai:.65s" data-profondeur="0.5">
+          <img src="images/illustration-bougie-parfumee.svg" alt="">
+        </div>
+        <div class="objet objet--loin" style="--x:95%; --y:62%; --taille:clamp(70px, 8vw, 124px); --rotation:-12deg; --duree:8.5s; --delai:.75s" data-profondeur="1.2">
+          <img src="images/illustration-table-appoint.svg" alt="">
+        </div>
+      </div>
+
+      <div class="hero__bloc">
+        <p class="bloc-titre__label hero-anim" style="--delai:.1s">Maison Ambre — Collection automne 2026</p>
+        <h1 class="hero__titre" data-decoupe>Vivre en douceur</h1>
+        <p class="hero__texte hero-anim" style="--delai:.55s">Canapés, chaises, porte-manteaux, meubles de maison, parfums d'ambiance et encens. Des pièces pensées comme des objets de galerie.</p>
+        <a href="#boutique" class="pilule hero-anim" style="--delai:.7s" data-magnetique>
+          <span class="roulant"><span data-texte="Découvrir la boutique">Découvrir la boutique</span></span>
+        </a>
+        <p class="note hero-anim" style="--delai:.85s">Livraison offerte dès 300 € · Expédition sous 48 h</p>
+      </div>
+
+      <a href="#manifeste" class="indicateur-scroll hero-anim" style="--delai:1s" aria-label="Faire défiler la page">
+        <span class="indicateur-scroll__ligne"></span>
+      </a>
+    </section>
+
+    <!-- ============ 2. BANDEAU DÉFILANT (réagit à la vitesse du scroll) ============ -->
+    <div class="bandeau" data-bandeau="0.8" aria-hidden="true">
+      <div class="bandeau__piste">
+        <div class="bandeau__groupe" data-dupliquer>
+          <span class="bandeau__mot">Canapés</span><span class="bandeau__point"></span>
+          <span class="bandeau__mot bandeau__mot--contour">Chaises</span><span class="bandeau__point"></span>
+          <span class="bandeau__mot">Porte-manteaux</span><span class="bandeau__point"></span>
+          <span class="bandeau__mot bandeau__mot--contour">Meubles de maison</span><span class="bandeau__point"></span>
+          <span class="bandeau__mot">Parfums d'ambiance</span><span class="bandeau__point"></span>
+          <span class="bandeau__mot bandeau__mot--contour">Encens</span><span class="bandeau__point"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 3. MANIFESTE (les mots s'allument au scroll) ============ -->
+    <section class="manifeste" id="manifeste">
+      <p class="bloc-titre__label" data-apparition="haut">Notre philosophie</p>
+      <p class="manifeste__texte" data-mots-scroll>
+        Une maison se ressent avant de se regarder. Le grain d'un chêne huilé
+        <span class="pastille-texte"><img src="images/illustration-chaise.svg" alt=""></span>, le moelleux d'un canapé,
+        une note de santal qui flotte dans l'entrée
+        <span class="pastille-texte"><img src="images/illustration-bougie-parfumee.svg" alt=""></span>. Chaque pièce est choisie
+        pour durer, et pour apaiser.
+      </p>
+    </section>
+
+    <!-- ============ 4. NOS UNIVERS (section claire) ============ -->
+    <section class="univers section-claire" id="univers">
+      <div class="bloc-titre">
+        <p class="bloc-titre__label" data-apparition="haut">Nos univers</p>
+        <h2 class="bloc-titre__mot" data-decoupe>Chaque pièce compte</h2>
+      </div>
+
+      <ul class="univers__grille" data-apparition-groupe="0.08">
+        <li data-apparition="haut">
+          <a href="#boutique" class="carte-univers" data-inclinaison="6" data-curseur="Voir">
+            <span class="carte-univers__visuel"><img src="images/illustration-canape.svg" alt="" loading="lazy"></span>
+            <span class="carte-univers__pied">
+              <span><span class="carte-univers__nom">Canapés</span><span class="carte-univers__info">24 modèles</span></span>
+              <span class="carte-univers__fleche"><svg class="icone"><use href="#icone-fleche"/></svg></span>
+            </span>
+          </a>
+        </li>
+        <li data-apparition="haut">
+          <a href="#boutique" class="carte-univers" data-inclinaison="6" data-curseur="Voir">
+            <span class="carte-univers__visuel"><img src="images/illustration-chaise.svg" alt="" loading="lazy"></span>
+            <span class="carte-univers__pied">
+              <span><span class="carte-univers__nom">Chaises</span><span class="carte-univers__info">18 modèles</span></span>
+              <span class="carte-univers__fleche"><svg class="icone"><use href="#icone-fleche"/></svg></span>
+            </span>
+          </a>
+        </li>
+        <li data-apparition="haut">
+          <a href="#boutique" class="carte-univers" data-inclinaison="6" data-curseur="Voir">
+            <span class="carte-univers__visuel"><img src="images/illustration-porte-manteau.svg" alt="" loading="lazy"></span>
+            <span class="carte-univers__pied">
+              <span><span class="carte-univers__nom">Porte-manteaux</span><span class="carte-univers__info">9 modèles</span></span>
+              <span class="carte-univers__fleche"><svg class="icone"><use href="#icone-fleche"/></svg></span>
+            </span>
+          </a>
+        </li>
+        <li data-apparition="haut">
+          <a href="#boutique" class="carte-univers" data-inclinaison="6" data-curseur="Voir">
+            <span class="carte-univers__visuel"><img src="images/illustration-enfilade.svg" alt="" loading="lazy"></span>
+            <span class="carte-univers__pied">
+              <span><span class="carte-univers__nom">Meubles de maison</span><span class="carte-univers__info">32 modèles</span></span>
+              <span class="carte-univers__fleche"><svg class="icone"><use href="#icone-fleche"/></svg></span>
+            </span>
+          </a>
+        </li>
+        <li data-apparition="haut">
+          <a href="#senteurs" class="carte-univers" data-inclinaison="6" data-curseur="Voir">
+            <span class="carte-univers__visuel"><img src="images/illustration-parfum-ambiance.svg" alt="" loading="lazy"></span>
+            <span class="carte-univers__pied">
+              <span><span class="carte-univers__nom">Parfums d'ambiance</span><span class="carte-univers__info">14 senteurs</span></span>
+              <span class="carte-univers__fleche"><svg class="icone"><use href="#icone-fleche"/></svg></span>
+            </span>
+          </a>
+        </li>
+        <li data-apparition="haut">
+          <a href="#senteurs" class="carte-univers" data-inclinaison="6" data-curseur="Voir">
+            <span class="carte-univers__visuel"><img src="images/illustration-encens.svg" alt="" loading="lazy"></span>
+            <span class="carte-univers__pied">
+              <span><span class="carte-univers__nom">Encens</span><span class="carte-univers__info">12 senteurs</span></span>
+              <span class="carte-univers__fleche"><svg class="icone"><use href="#icone-fleche"/></svg></span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============ 5. COLLECTION SIGNATURE (défilement horizontal au scroll) ============ -->
+    <section class="collection" id="collection">
+      <div class="collection__collant">
+        <div class="bloc-titre">
+          <p class="bloc-titre__label">Collection signature</p>
+          <h2 class="bloc-titre__mot" data-decoupe>Pièces iconiques</h2>
+        </div>
+
+        <div class="collection__piste">
+          <article class="panneau">
+            <div class="panneau__visuel"><img src="images/illustration-canape.svg" alt="Canapé Nuage" loading="lazy"></div>
+            <div class="panneau__texte">
+              <p class="panneau__numero">01 — Canapé</p>
+              <h3 class="panneau__nom">Nuage</h3>
+              <p class="panneau__description">Trois places en velours côtelé, doux au toucher et généreux en confort. Le canapé où l'on s'installe pour toute la soirée.</p>
+              <p class="panneau__prix">1 290 €</p>
+              <button class="pilule" type="button" data-ajout-panier="Canapé Nuage" data-magnetique>
+                <span class="roulant"><span data-texte="Ajouter au panier">Ajouter au panier</span></span>
+              </button>
+            </div>
+          </article>
+          <article class="panneau">
+            <div class="panneau__visuel"><img src="images/illustration-chaise.svg" alt="Chaise Alba" loading="lazy"></div>
+            <div class="panneau__texte">
+              <p class="panneau__numero">02 — Chaise</p>
+              <h3 class="panneau__nom">Alba</h3>
+              <p class="panneau__description">Le chêne apporte la solidité, le lin sauge la douceur. Une chaise qui réchauffe toutes les tables.</p>
+              <p class="panneau__prix">189 €</p>
+              <button class="pilule" type="button" data-ajout-panier="Chaise Alba" data-magnetique>
+                <span class="roulant"><span data-texte="Ajouter au panier">Ajouter au panier</span></span>
+              </button>
+            </div>
+          </article>
+          <article class="panneau">
+            <div class="panneau__visuel"><img src="images/illustration-porte-manteau.svg" alt="Porte-manteau Sylve" loading="lazy"></div>
+            <div class="panneau__texte">
+              <p class="panneau__numero">03 — Porte-manteau</p>
+              <h3 class="panneau__nom">Sylve</h3>
+              <p class="panneau__description">En frêne massif, il accueille manteaux, sacs et écharpes. Votre entrée gagne une vraie pièce de caractère.</p>
+              <p class="panneau__prix">145 €</p>
+              <button class="pilule" type="button" data-ajout-panier="Porte-manteau Sylve" data-magnetique>
+                <span class="roulant"><span data-texte="Ajouter au panier">Ajouter au panier</span></span>
+              </button>
+            </div>
+          </article>
+          <article class="panneau">
+            <div class="panneau__visuel"><img src="images/illustration-enfilade.svg" alt="Enfilade Lune" loading="lazy"></div>
+            <div class="panneau__texte">
+              <p class="panneau__numero">04 — Meuble de maison</p>
+              <h3 class="panneau__nom">Lune</h3>
+              <p class="panneau__description">La chaleur du noyer rencontre la légèreté du cannage. Une enfilade qui range tout, avec élégance.</p>
+              <p class="panneau__prix">980 €</p>
+              <button class="pilule" type="button" data-ajout-panier="Enfilade Lune" data-magnetique>
+                <span class="roulant"><span data-texte="Ajouter au panier">Ajouter au panier</span></span>
+              </button>
+            </div>
+          </article>
+          <article class="panneau">
+            <div class="panneau__visuel"><img src="images/illustration-table-appoint.svg" alt="Table d'appoint Galet" loading="lazy"></div>
+            <div class="panneau__texte">
+              <p class="panneau__numero">05 — Table d'appoint</p>
+              <h3 class="panneau__nom">Galet</h3>
+              <p class="panneau__description">Le travertin et ses veinures naturelles, à glisser près du canapé. La touche minérale qui change tout.</p>
+              <p class="panneau__prix">260 €</p>
+              <button class="pilule" type="button" data-ajout-panier="Table d'appoint Galet" data-magnetique>
+                <span class="roulant"><span data-texte="Ajouter au panier">Ajouter au panier</span></span>
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <div class="collection__suivi" aria-hidden="true">
+          <span class="collection__compteur"><span class="collection__actuel">01</span> / 05</span>
+          <span class="collection__progression"><span></span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. BOUTIQUE (section claire : filtres + ajout au panier) ============ -->
+    <section class="boutique section-claire" id="boutique">
+      <div class="bloc-titre">
+        <p class="bloc-titre__label" data-apparition="haut">La boutique</p>
+        <h2 class="bloc-titre__mot" data-decoupe>Coups de cœur</h2>
+      </div>
+
+      <div class="filtres" role="group" aria-label="Filtrer les produits" data-apparition="haut">
+        <span class="filtres__indicateur" aria-hidden="true"></span>
+        <button class="filtre est-actif" type="button" data-filtre="tous" aria-pressed="true">Tout voir</button>
+        <button class="filtre" type="button" data-filtre="meubles" aria-pressed="false">Meubles</button>
+        <button class="filtre" type="button" data-filtre="parfums" aria-pressed="false">Parfums &amp; encens</button>
+      </div>
+
+      <ul class="produits" data-apparition-groupe="0.07">
+        <li class="produit" data-categorie="meubles" data-apparition="haut">
+          <article class="carte-produit">
+            <div class="carte-produit__visuel" data-curseur="Voir">
+              <span class="etiquette">Best-seller</span>
+              <button class="bouton-favori" type="button" aria-label="Ajouter Canapé Nuage aux favoris" aria-pressed="false"><svg class="icone"><use href="#icone-coeur"/></svg></button>
+              <img src="images/illustration-canape.svg" alt="Canapé Nuage en velours terracotta" loading="lazy">
+              <button class="bouton-panier" type="button" data-ajout-panier="Canapé Nuage"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
+            </div>
+            <div class="carte-produit__infos">
+              <div><h3 class="carte-produit__nom">Canapé Nuage</h3><p class="carte-produit__type">3 places · Velours côtelé</p></div>
+              <p class="carte-produit__prix">1 290 €</p>
+            </div>
+            <p class="carte-produit__accroche">Un moelleux enveloppant pour s'y lover comme dans un nuage.</p>
+          </article>
+        </li>
+        <li class="produit" data-categorie="meubles" data-apparition="haut">
+          <article class="carte-produit">
+            <div class="carte-produit__visuel" data-curseur="Voir">
+              <button class="bouton-favori" type="button" aria-label="Ajouter Chaise Alba aux favoris" aria-pressed="false"><svg class="icone"><use href="#icone-coeur"/></svg></button>
+              <img src="images/illustration-chaise.svg" alt="Chaise Alba en chêne et lin" loading="lazy">
+              <button class="bouton-panier" type="button" data-ajout-panier="Chaise Alba"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
+            </div>
+            <div class="carte-produit__infos">
+              <div><h3 class="carte-produit__nom">Chaise Alba</h3><p class="carte-produit__type">Chêne · Lin sauge</p></div>
+              <p class="carte-produit__prix">189 €</p>
+            </div>
+            <p class="carte-produit__accroche">Le chêne et le lin réunis pour des repas qui s'éternisent.</p>
+          </article>
+        </li>
+        <li class="produit" data-categorie="meubles" data-apparition="haut">
+          <article class="carte-produit">
+            <div class="carte-produit__visuel" data-curseur="Voir">
+              <span class="etiquette">Nouveau</span>
+              <button class="bouton-favori" type="button" aria-label="Ajouter Porte-manteau Sylve aux favoris" aria-pressed="false"><svg class="icone"><use href="#icone-coeur"/></svg></button>
+              <img src="images/illustration-porte-manteau.svg" alt="Porte-manteau Sylve en frêne" loading="lazy">
+              <button class="bouton-panier" type="button" data-ajout-panier="Porte-manteau Sylve"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
+            </div>
+            <div class="carte-produit__infos">
+              <div><h3 class="carte-produit__nom">Porte-manteau Sylve</h3><p class="carte-produit__type">Frêne massif</p></div>
+              <p class="carte-produit__prix">145 €</p>
+            </div>
+            <p class="carte-produit__accroche">Il habille l'entrée et accueille vos manteaux avec élégance.</p>
+          </article>
+        </li>
+        <li class="produit" data-categorie="meubles" data-apparition="haut">
+          <article class="carte-produit">
+            <div class="carte-produit__visuel" data-curseur="Voir">
+              <button class="bouton-favori" type="button" aria-label="Ajouter Enfilade Lune aux favoris" aria-pressed="false"><svg class="icone"><use href="#icone-coeur"/></svg></button>
+              <img src="images/illustration-enfilade.svg" alt="Enfilade Lune en noyer et cannage" loading="lazy">
+              <button class="bouton-panier" type="button" data-ajout-panier="Enfilade Lune"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
+            </div>
+            <div class="carte-produit__infos">
+              <div><h3 class="carte-produit__nom">Enfilade Lune</h3><p class="carte-produit__type">Noyer · Cannage</p></div>
+              <p class="carte-produit__prix">980 €</p>
+            </div>
+            <p class="carte-produit__accroche">Noyer et cannage : tout se range, tout reste beau.</p>
+          </article>
+        </li>
+        <li class="produit" data-categorie="meubles" data-apparition="haut">
+          <article class="carte-produit">
+            <div class="carte-produit__visuel" data-curseur="Voir">
+              <button class="bouton-favori" type="button" aria-label="Ajouter Table d'appoint Galet aux favoris" aria-pressed="false"><svg class="icone"><use href="#icone-coeur"/></svg></button>
+              <img src="images/illustration-table-appoint.svg" alt="Table d'appoint Galet en travertin" loading="lazy">
+              <button class="bouton-panier" type="button" data-ajout-panier="Table d'appoint Galet"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
+            </div>
+            <div class="carte-produit__infos">
+              <div><h3 class="carte-produit__nom">Table d'appoint Galet</h3><p class="carte-produit__type">Travertin</p></div>
+              <p class="carte-produit__prix">260 €</p>
+            </div>
+            <p class="carte-produit__accroche">La touche minérale du travertin, toujours à portée de main.</p>
+          </article>
+        </li>
+        <li class="produit" data-categorie="parfums" data-apparition="haut">
+          <article class="carte-produit">
+            <div class="carte-produit__visuel" data-curseur="Voir">
+              <span class="etiquette">Best-seller</span>
+              <button class="bouton-favori" type="button" aria-label="Ajouter Diffuseur Figue et Cèdre aux favoris" aria-pressed="false"><svg class="icone"><use href="#icone-coeur"/></svg></button>
+              <img src="images/illustration-parfum-ambiance.svg" alt="Diffuseur de parfum d'ambiance Figue et Cèdre" loading="lazy">
+              <button class="bouton-panier" type="button" data-ajout-panier="Diffuseur Figue &amp; Cèdre"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
+            </div>
+            <div class="carte-produit__infos">
+              <div><h3 class="carte-produit__nom">Diffuseur Figue &amp; Cèdre</h3><p class="carte-produit__type">Parfum d'ambiance · 200 ml</p></div>
+              <p class="carte-produit__prix">39 €</p>
+            </div>
+            <p class="carte-produit__accroche">La fraîcheur de la figue, la chaleur du cèdre, jour et nuit.</p>
+          </article>
+        </li>
+        <li class="produit" data-categorie="parfums" data-apparition="haut">
+          <article class="carte-produit">
+            <div class="carte-produit__visuel" data-curseur="Voir">
+              <button class="bouton-favori" type="button" aria-label="Ajouter Bougie Ambre et Vanille aux favoris" aria-pressed="false"><svg class="icone"><use href="#icone-coeur"/></svg></button>
+              <img src="images/illustration-bougie-parfumee.svg" alt="Bougie parfumée Ambre et Vanille" loading="lazy">
+              <button class="bouton-panier" type="button" data-ajout-panier="Bougie Ambre &amp; Vanille"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
+            </div>
+            <div class="carte-produit__infos">
+              <div><h3 class="carte-produit__nom">Bougie Ambre &amp; Vanille</h3><p class="carte-produit__type">Cire végétale · 50 h</p></div>
+              <p class="carte-produit__prix">32 €</p>
+            </div>
+            <p class="carte-produit__accroche">Une lumière douce et des notes chaudes d'ambre et de vanille.</p>
+          </article>
+        </li>
+        <li class="produit" data-categorie="parfums" data-apparition="haut">
+          <article class="carte-produit">
+            <div class="carte-produit__visuel" data-curseur="Voir">
+              <span class="etiquette">Nouveau</span>
+              <button class="bouton-favori" type="button" aria-label="Ajouter Encens Santal et Myrrhe aux favoris" aria-pressed="false"><svg class="icone"><use href="#icone-coeur"/></svg></button>
+              <img src="images/illustration-encens.svg" alt="Encens Santal et Myrrhe sur son support" loading="lazy">
+              <button class="bouton-panier" type="button" data-ajout-panier="Encens Santal &amp; Myrrhe"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
+            </div>
+            <div class="carte-produit__infos">
+              <div><h3 class="carte-produit__nom">Encens Santal &amp; Myrrhe</h3><p class="carte-produit__type">40 bâtonnets + support</p></div>
+              <p class="carte-produit__prix">18 €</p>
+            </div>
+            <p class="carte-produit__accroche">Des notes profondes de santal et de myrrhe pour vos moments de calme.</p>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============ 7. PARFUMS D'AMBIANCE & ENCENS (sélecteur de senteurs) ============ -->
+    <section class="senteurs" id="senteurs">
+      <div class="bloc-titre">
+        <p class="bloc-titre__label" data-apparition="haut">Parfums d'ambiance &amp; encens</p>
+        <h2 class="bloc-titre__mot" data-decoupe>L'âme de la maison</h2>
+      </div>
+
+      <div class="senteurs__scene" data-apparition="zoom">
+        <img class="senteurs__produit est-actif" src="images/illustration-bougie-parfumee.svg" alt="Bougie parfumée Ambre et Vanille" data-senteur="ambre" loading="lazy">
+        <img class="senteurs__produit" src="images/illustration-parfum-ambiance.svg" alt="Diffuseur Figue et Cèdre" data-senteur="figue" loading="lazy">
+        <img class="senteurs__produit" src="images/illustration-encens.svg" alt="Encens Santal et Myrrhe" data-senteur="santal" loading="lazy">
+      </div>
+
+      <div class="senteurs__choix" role="group" aria-label="Choisir une senteur">
+        <button class="senteur est-actif" type="button" data-senteur="ambre" aria-pressed="true"
+          data-description="Bougie en cire végétale · 50 heures de lumière douce aux notes chaudes d'ambre et de vanille · 32 €">Ambre &amp; Vanille</button>
+        <button class="senteur" type="button" data-senteur="figue" aria-pressed="false"
+          data-description="Diffuseur 200 ml · La fraîcheur verte de la figue et la chaleur boisée du cèdre, pour une entrée qui accueille · 39 €">Figue &amp; Cèdre</button>
+        <button class="senteur" type="button" data-senteur="santal" aria-pressed="false"
+          data-description="40 bâtonnets d'encens et leur support · Des notes profondes de santal et de myrrhe pour vos moments de calme · 18 €">Santal &amp; Myrrhe</button>
+      </div>
+      <p class="senteurs__description" aria-live="polite">Bougie en cire végétale · 50 heures de lumière douce aux notes chaudes d'ambre et de vanille · 32 €</p>
+      <a href="#boutique" class="pilule" data-magnetique>
+        <span class="roulant"><span data-texte="Découvrir les senteurs">Découvrir les senteurs</span></span>
+      </a>
+    </section>
+
+    <!-- ============ 8. CHIFFRES CLÉS (compteurs animés, section claire) ============ -->
+    <section class="chiffres section-claire">
+      <ul class="chiffres__grille" data-apparition-groupe="0.12">
+        <li class="chiffre" data-apparition="haut">
+          <p class="chiffre__valeur" data-compteur="12">0</p>
+          <p class="chiffre__libelle">années d'artisanat</p>
+        </li>
+        <li class="chiffre" data-apparition="haut">
+          <p class="chiffre__valeur" data-compteur="4800">0</p>
+          <p class="chiffre__libelle">clients conquis</p>
+        </li>
+        <li class="chiffre" data-apparition="haut">
+          <p class="chiffre__valeur" data-compteur="100" data-suffixe="&#8239;%">0</p>
+          <p class="chiffre__libelle">de bois issu de forêts gérées durablement</p>
+        </li>
+        <li class="chiffre" data-apparition="haut">
+          <p class="chiffre__valeur" data-compteur="48" data-suffixe="&#8239;h">0</p>
+          <p class="chiffre__libelle">pour expédier votre commande</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============ AVIS CLIENTS : section retirée en attendant de vrais avis ============
+         Les styles sont déjà prêts (classes avis, avis__grille, avis-carte).
+         Dès que vous avez de vrais avis (prénom, ville, note, produit, texte),
+         la section pourra être remise ici, entre les chiffres clés et la newsletter. -->
+
+    <!-- ============ 9. NEWSLETTER (section noire) ============ -->
+    <section class="lettre" id="newsletter">
+      <div class="bloc-titre">
+        <p class="bloc-titre__label" data-apparition="haut">Newsletter</p>
+        <h2 class="bloc-titre__mot" data-decoupe>Restez inspiré</h2>
+      </div>
+      <p class="lettre__texte" data-apparition="haut">Nouveautés, senteurs de saison et ventes privées. -10 % sur votre première commande.</p>
+      <form class="formulaire" data-apparition="haut">
+        <label for="courriel" class="visuellement-cache">Votre adresse e-mail</label>
+        <input id="courriel" name="courriel" type="email" placeholder="Votre adresse e-mail" autocomplete="email" required>
+        <button class="pilule" type="submit" data-magnetique="0.2">
+          <span class="roulant"><span data-texte="Je m'inscris">Je m'inscris</span></span>
+        </button>
+      </form>
+      <p class="note lettre__merci" role="status"></p>
+      <p class="note">Désinscription en un clic · Aucune donnée revendue</p>
+    </section>
+  </main>
+
+  <!-- ============ PIED DE PAGE ============ -->
+  <footer class="pied" id="contact">
+    <div class="pied__grille">
+      <div class="pied__colonne">
+        <a href="#accueil" class="marque" aria-label="Maison Ambre, retour à l'accueil"><svg class="icone"><use href="#icone-marque"/></svg></a>
+        <p class="pied__slogan">Des meubles qui durent, des parfums qui apaisent.</p>
+      </div>
+      <div class="pied__colonne">
+        <p class="pied__titre">Meubles</p>
+        <ul class="pied__liens">
+          <li><a class="lien-souligne" href="#boutique">Canapés</a></li>
+          <li><a class="lien-souligne" href="#boutique">Chaises</a></li>
+          <li><a class="lien-souligne" href="#boutique">Porte-manteaux</a></li>
+          <li><a class="lien-souligne" href="#boutique">Meubles de maison</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <p class="pied__titre">Senteurs</p>
+        <ul class="pied__liens">
+          <li><a class="lien-souligne" href="#senteurs">Parfums d'ambiance</a></li>
+          <li><a class="lien-souligne" href="#senteurs">Bougies parfumées</a></li>
+          <li><a class="lien-souligne" href="#senteurs">Encens</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <p class="pied__titre">Contact</p>
+        <ul class="pied__liens">
+          <li><a class="lien-souligne" href="mailto:maisonambre@gmail.com">maisonambre@gmail.com</a></li>
+          <li><a class="lien-souligne" href="tel:+33662488337">06 62 48 83 37</a></li>
+          <li class="pied__info">Livraison offerte dès 300 €</li>
+          <li class="pied__info">Expédition sous 48 h</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="pied__marque" aria-hidden="true">Maison Ambre</p>
+
+    <div class="pied__bas">
+      <p>© 2026 Maison Ambre — Tous droits réservés</p>
+      <a href="#accueil" class="haut-de-page">Retour en haut <svg class="icone"><use href="#icone-fleche"/></svg></a>
+    </div>
+  </footer>
+
+  <!-- Notification (ajout au panier, favoris…) -->
+  <div class="notification" role="status" aria-live="polite">
+    <span class="notification__texte"></span>
+  </div>
+
+</body>
+</html>

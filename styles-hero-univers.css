@@ -1,0 +1,170 @@
+/* =========================================================
+   MAISON AMBRE — Hero, bandeau défilant, manifeste, univers
+   ========================================================= */
+
+/* ---------- 1. Hero : les produits flottent dans le vide ---------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 96px var(--marge) 70px;
+  overflow: hidden;
+  background: var(--noir);
+}
+/* La scène prend la hauteur restante pour que le titre et le bouton restent visibles */
+.hero__scene {
+  position: relative;
+  width: 100%; max-width: 1400px;
+  height: clamp(260px, calc(100vh - 520px), 600px);
+  height: clamp(260px, calc(100svh - 520px), 600px);
+  margin-bottom: 26px;
+}
+
+/* Chaque objet : position, taille et rotation réglées dans le HTML (--x, --y, --taille, --rotation) */
+.objet {
+  position: absolute;
+  left: var(--x, 50%); top: var(--y, 50%);
+  width: var(--taille, 120px);
+  translate: -50% -50%;
+  rotate: var(--rotation, 0deg);
+  z-index: 1;
+  transition: rotate 0.9s var(--courbe),
+              opacity 1.2s var(--courbe) var(--delai, 0s),
+              scale 1.4s var(--courbe) var(--delai, 0s);
+  will-change: transform;
+}
+.objet--loin { z-index: 0; }
+.objet--centre { --taille: min(54vw, 640px, max(380px, (100vh - 520px) * 1.55)); z-index: 2; }
+.objet img {
+  width: 100%; height: auto;
+  animation: flotter var(--duree, 8s) ease-in-out infinite;
+  animation-delay: calc(var(--duree, 8s) * -0.37);
+  transition: scale 0.8s var(--courbe);
+}
+.objet:hover { rotate: 0deg; }
+.objet:hover img { scale: 1.12; }
+.objet--centre:hover img { scale: 1.03; }
+.avec-js .objet { opacity: 0; scale: 0.55; }
+.est-pret .objet { opacity: 1; scale: 1; }
+
+/* Bloc titre centré sous les produits */
+.hero__bloc {
+  position: relative; z-index: 3;
+  display: grid; justify-items: center; gap: 18px;
+  max-width: 980px; text-align: center;
+}
+.hero__titre {
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 450; line-height: 0.9; letter-spacing: -0.06em;
+}
+.hero__texte { max-width: 520px; font-size: clamp(15px, 1.3vw, 18px); color: var(--fumee); }
+.hero__bloc .pilule { margin-top: 12px; }
+
+/* Indicateur « faire défiler » : un filet qui descend en boucle */
+.indicateur-scroll {
+  position: absolute; left: 0; right: 0; bottom: 22px;
+  width: max-content; margin-inline: auto; padding: 6px;
+}
+.indicateur-scroll__ligne {
+  display: block; position: relative;
+  width: 1px; height: 44px;
+  background: var(--filet); overflow: hidden;
+}
+.indicateur-scroll__ligne::after {
+  content: ""; position: absolute; inset: 0;
+  background: var(--blanc);
+  animation: descendre 2.2s var(--courbe) infinite;
+}
+
+/* ---------- 2. Bandeau défilant ---------- */
+.bandeau {
+  overflow: hidden;
+  padding-block: 26px;
+  border-block: 1px solid var(--filet);
+  background: var(--noir);
+}
+.bandeau__piste { display: flex; width: max-content; will-change: transform; }
+.bandeau__groupe { display: flex; align-items: center; gap: 41px; padding-right: 41px; }
+.bandeau__mot {
+  font-size: clamp(40px, 6.4vw, 88px);
+  font-weight: 450; line-height: 1.05; letter-spacing: -0.06em;
+  white-space: nowrap;
+  color: var(--blanc);
+  transition: color 0.4s, -webkit-text-stroke-color 0.4s;
+}
+.bandeau__mot--contour { color: transparent; -webkit-text-stroke: 1px var(--fumee); }
+.bandeau__mot:hover { color: var(--fer); }
+.bandeau__mot--contour:hover { color: var(--blanc); -webkit-text-stroke-color: var(--blanc); }
+.bandeau__point { flex-shrink: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--fer); }
+
+/* ---------- 3. Manifeste : les mots s'allument au fil du scroll ---------- */
+.manifeste {
+  display: grid; justify-items: center; gap: 35px;
+  padding: var(--ecart-section) var(--marge);
+  text-align: center;
+}
+.manifeste__texte {
+  max-width: 1080px;
+  font-size: clamp(28px, 3.9vw, 53px);
+  font-weight: 450; line-height: 1.08; letter-spacing: -0.045em;
+}
+.manifeste__texte .mot { opacity: 0.16; transition: opacity 0.5s var(--courbe); }
+.manifeste__texte .mot.allume { opacity: 1; }
+
+/* Petites vignettes de produits glissées dans le texte */
+.pastille-texte {
+  display: inline-grid; place-items: center;
+  width: 2em; height: 1.04em;
+  margin-inline: 0.08em;
+  vertical-align: -0.14em;
+  border: 1px solid var(--filet-fort);
+  border-radius: var(--rayon-pilule);
+  overflow: hidden;
+  transition: rotate 0.6s var(--courbe);
+}
+.pastille-texte img { height: 86%; width: auto; transition: scale 0.6s var(--courbe); }
+.pastille-texte:hover { rotate: -6deg; }
+.pastille-texte:hover img { scale: 1.25; }
+
+/* ---------- 4. Nos univers (section claire, cartes blanches) ---------- */
+.univers { padding-block: var(--ecart-section); }
+.univers__grille {
+  width: min(100% - 2 * var(--marge), var(--largeur-max));
+  margin: 47px auto 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+}
+.carte-univers {
+  display: flex; flex-direction: column; gap: 18px;
+  height: 100%;
+  padding: 26px;
+  border-radius: var(--rayon-carte);
+  background: var(--blanc); color: var(--noir);
+  transform-style: preserve-3d;
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.7s var(--courbe);
+}
+.carte-univers.est-survolee { transition: transform 0.15s linear; }
+.carte-univers__visuel {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  transform: translateZ(40px);
+}
+.carte-univers__visuel img {
+  position: absolute; inset: 0; margin: auto;
+  width: 80%; height: 84%; object-fit: contain;
+  transition: transform 0.9s var(--courbe);
+}
+.carte-univers:hover .carte-univers__visuel img { transform: translateY(-10px) scale(1.08) rotate(-4deg); }
+.carte-univers__pied { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; }
+.carte-univers__nom { display: block; font-size: 21px; font-weight: 450; line-height: 1.15; letter-spacing: -0.029em; }
+.carte-univers__info { display: block; margin-top: 4px; font-size: 13px; color: var(--fer); }
+.carte-univers__fleche {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--noir); color: var(--blanc);
+  scale: 0; rotate: -45deg;
+  transition: scale 0.5s var(--courbe), rotate 0.6s var(--courbe);
+}
+.carte-univers__fleche .icone { width: 20px; height: 20px; }
+.carte-univers:hover .carte-univers__fleche { scale: 1; rotate: 0deg; }

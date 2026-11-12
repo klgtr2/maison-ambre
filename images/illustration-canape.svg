@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="36 140 328 184" role="img" aria-label="Canapé Nuage en velours terracotta">
+  <!-- Pieds en bois -->
+  <path d="M88 292l-8 26M312 292l8 26" stroke="#8a5d3b" stroke-width="10" stroke-linecap="round"/>
+  <!-- Dossier et coussins de dossier -->
+  <rect x="78" y="146" width="244" height="108" rx="42" fill="#b9643d"/>
+  <rect x="92" y="160" width="106" height="80" rx="30" fill="#cf7c52"/>
+  <rect x="202" y="160" width="106" height="80" rx="30" fill="#cf7c52"/>
+  <!-- Assise -->
+  <rect x="60" y="234" width="280" height="62" rx="22" fill="#a9572f"/>
+  <rect x="92" y="228" width="106" height="34" rx="15" fill="#d6895f"/>
+  <rect x="202" y="228" width="106" height="34" rx="15" fill="#d6895f"/>
+  <!-- Accoudoirs -->
+  <rect x="40" y="194" width="58" height="102" rx="27" fill="#c46c42"/>
+  <rect x="302" y="194" width="58" height="102" rx="27" fill="#c46c42"/>
+  <!-- Coussin décoratif en lin -->
+  <rect x="106" y="180" width="56" height="52" rx="18" fill="#e9dcc8" transform="rotate(-12 134 206)"/>
+  <!-- Lumière de studio -->
+  <path d="M100 172c28-10 64-10 92-2M210 172c28-10 64-10 92-2" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".22" fill="none"/>
+  <path d="M52 212v62M314 212v62" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".16"/>
+  <path d="M64 290h272" stroke="#000" stroke-width="8" stroke-linecap="round" opacity=".18"/>
+</svg>

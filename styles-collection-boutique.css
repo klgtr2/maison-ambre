@@ -1,0 +1,168 @@
+/* =========================================================
+   MAISON AMBRE — Collection (scroll horizontal) et boutique
+   ========================================================= */
+
+/* ---------- 5. Collection signature ---------- */
+.collection { position: relative; background: var(--noir); }
+.collection__collant {
+  display: flex; flex-direction: column; justify-content: center; gap: 41px;
+  padding-block: var(--ecart-section);
+}
+
+/* Par défaut (mobile ou sans JS) : la piste se fait glisser au doigt */
+.collection__piste {
+  display: flex; gap: 18px;
+  padding-inline: var(--marge);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.collection__piste::-webkit-scrollbar { display: none; }
+
+/* Grand écran : le JS épingle la section et fait glisser la piste au scroll */
+.collection.est-horizontale .collection__collant {
+  position: sticky; top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  padding-block: 96px 41px;
+}
+.collection.est-horizontale .collection__piste {
+  width: max-content;
+  overflow: visible;
+  padding-inline: calc((100vw - min(72vw, 980px)) / 2);
+  will-change: transform;
+}
+
+.panneau {
+  position: relative; flex-shrink: 0;
+  width: min(72vw, 980px);
+  height: min(56vh, 540px);
+  display: grid; grid-template-columns: 1.15fr 1fr; align-items: stretch; gap: 26px;
+  padding: 26px 47px 26px 26px;
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon-carte);
+  background: var(--noir);
+  scroll-snap-align: center;
+  transition: border-color 0.5s;
+}
+.panneau:hover { border-color: var(--filet-fort); }
+.panneau__visuel { position: relative; min-height: 0; }
+.panneau__visuel img {
+  position: absolute; inset: 0; margin: auto;
+  width: 88%; height: 88%; object-fit: contain;
+  translate: var(--decalage, 0px) 0;
+  rotate: var(--rotation, 0deg);
+  transition: scale 0.9s var(--courbe);
+}
+.panneau:hover .panneau__visuel img { scale: 1.06; }
+.panneau__texte { align-self: center; display: grid; justify-items: start; gap: 12px; }
+.panneau__numero { font-size: 13px; color: var(--fer); }
+.panneau__nom { font-size: clamp(40px, 4.6vw, 64px); font-weight: 450; line-height: 0.95; letter-spacing: -0.06em; }
+.panneau__description { max-width: 34ch; font-size: 15px; color: var(--fumee); }
+.panneau__prix { margin-block: 6px 12px; font-size: 21px; font-weight: 450; letter-spacing: -0.029em; }
+
+/* Compteur 01 / 05 + filet de progression */
+.collection__suivi {
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  font-size: 13px; color: var(--fer); font-variant-numeric: tabular-nums;
+}
+.collection__actuel { color: var(--blanc); }
+.collection__progression { position: relative; width: 160px; height: 1px; background: var(--filet); overflow: hidden; }
+.collection__progression span {
+  position: absolute; inset: 0; background: var(--blanc);
+  transform-origin: left; transform: scaleX(var(--p, 0));
+}
+
+/* ---------- 6. Boutique (section claire) ---------- */
+.boutique { padding-block: var(--ecart-section); }
+
+/* Filtres : pilule blanche, indicateur noir qui glisse */
+.filtres {
+  position: relative;
+  display: flex; width: max-content; max-width: calc(100% - 2 * var(--marge));
+  margin: 35px auto 0;
+  padding: 6px;
+  border-radius: var(--rayon-pilule);
+  background: var(--blanc);
+}
+.filtre {
+  position: relative; z-index: 1;
+  padding: 12px 22px;
+  border-radius: var(--rayon-pilule);
+  font-size: 15px; color: var(--noir); white-space: nowrap;
+  transition: color 0.45s var(--courbe);
+}
+.filtre.est-actif { color: var(--blanc); }
+.filtres__indicateur {
+  position: absolute; top: 6px; bottom: 6px; left: 0;
+  width: 0;
+  border-radius: var(--rayon-pilule);
+  background: var(--noir);
+  transition: transform 0.6s var(--courbe), width 0.6s var(--courbe);
+}
+
+/* Grille de produits */
+.produits {
+  width: min(100% - 2 * var(--marge), var(--largeur-max));
+  margin: 35px auto 0;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px 18px;
+}
+.produit[hidden] { display: none; }
+.avec-js .produits .produit.est-masque { opacity: 0; transform: scale(0.92) translateY(20px); }
+
+.carte-produit { display: flex; flex-direction: column; gap: 12px; height: 100%; }
+.carte-produit__visuel {
+  position: relative;
+  display: grid; place-items: center;
+  aspect-ratio: 4 / 5;
+  padding: 26px;
+  border-radius: var(--rayon-carte);
+  background: var(--blanc);
+  overflow: hidden;
+}
+.carte-produit__visuel img {
+  position: absolute; inset: 0; margin: auto;
+  width: 76%; height: 70%; object-fit: contain;
+  transition: transform 1s var(--courbe);
+}
+.carte-produit:hover .carte-produit__visuel img { transform: translateY(-8%) scale(1.08) rotate(-3deg); }
+
+.etiquette {
+  position: absolute; top: 18px; left: 18px; z-index: 2;
+  padding: 6px 12px;
+  border-radius: var(--rayon-pilule);
+  background: var(--cendre); color: var(--noir);
+  font-size: 13px; line-height: 1.2;
+}
+.bouton-favori {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  display: grid; place-items: center;
+  width: 40px; height: 40px; border-radius: 50%;
+  transition: transform 0.5s var(--courbe);
+}
+.bouton-favori .icone { width: 22px; height: 22px; fill: transparent; stroke: var(--noir); stroke-width: 1.5; transition: fill 0.3s; }
+.bouton-favori:hover { transform: scale(1.15); }
+.bouton-favori.est-aime .icone { fill: var(--noir); animation: coeur 0.6s var(--courbe); }
+
+/* Bouton « Ajouter au panier » qui monte au survol */
+.bouton-panier {
+  position: absolute; left: 18px; right: 18px; bottom: 18px; z-index: 2;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 14px 18px;
+  border-radius: var(--rayon-pilule);
+  background: var(--noir); color: var(--blanc);
+  font-size: 15px; font-weight: 500;
+  translate: 0 calc(100% + 24px);
+  transition: translate 0.6s var(--courbe), scale 0.3s var(--courbe);
+}
+.bouton-panier .icone { width: 20px; height: 20px; }
+.carte-produit:hover .bouton-panier,
+.bouton-panier:focus-visible { translate: 0 0; }
+.bouton-panier:active { scale: 0.96; }
+
+.carte-produit__infos { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-inline: 6px; }
+.carte-produit__nom { font-size: 16px; font-weight: 450; line-height: 1.3; }
+.carte-produit__type { font-size: 13px; color: rgba(0, 0, 0, 0.55); }
+.carte-produit__prix { font-size: 16px; white-space: nowrap; }
+.carte-produit__accroche { padding-inline: 6px; font-size: 15px; line-height: 1.45; color: rgba(0, 0, 0, 0.7); }

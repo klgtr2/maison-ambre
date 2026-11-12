@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="76 0 248 344" role="img" aria-label="Encens Santal et Myrrhe sur son porte-encens en céramique">
+  <style>
+    .fumee{fill:none;stroke:#bfbfbf;stroke-linecap:round;stroke-dasharray:60 40;animation:fumer 3.2s linear infinite}
+    .f2{animation-duration:4.4s;opacity:.65}.f3{animation-duration:5.6s;opacity:.4}
+    .volutes{transform-box:fill-box;transform-origin:50% 100%;animation:balancer 7s ease-in-out infinite}
+    .braise{animation:braise 1.8s ease-in-out infinite}
+    @keyframes fumer{to{stroke-dashoffset:-200}}
+    @keyframes balancer{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
+    @keyframes braise{50%{opacity:.45}}
+    @media (prefers-reduced-motion:reduce){.fumee,.volutes,.braise{animation:none}}
+  </style>
+  <defs>
+    <linearGradient id="fondu" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="masque-fumee" maskUnits="userSpaceOnUse" x="76" y="0" width="248" height="152">
+      <rect x="76" y="0" width="248" height="152" fill="url(#fondu)"/>
+    </mask>
+  </defs>
+  <!-- Porte-encens en céramique -->
+  <path d="M84 318c10 22 222 22 232 0z" fill="#9c4f2b"/>
+  <ellipse cx="200" cy="318" rx="116" ry="14" fill="#c0683f"/>
+  <ellipse cx="200" cy="316" rx="96" ry="8" fill="#a95632"/>
+  <ellipse cx="172" cy="315" rx="6" ry="3" fill="#6e3419"/>
+  <circle cx="214" cy="314" r="2.5" fill="#d8cfc6"/>
+  <circle cx="226" cy="317" r="2" fill="#d8cfc6"/>
+  <circle cx="238" cy="313" r="2.5" fill="#d8cfc6"/>
+  <!-- Bâtonnet et braise -->
+  <path d="M172 314L250 150" stroke="#a87543" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M234 183L250 150" stroke="#7a5a45" stroke-width="5" stroke-linecap="round"/>
+  <circle class="braise" cx="250" cy="150" r="4.5" fill="#f2a33a"/>
+  <!-- Fumée animée -->
+  <g mask="url(#masque-fumee)">
+    <g class="volutes">
+      <path class="fumee" stroke-width="4" d="M250 148c-18-22 16-36 0-58s14-38-2-60"/>
+      <path class="fumee f2" stroke-width="3" d="M250 148c14-20-14-34 4-56s-10-40 8-62"/>
+      <path class="fumee f3" stroke-width="6" d="M250 148c-24-28 22-44-4-70s18-40-6-62"/>
+    </g>
+  </g>
+</svg>

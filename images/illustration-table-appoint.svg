@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="92 96 216 226" role="img" aria-label="Table d'appoint Galet en travertin">
+  <!-- Pied central et socle -->
+  <path d="M184 186h32l10 112h-52z" fill="#cdb595"/>
+  <ellipse cx="200" cy="302" rx="62" ry="13" fill="#bfa685"/>
+  <ellipse cx="200" cy="298" rx="62" ry="13" fill="#d8c3a5"/>
+  <!-- Plateau en travertin -->
+  <path d="M100 168v14c0 12 45 22 100 22s100-10 100-22v-14z" fill="#bfa685"/>
+  <ellipse cx="200" cy="168" rx="100" ry="22" fill="#e0ccae"/>
+  <g fill="#c9b190">
+    <ellipse cx="160" cy="162" rx="6" ry="2"/>
+    <ellipse cx="236" cy="174" rx="8" ry="2.2"/>
+    <ellipse cx="206" cy="158" rx="4" ry="1.5"/>
+    <ellipse cx="130" cy="174" rx="5" ry="1.6"/>
+  </g>
+  <!-- Petit vase sauge -->
+  <path d="M222 160c-10-6-12-26 0-36h16c12 10 10 30 0 36z" fill="#8c9a7e"/>
+  <rect x="223" y="118" width="14" height="8" rx="2" fill="#7a8a6a"/>
+  <!-- Lumière de studio -->
+  <path d="M120 160c20-8 50-12 80-12" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".35" fill="none"/>
+  <path d="M186 196v96" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".3"/>
+</svg>

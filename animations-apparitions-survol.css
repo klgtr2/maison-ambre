@@ -1,0 +1,85 @@
+/* =========================================================
+   MAISON AMBRE — Apparitions au scroll et images clés d'animation
+   (les états « cachés » ne s'appliquent que si JavaScript est actif)
+   ========================================================= */
+
+/* ---------- Apparitions au scroll ---------- */
+.avec-js [data-apparition] {
+  opacity: 0;
+  transition: opacity 1s var(--courbe) var(--delai, 0s),
+              transform 1.2s var(--courbe) var(--delai, 0s),
+              translate 0.6s var(--courbe),
+              border-color 0.5s;
+}
+.avec-js [data-apparition="haut"] { transform: translateY(60px); }
+.avec-js [data-apparition="zoom"] { transform: scale(0.86); }
+.avec-js [data-apparition="gauche"] { transform: translateX(-60px); }
+.avec-js [data-apparition="droite"] { transform: translateX(60px); }
+.avec-js [data-apparition].est-visible { opacity: 1; transform: none; }
+
+/* ---------- Titres découpés en mots : chaque mot sort d'un masque ---------- */
+.mot-masque {
+  display: inline-block; overflow: hidden; vertical-align: top;
+  padding: 0.04em 0.08em 0.1em;
+  margin: -0.04em -0.08em -0.1em;
+}
+.mot-interieur { display: inline-block; }
+.avec-js [data-decoupe] .mot-interieur {
+  translate: 0 115%;
+  rotate: 6deg;
+  transform-origin: left bottom;
+  transition: translate 1.1s var(--courbe), rotate 1.1s var(--courbe);
+  transition-delay: calc(var(--i, 0) * 70ms + var(--delai-base, 0s));
+}
+.avec-js [data-decoupe].est-visible .mot-interieur,
+.est-pret .hero [data-decoupe] .mot-interieur { translate: 0 0; rotate: 0deg; }
+.hero [data-decoupe] { --delai-base: 0.2s; }
+
+/* ---------- Entrée du hero après l'écran de chargement ---------- */
+.avec-js .hero-anim {
+  opacity: 0;
+  translate: 0 30px;
+  transition: opacity 1s var(--courbe) var(--delai, 0s),
+              translate 1.2s var(--courbe) var(--delai, 0s),
+              transform 0.45s var(--courbe),
+              background-color 0.4s,
+              scale 0.3s var(--courbe);
+}
+.est-pret .hero-anim { opacity: 1; translate: 0 0; }
+
+/* ---------- Images clés ---------- */
+@keyframes lettre-monte { to { translate: 0 0; } }
+
+@keyframes flotter {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  50% { translate: 0 -14px; rotate: 1.6deg; }
+}
+
+@keyframes descendre {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
+}
+
+@keyframes rebond {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.55); }
+  100% { transform: scale(1); }
+}
+
+@keyframes coeur {
+  0% { transform: scale(1); }
+  30% { transform: scale(0.75); }
+  60% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- Respect du réglage « réduire les animations » ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
