@@ -72,9 +72,10 @@
     const visuel = document.createElement('span');
     visuel.className = 'ligne-panier__visuel';
     const image = document.createElement('img');
-    image.src = produit.image;
+    image.src = CATALOGUE.visuel(article.id);
     image.alt = '';
     visuel.append(image);
+    if (produit.photo) visuel.classList.add('avec-photo');
 
     const infos = document.createElement('div');
     infos.className = 'ligne-panier__infos';
@@ -242,18 +243,28 @@
     rendre();
   });
 
-  /* ---------- 6. Les prix affichés sur la page sont ceux du catalogue ---------- */
+  /* ---------- 6. Prix et photos affichés sur la page = ceux du catalogue ---------- */
   document.querySelectorAll('[data-ajout-panier]').forEach((bouton) => {
+    if (!bouton.dataset.ajoutPanier) return; // bouton rempli plus tard (page produit)
     const id = trouverParNom(bouton.dataset.ajoutPanier);
     if (!id) { console.warn('Produit absent de catalogue-produits.js :', bouton.dataset.ajoutPanier); return; }
+    const produit = CATALOGUE.produits[id];
     const bloc = bouton.closest('.carte-produit, .panneau');
-    const prix = bloc && bloc.querySelector('.carte-produit__prix, .panneau__prix');
-    if (prix) prix.textContent = euros(CATALOGUE.produits[id].prix);
+    if (!bloc) return;
+    const prix = bloc.querySelector('.carte-produit__prix, .panneau__prix');
+    if (prix) prix.textContent = euros(produit.prix);
+    // Remplace l'illustration par la vraie photo quand le catalogue en a une
+    const image = bloc.querySelector('.carte-produit__visuel img, .panneau__visuel img');
+    if (image && produit.photo && !image.closest('.avec-photo')) {
+      image.src = produit.photo;
+      image.closest('.carte-produit__visuel, .panneau__visuel').classList.add('avec-photo');
+    }
   });
 
   /* ---------- Accès pour les autres scripts ---------- */
   MA.panier = {
-    ajouter(nom) {
+    // options.rebond = false : le compteur rebondira plus tard (à l'arrivée de la bille)
+    ajouter(nom, options = {}) {
       const id = trouverParNom(nom);
       if (!id) { console.warn('Produit absent de catalogue-produits.js :', nom); return false; }
       const article = articles.find((a) => a.id === id);
@@ -261,9 +272,10 @@
       else articles.push({ id, quantite: 1 });
       sauver();
       rendre(id);
-      faireRebondir();
+      if (options.rebond !== false) faireRebondir();
       return true;
     },
+    rebondir: faireRebondir,
     ouvrir,
     fermer,
     nombre: nombreArticles,

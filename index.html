@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="styles-senteurs-avis-pied-de-page.css">
   <link rel="stylesheet" href="animations-apparitions-survol.css">
   <link rel="stylesheet" href="styles-panier.css">
+  <link rel="stylesheet" href="styles-menu-univers.css">
   <link rel="stylesheet" href="styles-responsive-mobile.css">
 
   <!-- Scripts : animations, catalogue des prix, panier + paiement, interactions -->
@@ -35,6 +36,7 @@
   <script src="catalogue-produits.js" defer></script>
   <script src="script-panier-paiement.js" defer></script>
   <script src="script-boutique-interactions.js" defer></script>
+  <script src="script-menu-univers.js" defer></script>
 </head>
 <body>
 
@@ -256,7 +258,7 @@
             <div class="panneau__visuel"><img src="images/illustration-canape.svg" alt="Canapé Nuage" loading="lazy"></div>
             <div class="panneau__texte">
               <p class="panneau__numero">01 — Canapé</p>
-              <h3 class="panneau__nom">Nuage</h3>
+              <h3 class="panneau__nom"><a class="lien-produit" href="page-produit.html?produit=canape-nuage" data-curseur="Voir">Nuage</a></h3>
               <p class="panneau__description">Trois places en velours côtelé, doux au toucher et généreux en confort. Le canapé où l'on s'installe pour toute la soirée.</p>
               <p class="panneau__prix">1 290 €</p>
               <button class="pilule" type="button" data-ajout-panier="Canapé Nuage" data-magnetique>
@@ -268,7 +270,7 @@
             <div class="panneau__visuel"><img src="images/illustration-chaise.svg" alt="Chaise Alba" loading="lazy"></div>
             <div class="panneau__texte">
               <p class="panneau__numero">02 — Chaise</p>
-              <h3 class="panneau__nom">Alba</h3>
+              <h3 class="panneau__nom"><a class="lien-produit" href="page-produit.html?produit=chaise-alba" data-curseur="Voir">Alba</a></h3>
               <p class="panneau__description">Le chêne apporte la solidité, le lin sauge la douceur. Une chaise qui réchauffe toutes les tables.</p>
               <p class="panneau__prix">189 €</p>
               <button class="pilule" type="button" data-ajout-panier="Chaise Alba" data-magnetique>
@@ -280,7 +282,7 @@
             <div class="panneau__visuel"><img src="images/illustration-porte-manteau.svg" alt="Porte-manteau Sylve" loading="lazy"></div>
             <div class="panneau__texte">
               <p class="panneau__numero">03 — Porte-manteau</p>
-              <h3 class="panneau__nom">Sylve</h3>
+              <h3 class="panneau__nom"><a class="lien-produit" href="page-produit.html?produit=porte-manteau-sylve" data-curseur="Voir">Sylve</a></h3>
               <p class="panneau__description">En frêne massif, il accueille manteaux, sacs et écharpes. Votre entrée gagne une vraie pièce de caractère.</p>
               <p class="panneau__prix">145 €</p>
               <button class="pilule" type="button" data-ajout-panier="Porte-manteau Sylve" data-magnetique>
@@ -292,7 +294,7 @@
             <div class="panneau__visuel"><img src="images/illustration-enfilade.svg" alt="Enfilade Lune" loading="lazy"></div>
             <div class="panneau__texte">
               <p class="panneau__numero">04 — Meuble de maison</p>
-              <h3 class="panneau__nom">Lune</h3>
+              <h3 class="panneau__nom"><a class="lien-produit" href="page-produit.html?produit=enfilade-lune" data-curseur="Voir">Lune</a></h3>
               <p class="panneau__description">La chaleur du noyer rencontre la légèreté du cannage. Une enfilade qui range tout, avec élégance.</p>
               <p class="panneau__prix">980 €</p>
               <button class="pilule" type="button" data-ajout-panier="Enfilade Lune" data-magnetique>
@@ -304,7 +306,7 @@
             <div class="panneau__visuel"><img src="images/illustration-table-appoint.svg" alt="Table d'appoint Galet" loading="lazy"></div>
             <div class="panneau__texte">
               <p class="panneau__numero">05 — Table d'appoint</p>
-              <h3 class="panneau__nom">Galet</h3>
+              <h3 class="panneau__nom"><a class="lien-produit" href="page-produit.html?produit=table-appoint-galet" data-curseur="Voir">Galet</a></h3>
               <p class="panneau__description">Le travertin et ses veinures naturelles, à glisser près du canapé. La touche minérale qui change tout.</p>
               <p class="panneau__prix">260 €</p>
               <button class="pilule" type="button" data-ajout-panier="Table d'appoint Galet" data-magnetique>
@@ -345,7 +347,7 @@
               <button class="bouton-panier" type="button" data-ajout-panier="Canapé Nuage"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
             </div>
             <div class="carte-produit__infos">
-              <div><h3 class="carte-produit__nom">Canapé Nuage</h3><p class="carte-produit__type">3 places · Velours côtelé</p></div>
+              <div><h3 class="carte-produit__nom"><a class="lien-produit" href="page-produit.html?produit=canape-nuage" data-curseur="Voir">Canapé Nuage</a></h3><p class="carte-produit__type">3 places · Velours côtelé</p></div>
               <p class="carte-produit__prix">1 290 €</p>
             </div>
             <p class="carte-produit__accroche">Un moelleux enveloppant pour s'y lover comme dans un nuage.</p>
@@ -359,7 +361,7 @@
               <button class="bouton-panier" type="button" data-ajout-panier="Chaise Alba"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
             </div>
             <div class="carte-produit__infos">
-              <div><h3 class="carte-produit__nom">Chaise Alba</h3><p class="carte-produit__type">Chêne · Lin sauge</p></div>
+              <div><h3 class="carte-produit__nom"><a class="lien-produit" href="page-produit.html?produit=chaise-alba" data-curseur="Voir">Chaise Alba</a></h3><p class="carte-produit__type">Chêne · Lin sauge</p></div>
               <p class="carte-produit__prix">189 €</p>
             </div>
             <p class="carte-produit__accroche">Le chêne et le lin réunis pour des repas qui s'éternisent.</p>
@@ -374,7 +376,7 @@
               <button class="bouton-panier" type="button" data-ajout-panier="Porte-manteau Sylve"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
             </div>
             <div class="carte-produit__infos">
-              <div><h3 class="carte-produit__nom">Porte-manteau Sylve</h3><p class="carte-produit__type">Frêne massif</p></div>
+              <div><h3 class="carte-produit__nom"><a class="lien-produit" href="page-produit.html?produit=porte-manteau-sylve" data-curseur="Voir">Porte-manteau Sylve</a></h3><p class="carte-produit__type">Frêne massif</p></div>
               <p class="carte-produit__prix">145 €</p>
             </div>
             <p class="carte-produit__accroche">Il habille l'entrée et accueille vos manteaux avec élégance.</p>
@@ -388,7 +390,7 @@
               <button class="bouton-panier" type="button" data-ajout-panier="Enfilade Lune"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
             </div>
             <div class="carte-produit__infos">
-              <div><h3 class="carte-produit__nom">Enfilade Lune</h3><p class="carte-produit__type">Noyer · Cannage</p></div>
+              <div><h3 class="carte-produit__nom"><a class="lien-produit" href="page-produit.html?produit=enfilade-lune" data-curseur="Voir">Enfilade Lune</a></h3><p class="carte-produit__type">Noyer · Cannage</p></div>
               <p class="carte-produit__prix">980 €</p>
             </div>
             <p class="carte-produit__accroche">Noyer et cannage : tout se range, tout reste beau.</p>
@@ -402,7 +404,7 @@
               <button class="bouton-panier" type="button" data-ajout-panier="Table d'appoint Galet"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
             </div>
             <div class="carte-produit__infos">
-              <div><h3 class="carte-produit__nom">Table d'appoint Galet</h3><p class="carte-produit__type">Travertin</p></div>
+              <div><h3 class="carte-produit__nom"><a class="lien-produit" href="page-produit.html?produit=table-appoint-galet" data-curseur="Voir">Table d'appoint Galet</a></h3><p class="carte-produit__type">Travertin</p></div>
               <p class="carte-produit__prix">260 €</p>
             </div>
             <p class="carte-produit__accroche">La touche minérale du travertin, toujours à portée de main.</p>
@@ -417,7 +419,7 @@
               <button class="bouton-panier" type="button" data-ajout-panier="Diffuseur Figue &amp; Cèdre"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
             </div>
             <div class="carte-produit__infos">
-              <div><h3 class="carte-produit__nom">Diffuseur Figue &amp; Cèdre</h3><p class="carte-produit__type">Parfum d'ambiance · 200 ml</p></div>
+              <div><h3 class="carte-produit__nom"><a class="lien-produit" href="page-produit.html?produit=diffuseur-figue-cedre" data-curseur="Voir">Diffuseur Figue &amp; Cèdre</a></h3><p class="carte-produit__type">Parfum d'ambiance · 200 ml</p></div>
               <p class="carte-produit__prix">39 €</p>
             </div>
             <p class="carte-produit__accroche">La fraîcheur de la figue, la chaleur du cèdre, jour et nuit.</p>
@@ -431,7 +433,7 @@
               <button class="bouton-panier" type="button" data-ajout-panier="Bougie Ambre &amp; Vanille"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
             </div>
             <div class="carte-produit__infos">
-              <div><h3 class="carte-produit__nom">Bougie Ambre &amp; Vanille</h3><p class="carte-produit__type">Cire végétale · 50 h</p></div>
+              <div><h3 class="carte-produit__nom"><a class="lien-produit" href="page-produit.html?produit=bougie-ambre-vanille" data-curseur="Voir">Bougie Ambre &amp; Vanille</a></h3><p class="carte-produit__type">Cire végétale · 50 h</p></div>
               <p class="carte-produit__prix">32 €</p>
             </div>
             <p class="carte-produit__accroche">Une lumière douce et des notes chaudes d'ambre et de vanille.</p>
@@ -446,7 +448,7 @@
               <button class="bouton-panier" type="button" data-ajout-panier="Encens Santal &amp; Myrrhe"><svg class="icone"><use href="#icone-sac"/></svg><span>Ajouter au panier</span></button>
             </div>
             <div class="carte-produit__infos">
-              <div><h3 class="carte-produit__nom">Encens Santal &amp; Myrrhe</h3><p class="carte-produit__type">40 bâtonnets + support</p></div>
+              <div><h3 class="carte-produit__nom"><a class="lien-produit" href="page-produit.html?produit=encens-santal-myrrhe" data-curseur="Voir">Encens Santal &amp; Myrrhe</a></h3><p class="carte-produit__type">40 bâtonnets + support</p></div>
               <p class="carte-produit__prix">18 €</p>
             </div>
             <p class="carte-produit__accroche">Des notes profondes de santal et de myrrhe pour vos moments de calme.</p>
@@ -469,16 +471,16 @@
       </div>
 
       <div class="senteurs__choix" role="group" aria-label="Choisir une senteur">
-        <button class="senteur est-actif" type="button" data-senteur="ambre" aria-pressed="true"
+        <button class="senteur est-actif" type="button" data-senteur="ambre" data-produit="bougie-ambre-vanille" aria-pressed="true"
           data-description="Bougie en cire végétale · 50 heures de lumière douce aux notes chaudes d'ambre et de vanille · 32 €">Ambre &amp; Vanille</button>
-        <button class="senteur" type="button" data-senteur="figue" aria-pressed="false"
+        <button class="senteur" type="button" data-senteur="figue" data-produit="diffuseur-figue-cedre" aria-pressed="false"
           data-description="Diffuseur 200 ml · La fraîcheur verte de la figue et la chaleur boisée du cèdre, pour une entrée qui accueille · 39 €">Figue &amp; Cèdre</button>
-        <button class="senteur" type="button" data-senteur="santal" aria-pressed="false"
+        <button class="senteur" type="button" data-senteur="santal" data-produit="encens-santal-myrrhe" aria-pressed="false"
           data-description="40 bâtonnets d'encens et leur support · Des notes profondes de santal et de myrrhe pour vos moments de calme · 18 €">Santal &amp; Myrrhe</button>
       </div>
       <p class="senteurs__description" aria-live="polite">Bougie en cire végétale · 50 heures de lumière douce aux notes chaudes d'ambre et de vanille · 32 €</p>
-      <a href="#boutique" class="pilule" data-magnetique>
-        <span class="roulant"><span data-texte="Découvrir les senteurs">Découvrir les senteurs</span></span>
+      <a href="page-produit.html?produit=bougie-ambre-vanille" class="pilule senteurs__lien" data-magnetique>
+        <span class="roulant"><span data-texte="Voir ce produit">Voir ce produit</span></span>
       </a>
     </section>
 

@@ -44,13 +44,15 @@
      script-panier-paiement.js (objet MaisonAmbre.panier). */
   const entete = document.querySelector('.entete');
   const panier = document.querySelector('.panier');
-  const ajouterAuPanier = (nom) => {
-    if (MA.panier) MA.panier.ajouter(nom);
+  const ajouterAuPanier = (nom, rebond) => {
+    if (MA.panier) MA.panier.ajouter(nom, { rebond });
   };
 
   const envolerVersPanier = (depuis, nom) => {
     entete.classList.remove('est-cache');
-    if (MA.reduit || !Element.prototype.animate || !panier) { ajouterAuPanier(nom); return; }
+    if (MA.reduit || !Element.prototype.animate || !panier) { ajouterAuPanier(nom, true); return; }
+    // L'article est enregistré tout de suite (même si le client change de page pendant l'animation)
+    ajouterAuPanier(nom, false);
     const depart = depuis.getBoundingClientRect();
     const decalageEntete = entete.getBoundingClientRect().top; // négatif si l'en-tête est encore caché
     const arrivee = panier.getBoundingClientRect();
@@ -66,7 +68,7 @@
       { transform: `translate(${(x0 + x1) / 2}px, ${Math.min(y0, y1) - 140}px) scale(1.6)`, offset: 0.45 },
       { transform: `translate(${x1}px, ${y1}px) scale(0.5)` },
     ], { duration: 900, easing: 'cubic-bezier(0.5, 0, 0.3, 1)' });
-    vol.onfinish = () => { bille.remove(); ajouterAuPanier(nom); };
+    vol.onfinish = () => { bille.remove(); if (MA.panier) MA.panier.rebondir(); };
   };
 
   document.querySelectorAll('[data-ajout-panier]').forEach((bouton) => {
@@ -159,6 +161,9 @@
         b.classList.toggle('est-actif', i === index);
         b.setAttribute('aria-pressed', String(i === index));
       });
+      // Le bouton « Voir ce produit » mène à la page du produit affiché
+      const lien = senteurs.querySelector('.senteurs__lien');
+      if (lien && choix[index].dataset.produit) lien.href = `page-produit.html?produit=${choix[index].dataset.produit}`;
       precedent.classList.remove('est-actif');
       precedent.classList.add('est-sortant');
       setTimeout(() => precedent.classList.remove('est-sortant'), 900);

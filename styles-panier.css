@@ -75,6 +75,8 @@
   border-radius: var(--rayon-carte);
 }
 .ligne-panier__visuel img { width: 74%; height: 74%; object-fit: contain; }
+.ligne-panier__visuel.avec-photo { overflow: hidden; }
+.ligne-panier__visuel.avec-photo img { width: 100%; height: 100%; object-fit: cover; }
 .ligne-panier__infos { display: grid; gap: 6px; min-width: 0; }
 .ligne-panier__nom { font-size: 16px; font-weight: 450; line-height: 1.25; }
 .ligne-panier__prix { font-size: 15px; color: var(--fumee); }

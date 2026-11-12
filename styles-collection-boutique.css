@@ -166,3 +166,19 @@
 .carte-produit__type { font-size: 13px; color: rgba(0, 0, 0, 0.55); }
 .carte-produit__prix { font-size: 16px; white-space: nowrap; }
 .carte-produit__accroche { padding-inline: 6px; font-size: 15px; line-height: 1.45; color: rgba(0, 0, 0, 0.7); }
+
+/* ---------- Lien vers la page produit : toute la carte devient cliquable ---------- */
+.carte-produit,
+.panneau { position: relative; }
+.lien-produit::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: var(--rayon-carte); }
+.lien-produit:focus-visible { outline: none; }
+.lien-produit:focus-visible::after { outline: 1px solid currentColor; outline-offset: 4px; }
+.panneau .pilule { position: relative; z-index: 2; }
+
+/* ---------- Vraies photos (ajoutées depuis le catalogue) ---------- */
+.carte-produit__visuel.avec-photo { padding: 0; }
+.carte-produit__visuel.avec-photo img { width: 100%; height: 100%; object-fit: cover; }
+.carte-produit:hover .carte-produit__visuel.avec-photo img { transform: scale(1.06); }
+.panneau__visuel.avec-photo { overflow: hidden; border-radius: var(--rayon-carte); }
+.panneau__visuel.avec-photo img { width: 100%; height: 100%; object-fit: cover; rotate: 0deg; scale: 1.12; }
+.panneau:hover .panneau__visuel.avec-photo img { scale: 1.16; }
