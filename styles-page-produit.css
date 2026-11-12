@@ -34,7 +34,7 @@
   overflow: hidden;
   transition: clip-path 1.3s var(--courbe);
 }
-.avec-js .fiche__visuel { clip-path: inset(0 0 100% 0 round 17.6px); }
+.avec-js .fiche__visuel { clip-path: inset(100% 0 0 0 round 17.6px); }
 .est-pret .fiche__visuel { clip-path: inset(0 0 0 0 round 17.6px); }
 
 .fiche__scene {
