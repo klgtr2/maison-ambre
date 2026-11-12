@@ -1,0 +1,143 @@
+/* =========================================================
+   MAISON AMBRE — Tiroir du panier (glisse depuis la droite)
+   ========================================================= */
+
+/* Voile sombre derrière le tiroir */
+.voile-panier {
+  position: fixed; inset: 0; z-index: 70;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s var(--courbe);
+}
+.panier-ouvert .voile-panier { opacity: 1; pointer-events: auto; }
+.panier-ouvert body { overflow: hidden; }
+
+/* Le tiroir */
+.tiroir-panier {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 75;
+  width: min(440px, 100vw);
+  display: flex; flex-direction: column;
+  background: var(--noir); color: var(--blanc);
+  border-left: 1px solid var(--filet);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.7s var(--courbe), visibility 0s linear 0.7s;
+}
+.panier-ouvert .tiroir-panier {
+  transform: none;
+  visibility: visible;
+  transition: transform 0.7s var(--courbe), visibility 0s;
+}
+
+/* En-tête : titre + nombre d'articles + bouton fermer */
+.tiroir-panier__entete {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  padding: 22px 26px;
+  border-bottom: 1px solid var(--filet);
+}
+.tiroir-panier__titre {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 21px; font-weight: 450; letter-spacing: -0.029em;
+}
+.tiroir-panier__nombre {
+  min-width: 24px; height: 24px; padding: 0 8px;
+  border-radius: var(--rayon-pilule);
+  background: var(--blanc); color: var(--noir);
+  font-size: 13px; font-weight: 500; line-height: 24px; text-align: center;
+}
+.tiroir-panier__fermer {
+  position: relative; flex-shrink: 0;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--filet);
+  transition: transform 0.6s var(--courbe), border-color 0.3s;
+}
+.tiroir-panier__fermer span {
+  position: absolute; left: 11px; right: 11px; top: 19px; height: 1.5px;
+  background: var(--blanc);
+}
+.tiroir-panier__fermer span:first-child { transform: rotate(45deg); }
+.tiroir-panier__fermer span:last-child { transform: rotate(-45deg); }
+.tiroir-panier__fermer:hover { transform: rotate(90deg); border-color: var(--filet-fort); }
+
+/* Liste des articles */
+.tiroir-panier__liste { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 0 26px; }
+.ligne-panier {
+  display: grid; grid-template-columns: 76px 1fr auto; align-items: center; gap: 18px;
+  padding-block: 18px;
+  border-bottom: 1px solid var(--filet);
+}
+.ligne-panier--anime { animation: ligne-entree 0.7s var(--courbe) both; animation-delay: calc(0.15s + var(--i, 0) * 70ms); }
+.ligne-panier.est-retiree { animation: ligne-sortie 0.35s var(--courbe) forwards; }
+.ligne-panier__visuel {
+  display: grid; place-items: center;
+  width: 76px; height: 76px;
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon-carte);
+}
+.ligne-panier__visuel img { width: 74%; height: 74%; object-fit: contain; }
+.ligne-panier__infos { display: grid; gap: 6px; min-width: 0; }
+.ligne-panier__nom { font-size: 16px; font-weight: 450; line-height: 1.25; }
+.ligne-panier__prix { font-size: 15px; color: var(--fumee); }
+.ligne-panier__retirer { align-self: start; font-size: 13px; color: var(--fer); transition: color 0.3s; }
+.ligne-panier__retirer:hover { color: var(--blanc); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Sélecteur de quantité en pilule */
+.quantite {
+  display: inline-flex; align-items: center; width: max-content;
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon-pilule);
+}
+.quantite__bouton {
+  width: 32px; height: 32px; border-radius: 50%;
+  font-size: 16px; color: var(--blanc);
+  transition: background-color 0.3s;
+}
+.quantite__bouton:hover { background: var(--filet); }
+.quantite__valeur { min-width: 24px; text-align: center; font-size: 15px; font-variant-numeric: tabular-nums; }
+
+/* Panier vide */
+.tiroir-panier__vide {
+  display: none; flex: 1; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+  padding: 26px; text-align: center; color: var(--fumee);
+}
+.tiroir-panier.est-vide .tiroir-panier__vide { display: flex; }
+.tiroir-panier.est-vide .tiroir-panier__liste,
+.tiroir-panier.est-vide .tiroir-panier__pied { display: none; }
+
+/* Pied : jauge de livraison offerte, montants, paiement */
+.tiroir-panier__pied { display: grid; gap: 12px; padding: 22px 26px 26px; border-top: 1px solid var(--filet); }
+.tiroir-panier__jauge { position: relative; height: 2px; background: var(--filet); overflow: hidden; }
+.tiroir-panier__jauge span {
+  position: absolute; inset: 0; background: var(--blanc);
+  transform-origin: left; transform: scaleX(0);
+  transition: transform 0.9s var(--courbe);
+}
+.tiroir-panier__astuce { font-size: 13px; color: var(--fer); }
+.tiroir-panier__ligne { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; color: var(--fumee); }
+.tiroir-panier__ligne--total {
+  margin-top: 6px; padding-top: 12px;
+  border-top: 1px solid var(--filet);
+  font-size: 21px; font-weight: 450; letter-spacing: -0.029em; color: var(--blanc);
+}
+.tiroir-panier__payer { width: 100%; margin-top: 6px; }
+.tiroir-panier.est-en-cours .tiroir-panier__payer { opacity: 0.6; cursor: progress; }
+.tiroir-panier__message { font-size: 13px; line-height: 1.45; color: var(--cendre); }
+.tiroir-panier__message:empty { display: none; }
+.tiroir-panier .note { font-size: 13px; }
+
+@keyframes ligne-entree {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ligne-sortie {
+  to { opacity: 0; transform: translateX(40px); }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .tiroir-panier__entete,
+  .tiroir-panier__pied { padding-inline: 18px; }
+  .tiroir-panier__liste { padding: 0 18px; }
+  .ligne-panier { grid-template-columns: 64px 1fr auto; gap: 12px; }
+  .ligne-panier__visuel { width: 64px; height: 64px; }
+}

@@ -26,11 +26,14 @@
   <link rel="stylesheet" href="styles-collection-boutique.css">
   <link rel="stylesheet" href="styles-senteurs-avis-pied-de-page.css">
   <link rel="stylesheet" href="animations-apparitions-survol.css">
+  <link rel="stylesheet" href="styles-panier.css">
   <link rel="stylesheet" href="styles-responsive-mobile.css">
 
-  <!-- Scripts d'animation -->
+  <!-- Scripts : animations, catalogue des prix, panier + paiement, interactions -->
   <script src="script-chargement-curseur-entete.js" defer></script>
   <script src="script-effets-scroll.js" defer></script>
+  <script src="catalogue-produits.js" defer></script>
+  <script src="script-panier-paiement.js" defer></script>
   <script src="script-boutique-interactions.js" defer></script>
 </head>
 <body>
@@ -567,6 +570,39 @@
       <a href="#accueil" class="haut-de-page">Retour en haut <svg class="icone"><use href="#icone-fleche"/></svg></a>
     </div>
   </footer>
+
+  <!-- ============ PANIER (tiroir latéral, rempli par script-panier-paiement.js) ============ -->
+  <div class="voile-panier" data-fermer-panier></div>
+  <aside class="tiroir-panier" id="tiroir-panier" aria-label="Votre panier" aria-hidden="true">
+    <div class="tiroir-panier__entete">
+      <p class="tiroir-panier__titre">Votre panier <span class="tiroir-panier__nombre">0</span></p>
+      <button class="tiroir-panier__fermer" type="button" aria-label="Fermer le panier" data-fermer-panier>
+        <span></span><span></span>
+      </button>
+    </div>
+
+    <ul class="tiroir-panier__liste" aria-live="polite"></ul>
+
+    <div class="tiroir-panier__vide">
+      <p>Votre panier est vide pour le moment.</p>
+      <a href="#boutique" class="pilule" data-fermer-panier>
+        <span class="roulant"><span data-texte="Découvrir la boutique">Découvrir la boutique</span></span>
+      </a>
+    </div>
+
+    <div class="tiroir-panier__pied">
+      <div class="tiroir-panier__jauge" aria-hidden="true"><span></span></div>
+      <p class="tiroir-panier__astuce"></p>
+      <div class="tiroir-panier__ligne"><span>Sous-total</span><span data-montant="sousTotal">0 €</span></div>
+      <div class="tiroir-panier__ligne"><span>Livraison</span><span data-montant="livraison">Offerte</span></div>
+      <div class="tiroir-panier__ligne tiroir-panier__ligne--total"><span>Total</span><span data-montant="total">0 €</span></div>
+      <button class="pilule tiroir-panier__payer" type="button" data-payer>
+        <span class="roulant"><span data-texte="Payer en toute sécurité">Payer en toute sécurité</span></span>
+      </button>
+      <p class="tiroir-panier__message" role="status"></p>
+      <p class="note">Paiement sécurisé par Stripe · Livraison en France et en Belgique</p>
+    </div>
+  </aside>
 
   <!-- Notification (ajout au panier, favoris…) -->
   <div class="notification" role="status" aria-live="polite">

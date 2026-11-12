@@ -39,26 +39,18 @@
     minuteurNotification = setTimeout(() => notification.classList.remove('est-visible'), 2600);
   };
 
-  /* ---------- 3. Panier : une bille s'envole jusqu'à l'icône ---------- */
+  /* ---------- 3. Ajout au panier : une bille s'envole jusqu'à l'icône ----------
+     Le contenu du panier, le tiroir et le paiement sont gérés par
+     script-panier-paiement.js (objet MaisonAmbre.panier). */
   const entete = document.querySelector('.entete');
   const panier = document.querySelector('.panier');
-  const compteurPanier = panier ? panier.querySelector('.panier__compteur') : null;
-  let articles = 0;
-  const pluriel = (n) => `${n} article${n > 1 ? 's' : ''}`;
-
-  const majPanier = () => {
-    articles += 1;
-    compteurPanier.textContent = articles;
-    compteurPanier.classList.add('est-rempli');
-    compteurPanier.classList.remove('rebond');
-    void compteurPanier.offsetWidth; // relance l'animation de rebond
-    compteurPanier.classList.add('rebond');
-    panier.setAttribute('aria-label', `Panier, ${pluriel(articles)}`);
+  const ajouterAuPanier = (nom) => {
+    if (MA.panier) MA.panier.ajouter(nom);
   };
 
-  const envolerVersPanier = (depuis) => {
+  const envolerVersPanier = (depuis, nom) => {
     entete.classList.remove('est-cache');
-    if (MA.reduit || !Element.prototype.animate) { majPanier(); return; }
+    if (MA.reduit || !Element.prototype.animate || !panier) { ajouterAuPanier(nom); return; }
     const depart = depuis.getBoundingClientRect();
     const decalageEntete = entete.getBoundingClientRect().top; // négatif si l'en-tête est encore caché
     const arrivee = panier.getBoundingClientRect();
@@ -74,12 +66,12 @@
       { transform: `translate(${(x0 + x1) / 2}px, ${Math.min(y0, y1) - 140}px) scale(1.6)`, offset: 0.45 },
       { transform: `translate(${x1}px, ${y1}px) scale(0.5)` },
     ], { duration: 900, easing: 'cubic-bezier(0.5, 0, 0.3, 1)' });
-    vol.onfinish = () => { bille.remove(); majPanier(); };
+    vol.onfinish = () => { bille.remove(); ajouterAuPanier(nom); };
   };
 
   document.querySelectorAll('[data-ajout-panier]').forEach((bouton) => {
     bouton.addEventListener('click', () => {
-      envolerVersPanier(bouton);
+      envolerVersPanier(bouton, bouton.dataset.ajoutPanier);
       notifier(`« ${bouton.dataset.ajoutPanier} » ajouté au panier`);
       // Le texte du bouton devient « Ajouté ✓ » pendant un court instant
       const libelle = bouton.querySelector('[data-texte]') || bouton.querySelector('span');
@@ -94,12 +86,6 @@
       }, 1600);
     });
   });
-
-  if (panier) {
-    panier.addEventListener('click', () => {
-      notifier(articles ? `Votre panier contient ${pluriel(articles)}` : 'Votre panier est vide pour le moment');
-    });
-  }
 
   /* ---------- 4. Favoris (cœur) ---------- */
   document.querySelectorAll('.bouton-favori').forEach((bouton) => {
