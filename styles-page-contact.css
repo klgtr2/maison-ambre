@@ -1,0 +1,191 @@
+/* =========================================================
+   MAISON AMBRE — Page contact
+   Coordonnées, formulaire animé (étiquettes flottantes, filet qui se dessine),
+   questions fréquentes en accordéon.
+   ========================================================= */
+.page-contact { padding-top: 96px; }
+
+/* ---------- Titre ---------- */
+.contact-hero {
+  display: grid; justify-items: center; gap: 22px;
+  padding: clamp(48px, 8vw, 110px) var(--marge) 56px;
+  text-align: center;
+}
+.contact-hero__texte { max-width: 560px; font-size: clamp(15px, 1.3vw, 18px); color: var(--fumee); }
+
+/* ---------- Coordonnées + formulaire ---------- */
+.contact-grille {
+  width: min(100% - 2 * var(--marge), var(--largeur-max));
+  margin: 0 auto;
+  padding-bottom: var(--ecart-section);
+  display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(26px, 5vw, 80px);
+  align-items: start;
+}
+
+.contact-cartes { position: sticky; top: 110px; display: grid; gap: 12px; }
+.carte-contact {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 2px 18px;
+  padding: 26px;
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon-carte);
+  background: var(--noir);
+}
+.carte-contact__icone {
+  grid-row: span 3;
+  display: grid; place-items: center;
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 1px solid var(--filet-fort);
+  transition: background-color 0.4s, color 0.4s, rotate 0.6s var(--courbe);
+}
+.carte-contact__label { font-size: 13px; color: var(--fer); }
+.carte-contact__valeur {
+  grid-column: 2;
+  font-size: clamp(17px, 1.6vw, 21px); font-weight: 450; letter-spacing: -0.029em;
+  overflow-wrap: anywhere;
+}
+.carte-contact__detail { grid-column: 2; font-size: 13px; color: var(--fumee); }
+.carte-contact__fleche { grid-row: 1 / span 3; grid-column: 3; transition: translate 0.5s var(--courbe); }
+a.carte-contact:hover { border-color: var(--filet-fort); translate: 0 -4px; }
+a.carte-contact:hover .carte-contact__icone { background: var(--blanc); color: var(--noir); rotate: -10deg; }
+a.carte-contact:hover .carte-contact__fleche { translate: 6px 0; }
+
+/* ---------- Formulaire ---------- */
+.formulaire-contact {
+  display: grid; gap: 26px;
+  padding: clamp(26px, 4vw, 47px);
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon-carte);
+}
+.formulaire-contact__titre { font-size: 26px; font-weight: 450; letter-spacing: -0.03em; }
+
+/* Champ avec étiquette flottante et filet blanc qui se dessine au focus */
+.champ { position: relative; }
+.champ input,
+.champ textarea {
+  display: block; width: 100%;
+  padding: 24px 0 10px;
+  border: 0; border-bottom: 1px solid var(--filet-fort); border-radius: 0;
+  background: transparent; color: var(--blanc);
+  font-size: 16px; outline: none;
+}
+.champ textarea { resize: vertical; min-height: 120px; }
+.champ label {
+  position: absolute; left: 0; top: 24px;
+  font-size: 16px; color: var(--fer);
+  transform-origin: left top;
+  transition: transform 0.45s var(--courbe), color 0.3s;
+  pointer-events: none;
+}
+.champ input:focus + label,
+.champ input:not(:placeholder-shown) + label,
+.champ textarea:focus + label,
+.champ textarea:not(:placeholder-shown) + label { transform: translateY(-22px) scale(0.8); color: var(--fumee); }
+.champ::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: var(--blanc);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.6s var(--courbe);
+}
+.champ:focus-within::after { transform: scaleX(1); }
+
+/* Choix du sujet : pastilles */
+.choix-sujet { border: 0; }
+.choix-sujet legend { margin-bottom: 12px; font-size: 13px; color: var(--fer); }
+.choix-sujet__pastilles { display: flex; flex-wrap: wrap; gap: 10px; }
+.pastille-choix { position: relative; }
+.pastille-choix input { position: absolute; opacity: 0; pointer-events: none; }
+.pastille-choix span {
+  display: inline-block;
+  padding: 10px 18px;
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon-pilule);
+  font-size: 15px; color: var(--fer);
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s, transform 0.4s var(--courbe);
+}
+.pastille-choix:hover span { color: var(--blanc); border-color: var(--filet-fort); transform: translateY(-2px); }
+.pastille-choix input:checked + span { color: var(--blanc); border-color: var(--blanc); }
+.pastille-choix input:focus-visible + span { outline: 1px solid var(--blanc); outline-offset: 3px; }
+
+/* Case de consentement ronde avec coche animée */
+.consentement { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; color: var(--fumee); cursor: pointer; }
+.consentement input {
+  appearance: none; flex-shrink: 0;
+  display: grid; place-items: center;
+  width: 20px; height: 20px; margin-top: 1px;
+  border: 1px solid var(--filet-fort); border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.consentement input::after {
+  content: ""; width: 9px; height: 5px;
+  border-left: 1.5px solid var(--noir); border-bottom: 1.5px solid var(--noir);
+  rotate: -45deg; translate: 0 -1px; scale: 0;
+  transition: scale 0.3s var(--courbe);
+}
+.consentement input:checked { background: var(--blanc); border-color: var(--blanc); }
+.consentement input:checked::after { scale: 1; }
+
+.formulaire-contact__envoyer { justify-self: start; }
+.formulaire-contact.est-en-cours .formulaire-contact__envoyer { opacity: 0.6; cursor: progress; }
+.formulaire-contact__etat { font-size: 15px; color: var(--cendre); }
+.formulaire-contact__etat:empty { display: none; }
+
+/* Après l'envoi : le formulaire laisse place au message de remerciement */
+.contact-merci { display: none; justify-items: start; gap: 14px; }
+.formulaire-contact.est-envoye > :not(.contact-merci) { display: none; }
+.formulaire-contact.est-envoye .contact-merci { display: grid; animation: merci-apparait 0.8s var(--courbe) both; }
+.contact-merci__coche {
+  display: grid; place-items: center;
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 1px solid var(--filet-fort);
+}
+.contact-merci__coche svg { width: 28px; height: 28px; }
+.contact-merci__coche path { stroke-dasharray: 30; stroke-dashoffset: 30; animation: coche-dessin 0.8s var(--courbe) 0.3s forwards; }
+.contact-merci__texte { color: var(--fumee); }
+@keyframes merci-apparait { from { opacity: 0; translate: 0 20px; } to { opacity: 1; translate: 0 0; } }
+@keyframes coche-dessin { to { stroke-dashoffset: 0; } }
+
+/* ---------- Questions fréquentes (section claire) ---------- */
+.faq { padding-block: var(--ecart-section); }
+.faq__liste { width: min(100% - 2 * var(--marge), 860px); margin: 47px auto 0; border-top: 1px solid var(--fumee); }
+.faq__question { border-bottom: 1px solid var(--fumee); }
+.faq__question summary {
+  display: flex; justify-content: space-between; align-items: center; gap: 18px;
+  padding: 22px 0;
+  list-style: none; cursor: pointer;
+  font-size: clamp(17px, 1.8vw, 21px); font-weight: 450; letter-spacing: -0.029em;
+  transition: padding 0.5s var(--courbe);
+}
+.faq__question summary::-webkit-details-marker { display: none; }
+.faq__question summary:hover { padding-left: 8px; }
+.faq__signe {
+  position: relative; flex-shrink: 0;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  transition: rotate 0.5s var(--courbe), background-color 0.3s;
+}
+.faq__signe::before,
+.faq__signe::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: 10px; height: 1.5px;
+  background: var(--noir);
+  translate: -50% -50%;
+  transition: background-color 0.3s;
+}
+.faq__signe::after { rotate: 90deg; }
+.faq__question.est-ouvert .faq__signe { rotate: 45deg; background: var(--noir); }
+.faq__question.est-ouvert .faq__signe::before,
+.faq__question.est-ouvert .faq__signe::after { background: var(--blanc); }
+.faq__reponse { overflow: hidden; }
+.faq__reponse p { max-width: 62ch; padding-bottom: 22px; font-size: 16px; color: rgba(0, 0, 0, 0.65); }
+
+/* ---------- Tablette et mobile ---------- */
+@media (max-width: 900px) {
+  .contact-grille { grid-template-columns: 1fr; }
+  .contact-cartes { position: static; }
+}
+@media (max-width: 640px) {
+  .carte-contact { padding: 22px 18px; }
+  .carte-contact__fleche { display: none; }
+}

@@ -55,6 +55,12 @@
   50% { translate: 0 -14px; rotate: 1.6deg; }
 }
 
+/* Zoom très lent à l'intérieur des cadres photo du haut de page */
+@keyframes zoom-lent {
+  from { transform: scale(1.02) translate(0, 0); }
+  to { transform: scale(1.16) translate(-2%, -1.5%); }
+}
+
 @keyframes descendre {
   from { transform: translateY(-100%); }
   to { transform: translateY(100%); }

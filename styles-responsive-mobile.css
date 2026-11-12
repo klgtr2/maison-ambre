@@ -31,9 +31,15 @@
 /* Mobile */
 @media (max-width: 640px) {
   .hero { padding-top: 96px; }
-  .hero__scene { height: 46vh; }
-  .objet--centre { --taille: 86vw; }
-  .objet--loin { display: none; }
+  .hero__scene { height: 48vh; }
+  /* Galerie photo : 5 cadres sur mobile, placés au-dessus et au-dessous du canapé */
+  .objet--centre { --taille: 62vw; }
+  .objet--loin,
+  .objet--bougie { display: none; }
+  .objet--chaise    { --x: 17%; --y: 13%; --taille: 21vw; }
+  .objet--manteau   { --x: 83%; --y: 15%; --taille: 18vw; }
+  .objet--diffuseur { --x: 20%; --y: 87%; --taille: 19vw; }
+  .objet--encens    { --x: 80%; --y: 86%; --taille: 21vw; }
 
   .univers__grille,
   .avis__grille { grid-template-columns: 1fr; }

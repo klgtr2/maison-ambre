@@ -21,7 +21,8 @@
   margin-bottom: 26px;
 }
 
-/* Chaque objet : position, taille et rotation réglées dans le HTML (--x, --y, --taille, --rotation) */
+/* Galerie en apesanteur : chaque cadre est placé avec --x / --y (position),
+   --taille (largeur), --rotation et --ratio (format) — réglages par produit plus bas */
 .objet {
   position: absolute;
   left: var(--x, 50%); top: var(--y, 50%);
@@ -35,18 +36,60 @@
   will-change: transform;
 }
 .objet--loin { z-index: 0; }
-.objet--centre { --taille: min(54vw, 640px, max(380px, (100vh - 520px) * 1.55)); z-index: 2; }
-.objet img {
-  width: 100%; height: auto;
+.objet:hover { rotate: 0deg; z-index: 3; }
+.avec-js .objet { opacity: 0; scale: 0.6; }
+.est-pret .objet { opacity: 1; scale: 1; }
+
+/* Le cadre photo : coins arrondis (ou rond), filet fin, il flotte doucement */
+.cadre { display: block; --rayon-cadre: var(--rayon-carte); }
+.cadre--rond { --rayon-cadre: var(--rayon-pilule); --ratio: 1 / 1; }
+.cadre__image {
+  display: block; position: relative; overflow: hidden;
+  aspect-ratio: var(--ratio, 4 / 5);
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon-cadre);
+  background: var(--noir);
   animation: flotter var(--duree, 8s) ease-in-out infinite;
   animation-delay: calc(var(--duree, 8s) * -0.37);
-  transition: scale 0.8s var(--courbe);
+  transition: clip-path 1.5s var(--courbe) var(--delai, 0s), border-color 0.4s;
 }
-.objet:hover { rotate: 0deg; }
-.objet:hover img { scale: 1.12; }
-.objet--centre:hover img { scale: 1.03; }
-.avec-js .objet { opacity: 0; scale: 0.55; }
-.est-pret .objet { opacity: 1; scale: 1; }
+/* Entrée : chaque photo se dévoile de bas en haut */
+.avec-js .cadre__image { clip-path: inset(100% 0 0 0 round var(--rayon-cadre)); }
+.est-pret .cadre__image { clip-path: inset(0 0 0 0 round var(--rayon-cadre)); }
+
+/* La photo zoome lentement dans son cadre, en continu (effet « Ken Burns ») */
+.cadre__image img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: var(--cadrage, 50% 50%);
+  animation: zoom-lent var(--duree-zoom, 16s) ease-in-out infinite alternate;
+  transition: scale 0.9s var(--courbe);
+}
+.objet:hover .cadre__image { border-color: var(--filet-fort); }
+.objet:hover .cadre__image img { scale: 1.1; }
+
+/* Nom du produit qui apparaît sous le cadre au survol */
+.cadre__legende {
+  position: absolute; left: 50%; top: calc(100% + 12px);
+  translate: -50% 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--filet-fort);
+  border-radius: var(--rayon-pilule);
+  background: var(--noir); color: var(--blanc);
+  font-size: 13px; white-space: nowrap;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s, translate 0.5s var(--courbe);
+}
+.objet:hover .cadre__legende { opacity: 1; translate: -50% 0; }
+
+/* Réglages de chaque cadre : position, taille, format, rotation, rythme */
+.objet--centre    { --taille: min(36vw, 500px, max(300px, (100vh - 520px) * 1.4)); --ratio: 16 / 10; --duree: 9s; z-index: 2; }
+.objet--chaise    { --x: 16%; --y: 30%; --taille: clamp(84px, 10vw, 160px);  --ratio: 3 / 4; --rotation: -6deg; --duree: 7s;   --delai: 0.15s; }
+.objet--manteau   { --x: 84%; --y: 24%; --taille: clamp(72px, 8.5vw, 132px); --ratio: 2 / 3; --rotation: 5deg;  --duree: 8s;   --delai: 0.25s; }
+.objet--diffuseur { --x: 26%; --y: 84%; --taille: clamp(64px, 7vw, 112px);   --cadrage: 60% 60%;                 --duree: 6.5s; --delai: 0.35s; }
+.objet--encens    { --x: 76%; --y: 84%; --taille: clamp(80px, 9.5vw, 148px); --ratio: 4 / 5; --rotation: -5deg; --duree: 7.5s; --delai: 0.45s; }
+.objet--enfilade  { --x: 6%;  --y: 78%; --taille: clamp(90px, 11vw, 176px);  --ratio: 1 / 1; --rotation: 4deg;  --duree: 9s;   --delai: 0.55s; }
+.objet--bougie    { --x: 27%; --y: 12%; --taille: clamp(48px, 5vw, 80px);    --cadrage: 50% 80%;                 --duree: 6s;   --delai: 0.65s; }
+.objet--table     { --x: 94%; --y: 66%; --taille: clamp(70px, 8vw, 124px);   --ratio: 3 / 4; --rotation: -7deg; --duree: 8.5s; --delai: 0.75s; }
 
 /* Bloc titre centré sous les produits */
 .hero__bloc {

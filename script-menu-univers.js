@@ -44,7 +44,7 @@
       </div>
       <ul class="menu-univers__liste">${groupes}</ul>
     </div>
-    <button class="menu-univers__bouton" type="button" aria-expanded="false" aria-controls="menu-univers-panneau">
+    <button class="menu-univers__bouton" type="button" aria-expanded="false" aria-controls="menu-univers-panneau" aria-label="Ouvrir le menu des univers">
       <span class="menu-univers__icone" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       <span class="menu-univers__libelle">Univers</span>
     </button>`;
@@ -62,6 +62,7 @@
     menu.classList.toggle('est-ouvert', ouvert);
     bouton.setAttribute('aria-expanded', String(ouvert));
     libelle.textContent = ouvert ? 'Fermer' : 'Univers';
+    bouton.setAttribute('aria-label', ouvert ? 'Fermer le menu des univers' : 'Ouvrir le menu des univers');
     panneau.inert = !ouvert;
   };
 

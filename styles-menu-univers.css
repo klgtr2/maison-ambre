@@ -109,6 +109,9 @@
 /* ---------- Mobile ---------- */
 @media (max-width: 640px) {
   .menu-univers { left: 12px; bottom: 12px; }
+  /* Sur mobile, le bouton devient une simple pastille ronde (icône seule) */
+  .menu-univers__bouton { padding: 15px; }
+  .menu-univers__libelle { display: none; }
   .menu-univers__panneau { width: calc(100vw - 24px); max-height: 65vh; }
   .notification { bottom: 80px; }
 }
