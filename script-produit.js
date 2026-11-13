@@ -174,7 +174,17 @@
         return '<button class="puce' + (v.photo ? ' puce--photo' : '') + '" type="button" data-option="' + io + '" data-valeur="' + iv + '" aria-pressed="' + (v.nom === choix[o.nom]) + '">' +
           (v.photo ? '<img src="' + B.echapper(v.photo) + '" alt="" loading="lazy" width="68" height="68">' : '') + B.echapper(v.nom) + '</button>';
       }).join('') + '</div></fieldset>';
-  }).join('') + '</div>' : '';
+  }).join('') + '<div class="details-choix" data-details-choix hidden><p class="details-choix__titre">Votre choix</p><ul></ul></div></div>' : '';
+  /* Caractéristiques de la variante choisie (taille, durée, notes du parfum…) */
+  var majDetails = function () {
+    var zone = document.querySelector('[data-details-choix]');
+    if (!zone) return;
+    var lignes = CATALOGUE.detailsChoix(p, choix);
+    zone.hidden = !lignes.length;
+    zone.querySelector('ul').innerHTML = lignes.map(function (l) {
+      return '<li>' + B.icone('coche') + '<span><strong>' + B.echapper(l.option) + ' : ' + B.echapper(l.valeur) + '</strong> — ' + B.echapper(l.detail) + '</span></li>';
+    }).join('');
+  };
   var choixJson = function () { return B.echapper(JSON.stringify(choix)); };
 
   var achat = p.abonnement
@@ -226,6 +236,19 @@
       ? '<button class="bouton bouton--plein" type="button" disabled>Bientôt disponible</button>'
       : '<button class="bouton bouton--plein" type="button" data-ajouter="' + id + '" data-choix="' + choixJson() + '" data-quantite="1">Ajouter au panier</button>');
 
+  majDetails();
+
+  /* Après un choix (couleur, taille…), on remonte en douceur sur la photo du produit,
+     sauf si elle est déjà entièrement visible (ordinateur : la photo reste fixe à côté). */
+  var remonterVersPhoto = function () {
+    var entete = document.querySelector('.entete');
+    var marge = (entete ? entete.getBoundingClientRect().bottom : 0) + 12;
+    var cadre = galerie.querySelector('.galerie__principale').getBoundingClientRect();
+    if (cadre.top >= marge - 1 && cadre.bottom <= window.innerHeight) return;
+    var doux = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: window.scrollY + cadre.top - marge, behavior: doux ? 'smooth' : 'auto' });
+  };
+
   /* Le client choisit une variante : prix, libellé, photo et boutons d'achat suivent */
   document.querySelector('[data-infos]').addEventListener('click', function (e) {
     var bouton = e.target.closest('[data-option]');
@@ -240,6 +263,8 @@
     document.querySelector('[data-prix-barre]').innerHTML = texte;
     document.querySelectorAll('[data-ajouter="' + id + '"]').forEach(function (b) { b.dataset.choix = JSON.stringify(choix); });
     if (v.photo) montrerVariante(v.photo);
+    majDetails();
+    remonterVersPhoto();
   });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (entrees) {

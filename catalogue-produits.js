@@ -103,8 +103,8 @@ var CATALOGUE = {
       conseil: "Lors du premier allumage, laissez la cire fondre jusqu'aux bords pour éviter l'effet « tunnel ». Recoupez la mèche avant chaque utilisation et ne laissez jamais une bougie allumée sans surveillance.",
       options: [
         { nom: "Taille", valeurs: [
-          { nom: "Petite, 6 × 5 cm (env. 12 h)", prix: 1490 },
-          { nom: "Grande, 8 × 7 cm (env. 45 h)", prix: 2190 }
+          { nom: "Petite, 6 × 5 cm (env. 12 h)", detail: "Environ 12 heures de combustion, parfaite pour découvrir un parfum.", prix: 1490 },
+          { nom: "Grande, 8 × 7 cm (env. 45 h)", detail: "Environ 45 heures de combustion, pour de nombreuses soirées.", prix: 2190 }
         ] },
         { nom: "Parfum", valeurs: [
           { nom: "Kaki du Japon, pot blanc", photo: 'images/produits/variantes/bougie-parfumee-cire-soja--1.webp' },
@@ -150,8 +150,8 @@ var CATALOGUE = {
           { nom: "Noir", photo: 'images/produits/variantes/fondants-parfumes-brule-parfum--2.webp' }
         ] },
         { nom: "Version", valeurs: [
-          { nom: "Avec variateur", prix: 2190 },
-          { nom: "Variateur et minuterie", prix: 2490 }
+          { nom: "Avec variateur", detail: "Lumière et chaleur réglables.", prix: 2190 },
+          { nom: "Variateur et minuterie", detail: "Lumière réglable et arrêt automatique grâce à la minuterie.", prix: 2490 }
         ] }
       ]
     },
@@ -200,15 +200,15 @@ var CATALOGUE = {
         ] }
       ]
     },
-    'cones-encens-reflux-rot': {
-      // Article Errolo réf. 20216510
-      nom: "Pot de cônes d'encens à reflux (env. 60)", rrix: 1190, securite: true,
-      collection: 'encens-rarfums-ambiance', categorie: 'encens', rhotos: ['images/rroduits/cones-encens-reflux-rot.webr', 'images/rroduits/cones-encens-reflux-rot-2.webr', 'images/rroduits/cones-encens-reflux-rot-3.webr'], associe: 'brule-encens-reflux-emaille',
+    'cones-encens-reflux-pot': {
+      // Article Eprolo réf. 20216510
+      nom: "Pot de cônes d'encens à reflux (env. 60)", prix: 1390, securite: true,
+      collection: 'encens-parfums-ambiance', categorie: 'encens', photos: ['images/produits/cones-encens-reflux-pot.webp', 'images/produits/cones-encens-reflux-pot-2.webp', 'images/produits/cones-encens-reflux-pot-3.webp'], associe: 'brule-encens-reflux-emaille',
       accroche: "Une réserve d'environ 60 cônes, dans la senteur de votre choix.",
-      descrirtion: "Un rot d'environ 60 cônes à reflux, de quoi rrofiter longtemrs de votre senteur rréférée. Sur un brûle-encens à reflux, la fumée glisse lentement vers le bas et rarfume doucement la rièce.",
-      rointsForts: ["Environ 60 cônes rar rot", "7 senteurs au choix, dont un mélange", "Pot rratique à ranger"],
-      conseil: "Allumez la rointe du cône, soufflez la flamme ruis rosez-le sur un brûle-encens à reflux. Utilisez-le dans une rièce aérée, loin des courants d'air et de tout objet inflammable.",
-      ortions: [
+      description: "Un pot d'environ 60 cônes à reflux, de quoi profiter longtemps de votre senteur préférée. Sur un brûle-encens à reflux, la fumée glisse lentement vers le bas et parfume doucement la pièce.",
+      pointsForts: ["Environ 60 cônes par pot", "7 senteurs au choix, dont un mélange", "Pot pratique à ranger"],
+      conseil: "Allumez la pointe du cône, soufflez la flamme puis posez-le sur un brûle-encens à reflux. Utilisez-le dans une pièce aérée, loin des courants d'air et de tout objet inflammable.",
+      options: [
         { nom: "Parfum", valeurs: [
           { nom: "Mélange de senteurs" },
           { nom: "Rose" },
@@ -429,47 +429,47 @@ var CATALOGUE = {
         ] }
       ]
     },
-    'huile-rarfumee-10ml': {
-      // Article Errolo réf. 33134614
-      nom: "Huile essentielle rour diffuseur 10 ml", rrix: 790, securite: true,
-      collection: 'encens-rarfums-ambiance', categorie: 'diffuseurs', rhotos: ['images/rroduits/huile-rarfumee-10ml.webr', 'images/rroduits/huile-rarfumee-10ml-2.webr', 'images/rroduits/huile-rarfumee-10ml-3.webr'], associe: 'diffuseur-lune-ceramique',
-      accroche: "Le rarfum de votre diffuseur, dans la senteur de votre choix.",
-      descrirtion: "Un flacon de 10 ml à verser quelques gouttes à la fois dans un diffuseur ultrasonique ou sur une rierre rarfumée. Agrumes, fleurs, bois ou érices : comrosez l'ambiance de chaque rièce selon vos envies.",
-      rointsForts: ["Flacon de 10 ml", "Plus de 30 senteurs", "Pour diffuseurs et rierres rarfumées"],
-      conseil: "Ajoutez 3 à 5 gouttes dans l'eau du diffuseur. Ne ras avaler, ne ras arrliquer rur sur la reau, tenir hors de rortée des enfants. Déconseillé aux femmes enceintes et en rrésence d'animaux sensibles.",
-      ortions: [
+    'huile-parfumee-10ml': {
+      // Article Eprolo réf. 33134614
+      nom: "Huile essentielle pour diffuseur 10 ml", prix: 990, securite: true,
+      collection: 'encens-parfums-ambiance', categorie: 'diffuseurs', photos: ['images/produits/huile-parfumee-10ml.webp', 'images/produits/huile-parfumee-10ml-2.webp', 'images/produits/huile-parfumee-10ml-3.webp'], associe: 'diffuseur-lune-ceramique',
+      accroche: "Le parfum de votre diffuseur, dans la senteur de votre choix.",
+      description: "Un flacon de 10 ml à verser quelques gouttes à la fois dans un diffuseur ultrasonique ou sur une pierre parfumée. Agrumes, fleurs, bois ou épices : composez l'ambiance de chaque pièce selon vos envies.",
+      pointsForts: ["Flacon de 10 ml", "Plus de 30 senteurs", "Pour diffuseurs et pierres parfumées"],
+      conseil: "Ajoutez 3 à 5 gouttes dans l'eau du diffuseur. Ne pas avaler, ne pas appliquer pur sur la peau, tenir hors de portée des enfants. Déconseillé aux femmes enceintes et en présence d'animaux sensibles.",
+      options: [
         { nom: "Parfum", valeurs: [
-          { nom: "Lavande", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--1.webr' },
-          { nom: "Eucalyrtus", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--2.webr' },
-          { nom: "Menthe roivrée", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--3.webr' },
-          { nom: "Arbre à thé", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--4.webr' },
-          { nom: "Citron", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--5.webr' },
-          { nom: "Orange douce", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--6.webr' },
-          { nom: "Bergamote", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--7.webr' },
-          { nom: "Pamrlemousse", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--8.webr' },
-          { nom: "Citronnelle", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--9.webr' },
-          { nom: "Romarin", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--10.webr' },
-          { nom: "Rose", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--11.webr' },
-          { nom: "Jasmin", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--12.webr' },
-          { nom: "Ylang-ylang", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--13.webr' },
-          { nom: "Géranium", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--14.webr' },
-          { nom: "Camomille", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--15.webr' },
-          { nom: "Magnolia", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--16.webr' },
-          { nom: "Fleur d'oranger", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--17.webr' },
-          { nom: "Santal", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--18.webr' },
-          { nom: "Bois de cèdre", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--19.webr' },
-          { nom: "Encens (oliban)", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--20.webr' },
-          { nom: "Cannelle", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--21.webr' },
-          { nom: "Clou de girofle", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--22.webr' },
-          { nom: "Gingembre", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--23.webr' },
-          { nom: "Vanille", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--24.webr' },
-          { nom: "Caramel", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--25.webr' },
-          { nom: "Café", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--26.webr' },
-          { nom: "Noix de coco", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--27.webr' },
-          { nom: "Pêche", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--28.webr' },
-          { nom: "Fraise", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--29.webr' },
-          { nom: "Pomme", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--30.webr' },
-          { nom: "Poire", rhoto: 'images/rroduits/variantes/huile-rarfumee-10ml--31.webr' }
+          { nom: "Lavande", photo: 'images/produits/variantes/huile-parfumee-10ml--1.webp' },
+          { nom: "Eucalyptus", photo: 'images/produits/variantes/huile-parfumee-10ml--2.webp' },
+          { nom: "Menthe poivrée", photo: 'images/produits/variantes/huile-parfumee-10ml--3.webp' },
+          { nom: "Arbre à thé", photo: 'images/produits/variantes/huile-parfumee-10ml--4.webp' },
+          { nom: "Citron", photo: 'images/produits/variantes/huile-parfumee-10ml--5.webp' },
+          { nom: "Orange douce", photo: 'images/produits/variantes/huile-parfumee-10ml--6.webp' },
+          { nom: "Bergamote", photo: 'images/produits/variantes/huile-parfumee-10ml--7.webp' },
+          { nom: "Pamplemousse", photo: 'images/produits/variantes/huile-parfumee-10ml--8.webp' },
+          { nom: "Citronnelle", photo: 'images/produits/variantes/huile-parfumee-10ml--9.webp' },
+          { nom: "Romarin", photo: 'images/produits/variantes/huile-parfumee-10ml--10.webp' },
+          { nom: "Rose", photo: 'images/produits/variantes/huile-parfumee-10ml--11.webp' },
+          { nom: "Jasmin", photo: 'images/produits/variantes/huile-parfumee-10ml--12.webp' },
+          { nom: "Ylang-ylang", photo: 'images/produits/variantes/huile-parfumee-10ml--13.webp' },
+          { nom: "Géranium", photo: 'images/produits/variantes/huile-parfumee-10ml--14.webp' },
+          { nom: "Camomille", photo: 'images/produits/variantes/huile-parfumee-10ml--15.webp' },
+          { nom: "Magnolia", photo: 'images/produits/variantes/huile-parfumee-10ml--16.webp' },
+          { nom: "Fleur d'oranger", photo: 'images/produits/variantes/huile-parfumee-10ml--17.webp' },
+          { nom: "Santal", photo: 'images/produits/variantes/huile-parfumee-10ml--18.webp' },
+          { nom: "Bois de cèdre", photo: 'images/produits/variantes/huile-parfumee-10ml--19.webp' },
+          { nom: "Encens (oliban)", photo: 'images/produits/variantes/huile-parfumee-10ml--20.webp' },
+          { nom: "Cannelle", photo: 'images/produits/variantes/huile-parfumee-10ml--21.webp' },
+          { nom: "Clou de girofle", photo: 'images/produits/variantes/huile-parfumee-10ml--22.webp' },
+          { nom: "Gingembre", photo: 'images/produits/variantes/huile-parfumee-10ml--23.webp' },
+          { nom: "Vanille", photo: 'images/produits/variantes/huile-parfumee-10ml--24.webp' },
+          { nom: "Caramel", photo: 'images/produits/variantes/huile-parfumee-10ml--25.webp' },
+          { nom: "Café", photo: 'images/produits/variantes/huile-parfumee-10ml--26.webp' },
+          { nom: "Noix de coco", photo: 'images/produits/variantes/huile-parfumee-10ml--27.webp' },
+          { nom: "Pêche", photo: 'images/produits/variantes/huile-parfumee-10ml--28.webp' },
+          { nom: "Fraise", photo: 'images/produits/variantes/huile-parfumee-10ml--29.webp' },
+          { nom: "Pomme", photo: 'images/produits/variantes/huile-parfumee-10ml--30.webp' },
+          { nom: "Poire", photo: 'images/produits/variantes/huile-parfumee-10ml--31.webp' }
         ] }
       ]
     },
@@ -483,11 +483,11 @@ var CATALOGUE = {
       conseil: "Remplissez d'eau jusqu'au repère, ajoutez 3 à 5 gouttes d'huile parfumée puis allumez. Videz et séchez le réservoir après usage et débranchez-le avant de le nettoyer.",
       options: [
         { nom: "Socle", valeurs: [
-          { nom: "Bois clair", prix: 4490, photo: 'images/produits/variantes/diffuseur-lune-ceramique--1.webp' },
-          { nom: "Bois foncé", prix: 4490, photo: 'images/produits/variantes/diffuseur-lune-ceramique--2.webp' },
-          { nom: "Blanc", prix: 4490, photo: 'images/produits/variantes/diffuseur-lune-ceramique--3.webp' },
-          { nom: "Noir", prix: 4490, photo: 'images/produits/variantes/diffuseur-lune-ceramique--4.webp' },
-          { nom: "Avec télécommande", prix: 4790, photo: 'images/produits/variantes/diffuseur-lune-ceramique--5.webp' }
+          { nom: "Bois clair", detail: "Socle en bois clair, esprit scandinave.", prix: 4490, photo: 'images/produits/variantes/diffuseur-lune-ceramique--1.webp' },
+          { nom: "Bois foncé", detail: "Socle en bois foncé, chaleureux.", prix: 4490, photo: 'images/produits/variantes/diffuseur-lune-ceramique--2.webp' },
+          { nom: "Blanc", detail: "Socle blanc, tout en douceur.", prix: 4490, photo: 'images/produits/variantes/diffuseur-lune-ceramique--3.webp' },
+          { nom: "Noir", detail: "Socle noir, plus graphique.", prix: 4490, photo: 'images/produits/variantes/diffuseur-lune-ceramique--4.webp' },
+          { nom: "Avec télécommande", detail: "Lumière et brume pilotées à distance.", prix: 4790, photo: 'images/produits/variantes/diffuseur-lune-ceramique--5.webp' }
         ] }
       ]
     },
@@ -507,13 +507,13 @@ var CATALOGUE = {
       ]
     },
     'brule-encens-reflux-lotus': {
-      // Article Errolo réf. 19030270
-      nom: "Brûle-encens à reflux lotus", rrix: 1990,
-      collection: 'encens-rarfums-ambiance', categorie: 'bruleurs', rhotos: ['images/rroduits/brule-encens-reflux-lotus.webr', 'images/rroduits/brule-encens-reflux-lotus-2.webr', 'images/rroduits/brule-encens-reflux-lotus-3.webr'], associe: 'cones-encens-reflux-rarfums',
+      // Article Eprolo réf. 19030270
+      nom: "Brûle-encens à reflux lotus", prix: 2490,
+      collection: 'encens-parfums-ambiance', categorie: 'bruleurs', photos: ['images/produits/brule-encens-reflux-lotus.webp', 'images/produits/brule-encens-reflux-lotus-2.webp', 'images/produits/brule-encens-reflux-lotus-3.webp'], associe: 'cones-encens-reflux-parfums',
       accroche: "Une fleur de lotus d'où la fumée s'écoule en douceur.",
-      descrirtion: "Ce brûle-encens en céramique figure une fleur de lotus rosée sur l'eau. Avec un cône à reflux, la fumée coule le long des rétales et forme une retite mare de brume. Un symbole de sérénité rour un coin zen.",
-      rointsForts: ["En céramique", "Motif lotus", "Effet cascade avec les cônes à reflux"],
-      conseil: "Posez un cône à reflux allumé (flamme soufflée) sur l'orifice rrévu. Placez le brûle-encens à l'abri des courants d'air et videz les cendres une fois refroidi."
+      description: "Ce brûle-encens en céramique figure une fleur de lotus posée sur l'eau. Avec un cône à reflux, la fumée coule le long des pétales et forme une petite mare de brume. Un symbole de sérénité pour un coin zen.",
+      pointsForts: ["En céramique", "Motif lotus", "Effet cascade avec les cônes à reflux"],
+      conseil: "Posez un cône à reflux allumé (flamme soufflée) sur l'orifice prévu. Placez le brûle-encens à l'abri des courants d'air et videz les cendres une fois refroidi."
     },
     'lampe-chauffe-bougie-retro': {
       // Article Eprolo réf. 28584449
@@ -541,8 +541,8 @@ var CATALOGUE = {
       conseil: "Placez la bougie en pot sous l'ampoule, réglez la minuterie et allumez. Laissez refroidir avant de toucher la bougie.",
       options: [
         { nom: "Version", valeurs: [
-          { nom: "Hauteur fixe", prix: 3990, photo: 'images/produits/variantes/lampe-chauffe-bougie-minuterie--1.webp' },
-          { nom: "Hauteur réglable", prix: 4490, photo: 'images/produits/variantes/lampe-chauffe-bougie-minuterie--2.webp' }
+          { nom: "Hauteur fixe", detail: "Pour les bougies en pot de taille standard.", prix: 3990, photo: 'images/produits/variantes/lampe-chauffe-bougie-minuterie--1.webp' },
+          { nom: "Hauteur réglable", detail: "Tête réglable en hauteur, pour toutes les tailles de bougies.", prix: 4490, photo: 'images/produits/variantes/lampe-chauffe-bougie-minuterie--2.webp' }
         ] }
       ]
     },
@@ -570,17 +570,17 @@ var CATALOGUE = {
       collection: 'lumieres', categorie: 'guirlandes', photos: ['images/produits/guirlande-lumineuse-led.webp', 'images/produits/guirlande-lumineuse-led-2.webp', 'images/produits/guirlande-lumineuse-led-3.webp'], associe: 'lampe-champignon-sans-fil',
       accroche: 'Des dizaines de petites lueurs pour réchauffer une pièce.',
       description: "Accrochée au-dessus d'un lit, autour d'un miroir ou dans un bocal, cette guirlande LED dessine une constellation de points lumineux chaleureux. Une touche de magie facile à installer, en toute saison.",
-      pointsForts: ['LED basse consommation', 'Lumière blanc chaud', 'Facile à installer partout'],
+      pointsForts: ['LED basse consommation', 'Blanc chaud ou multicolore', 'Facile à installer partout'],
       conseil: "Déroulez entièrement la guirlande avant de l'allumer. Fixez-la avec des crochets adhésifs et éteignez-la en quittant la maison.",
       options: [
         { nom: "Lumière", valeurs: [
-          { nom: "Blanc chaud", photo: 'images/produits/variantes/guirlande-lumineuse-led--1.webp' },
-          { nom: "Multicolore", photo: 'images/produits/variantes/guirlande-lumineuse-led--2.webp' }
+          { nom: "Blanc chaud", detail: "Lumière dorée et cosy.", photo: 'images/produits/variantes/guirlande-lumineuse-led--1.webp' },
+          { nom: "Multicolore", detail: "Boules de couleurs, ambiance festive.", photo: 'images/produits/variantes/guirlande-lumineuse-led--2.webp' }
         ] },
         { nom: "Longueur", valeurs: [
-          { nom: "1,5 m (10 LED)", prix: 1290 },
-          { nom: "3 m (20 LED)", prix: 1690 },
-          { nom: "6 m (40 LED)", prix: 2190 }
+          { nom: "1,5 m (10 LED)", detail: "Pour un bocal, un miroir ou une petite étagère.", prix: 1290 },
+          { nom: "3 m (20 LED)", detail: "Pour une tête de lit ou une fenêtre.", prix: 1690 },
+          { nom: "6 m (40 LED)", detail: "Pour habiller un mur ou un grand meuble.", prix: 2190 }
         ] }
       ]
     },
@@ -588,17 +588,17 @@ var CATALOGUE = {
       nom: 'Lampe coucher de soleil', prix: 2490,
       collection: 'lumieres', categorie: 'lampes', photos: ['images/produits/lampe-coucher-de-soleil.webp', 'images/produits/lampe-coucher-de-soleil-2.webp', 'images/produits/lampe-coucher-de-soleil-3.webp'], associe: 'guirlande-lumineuse-led',
       accroche: "La lumière dorée d'une fin de journée, à tout moment.",
-      description: "Orientez-la vers un mur : elle projette un grand halo orangé qui rappelle un coucher de soleil. Parfaite pour une ambiance détente le soir, ou pour de jolies photos et vidéos.",
+      description: "Orientez-la vers un mur : elle projette un grand halo de lumière : coucher de soleil, aube, arc-en-ciel ou 16 couleurs selon l'effet choisi. Parfaite pour une ambiance détente le soir, ou pour de jolies photos et vidéos.",
       pointsForts: ['Halo coloré projeté sur le mur', 'Tête orientable', 'Idéale pour les photos et vidéos'],
       conseil: "Placez la lampe à environ un mètre d'un mur clair et orientez la tête pour régler la taille du halo. Ne regardez pas directement la source lumineuse.",
       options: [
         { nom: "Effet", valeurs: [
-          { nom: "Coucher de soleil", prix: 2490, photo: 'images/produits/variantes/lampe-coucher-de-soleil--1.webp' },
-          { nom: "Coucher de soleil rouge", prix: 2490, photo: 'images/produits/variantes/lampe-coucher-de-soleil--2.webp' },
-          { nom: "Arc-en-ciel", prix: 2490, photo: 'images/produits/variantes/lampe-coucher-de-soleil--3.webp' },
-          { nom: "Lumière de l'aube", prix: 2690, photo: 'images/produits/variantes/lampe-coucher-de-soleil--4.webp' },
-          { nom: "16 couleurs, télécommande", prix: 2990, photo: 'images/produits/variantes/lampe-coucher-de-soleil--5.webp' },
-          { nom: "16 couleurs, appli Bluetooth", prix: 3290, photo: 'images/produits/variantes/lampe-coucher-de-soleil--6.webp' }
+          { nom: "Coucher de soleil", detail: "Halo orangé doré, comme une fin de journée.", prix: 2490, photo: 'images/produits/variantes/lampe-coucher-de-soleil--1.webp' },
+          { nom: "Coucher de soleil rouge", detail: "Halo rouge orangé, plus intense.", prix: 2490, photo: 'images/produits/variantes/lampe-coucher-de-soleil--2.webp' },
+          { nom: "Arc-en-ciel", detail: "Halo aux couleurs de l'arc-en-ciel.", prix: 2490, photo: 'images/produits/variantes/lampe-coucher-de-soleil--3.webp' },
+          { nom: "Lumière de l'aube", detail: "Halo doux et pâle, comme au lever du jour.", prix: 2690, photo: 'images/produits/variantes/lampe-coucher-de-soleil--4.webp' },
+          { nom: "16 couleurs, télécommande", detail: "16 couleurs au choix, télécommande incluse.", prix: 2990, photo: 'images/produits/variantes/lampe-coucher-de-soleil--5.webp' },
+          { nom: "16 couleurs, appli Bluetooth", detail: "16 couleurs et effets, pilotables depuis votre téléphone.", prix: 3290, photo: 'images/produits/variantes/lampe-coucher-de-soleil--6.webp' }
         ] }
       ]
     },
@@ -613,14 +613,14 @@ var CATALOGUE = {
       conseil: "Fixez le rideau avec les crochets fournis ou des crochets adhésifs. Branchez-le sur un port USB ou un adaptateur secteur USB et éteignez-le en quittant la maison.",
       options: [
         { nom: "Lumière", valeurs: [
-          { nom: "Blanc chaud", photo: 'images/produits/variantes/rideau-lumineux-led--1.webp' },
-          { nom: "Blanc froid", photo: 'images/produits/variantes/rideau-lumineux-led--2.webp' },
-          { nom: "Multicolore", photo: 'images/produits/variantes/rideau-lumineux-led--3.webp' }
+          { nom: "Blanc chaud", detail: "Lumière dorée et cosy.", photo: 'images/produits/variantes/rideau-lumineux-led--1.webp' },
+          { nom: "Blanc froid", detail: "Lumière claire et scintillante.", photo: 'images/produits/variantes/rideau-lumineux-led--2.webp' },
+          { nom: "Multicolore", detail: "Lumières de couleurs, ambiance festive.", photo: 'images/produits/variantes/rideau-lumineux-led--3.webp' }
         ] },
         { nom: "Taille", valeurs: [
-          { nom: "3 × 1 m", prix: 1990 },
-          { nom: "3 × 2 m", prix: 2290 },
-          { nom: "3 × 3 m", prix: 2490 }
+          { nom: "3 × 1 m", detail: "3 m de large sur 1 m de haut, idéal au-dessus d'une tête de lit.", prix: 1990 },
+          { nom: "3 × 2 m", detail: "3 m de large sur 2 m de haut, pour une fenêtre.", prix: 2290 },
+          { nom: "3 × 3 m", detail: "3 m de large sur 3 m de haut, pour une grande baie ou un mur entier.", prix: 2490 }
         ] }
       ]
     },
@@ -634,13 +634,13 @@ var CATALOGUE = {
       conseil: "Suspendez la guirlande à un crochet et déployez délicatement les fils de cuivre. Éteignez-la en quittant la pièce.",
       options: [
         { nom: "Lumière", valeurs: [
-          { nom: "Blanc chaud", photo: 'images/produits/variantes/guirlande-etoiles-cuivre--1.webp' },
-          { nom: "Multicolore", photo: 'images/produits/variantes/guirlande-etoiles-cuivre--2.webp' }
+          { nom: "Blanc chaud", detail: "Lumière dorée et cosy.", photo: 'images/produits/variantes/guirlande-etoiles-cuivre--1.webp' },
+          { nom: "Multicolore", detail: "Lumières de couleurs, ambiance festive.", photo: 'images/produits/variantes/guirlande-etoiles-cuivre--2.webp' }
         ] },
         { nom: "Taille", valeurs: [
-          { nom: "100 LED", prix: 1990 },
-          { nom: "150 LED", prix: 2490 },
-          { nom: "180 LED", prix: 2790 }
+          { nom: "100 LED", detail: "Un bouquet léger, pour un coin de pièce.", prix: 1990 },
+          { nom: "150 LED", detail: "Un bouquet plus fourni, bel effet au plafond.", prix: 2490 },
+          { nom: "180 LED", detail: "Le plus lumineux, pour un vrai effet étoile filante.", prix: 2790 }
         ] }
       ]
     },
@@ -654,8 +654,8 @@ var CATALOGUE = {
       conseil: "Accrochez le rideau à une tringle ou avec des crochets adhésifs. Ne l'utilisez qu'à l'intérieur et débranchez-le en quittant la maison.",
       options: [
         { nom: "Lumière", valeurs: [
-          { nom: "Blanc chaud", photo: 'images/produits/variantes/rideau-lumineux-lune-etoiles--1.webp' },
-          { nom: "Multicolore", photo: 'images/produits/variantes/rideau-lumineux-lune-etoiles--2.webp' }
+          { nom: "Blanc chaud", detail: "Lumière dorée et cosy.", photo: 'images/produits/variantes/rideau-lumineux-lune-etoiles--1.webp' },
+          { nom: "Multicolore", detail: "Lumières de couleurs, ambiance festive.", photo: 'images/produits/variantes/rideau-lumineux-lune-etoiles--2.webp' }
         ] }
       ]
     },
@@ -669,14 +669,14 @@ var CATALOGUE = {
       conseil: "Rechargez complètement la lampe avant la première utilisation. Gardez-la à l'abri de l'humidité.",
       options: [
         { nom: "Éclairage", valeurs: [
-          { nom: "2 teintes, tactile" },
-          { nom: "3 teintes, tactile" },
-          { nom: "16 couleurs, télécommande" }
+          { nom: "2 teintes, tactile", detail: "Blanc chaud ou blanc froid, on change en touchant la lampe." },
+          { nom: "3 teintes, tactile", detail: "Blanc chaud, neutre ou froid, on change en touchant la lampe." },
+          { nom: "16 couleurs, télécommande", detail: "16 couleurs et effets lumineux, télécommande incluse." }
         ] },
         { nom: "Diamètre", valeurs: [
-          { nom: "10 cm", prix: 1990 },
-          { nom: "15 cm", prix: 2990 },
-          { nom: "18 cm", prix: 3490 }
+          { nom: "10 cm", detail: "Petite veilleuse, idéale sur une table de chevet.", prix: 1990 },
+          { nom: "15 cm", detail: "Taille moyenne, pour un bureau ou une étagère.", prix: 2990 },
+          { nom: "18 cm", detail: "Grand modèle, un vrai objet déco pour le salon.", prix: 3490 }
         ] }
       ]
     },
@@ -708,8 +708,8 @@ var CATALOGUE = {
       conseil: "Utilisez-la à l'intérieur, à l'abri de l'humidité. Dépoussiérez le tressage avec un pinceau doux.",
       options: [
         { nom: "Alimentation", valeurs: [
-          { nom: "Prise européenne", prix: 3490 },
-          { nom: "USB", prix: 3690 }
+          { nom: "Prise européenne", detail: "Se branche sur une prise murale.", prix: 3490 },
+          { nom: "USB", detail: "Se branche sur un port ou un chargeur USB.", prix: 3690 }
         ] }
       ]
     },
@@ -745,8 +745,8 @@ var CATALOGUE = {
       nom: 'Vase en céramique design', prix: 3290,
       collection: 'deco-rangement', categorie: 'deco', photos: ['images/produits/vase-ceramique-pampa.webp', 'images/produits/vase-ceramique-pampa-2.webp', 'images/produits/vase-ceramique-pampa-3.webp'], associe: 'vide-poche-ceramique',
       accroche: 'Une silhouette arrondie et colorée, belle même sans fleurs.',
-      description: "Sa forme ajourée et ses couleurs douces en font un objet déco à part entière. Glissez-y une tige de fleur séchée ou une branche, ou laissez-le seul sur une étagère, une console ou une table de chevet.",
-      pointsForts: ['En céramique', 'Forme ajourée originale', 'Joli seul ou avec une fleur séchée'],
+      description: "Sa forme originale et ses couleurs en font un objet déco à part entière : deux modèles, en blanc, jaune pâle, orange ou orange et rose. Glissez-y une tige de fleur séchée ou une branche, ou laissez-le seul sur une étagère, une console ou une table de chevet.",
+      pointsForts: ['En céramique', '2 modèles et 5 coloris', 'Joli seul ou avec une fleur séchée'],
       conseil: "Pour des fleurs fraîches, changez l'eau régulièrement. Nettoyez le vase avec un chiffon doux et évitez les chocs : la céramique peut s'ébrécher.",
       options: [
         { nom: "Modèle", valeurs: [
@@ -767,10 +767,10 @@ var CATALOGUE = {
       conseil: "Nettoyez-le avec un chiffon humide. Évitez les chocs : la céramique peut s'ébrécher.",
       options: [
         { nom: "Taille", valeurs: [
-          { nom: "10 × 10 cm", photo: 'images/produits/variantes/vide-poche-ceramique--1.webp' },
-          { nom: "10,5 × 10 cm, bord haut", photo: 'images/produits/variantes/vide-poche-ceramique--2.webp' },
-          { nom: "11,5 × 11,5 cm", photo: 'images/produits/variantes/vide-poche-ceramique--3.webp' },
-          { nom: "12 × 10,5 cm", photo: 'images/produits/variantes/vide-poche-ceramique--4.webp' }
+          { nom: "10 × 10 cm", detail: "Format compact pour bagues et boucles d'oreilles.", photo: 'images/produits/variantes/vide-poche-ceramique--1.webp' },
+          { nom: "10,5 × 10 cm, bord haut", detail: "Bord plus haut, pour garder clés et bijoux en place.", photo: 'images/produits/variantes/vide-poche-ceramique--2.webp' },
+          { nom: "11,5 × 11,5 cm", detail: "Format carré un peu plus grand.", photo: 'images/produits/variantes/vide-poche-ceramique--3.webp' },
+          { nom: "12 × 10,5 cm", detail: "Le plus grand, pour les clés et la montre.", photo: 'images/produits/variantes/vide-poche-ceramique--4.webp' }
         ] }
       ]
     },
@@ -785,19 +785,19 @@ var CATALOGUE = {
     'portemanteau-mural-bois': {
       nom: 'Portemanteau mural en bois', prix: 3490,
       collection: 'deco-rangement', categorie: 'rangement', photos: ['images/produits/portemanteau-mural-bois.webp', 'images/produits/portemanteau-mural-bois-2.webp', 'images/produits/portemanteau-mural-bois-3.webp'], associe: 'panier-tresse',
-      accroche: "Une entrée rangée et chaleureuse, grâce au bois clair.",
+      accroche: "Une entrée rangée et chaleureuse, grâce au bois naturel.",
       description: "Manteaux, sacs, chapeaux : ce portemanteau mural en bois libère l'entrée tout en la décorant. Ses lignes simples s'accordent avec un intérieur japandi ou scandinave.",
       pointsForts: ['En bois', 'Léger et facile à fixer', 'Range manteaux, sacs et chapeaux'],
       conseil: "Fixez-le avec des vis et chevilles adaptées à votre mur. Répartissez les charges sur les patères et évitez de les surcharger.",
       options: [
         { nom: "Bois", valeurs: [
-          { nom: "Hêtre clair", photo: 'images/produits/variantes/portemanteau-mural-bois--1.webp' },
-          { nom: "Noyer foncé", photo: 'images/produits/variantes/portemanteau-mural-bois--2.webp' }
+          { nom: "Hêtre clair", detail: "Bois clair, esprit scandinave.", photo: 'images/produits/variantes/portemanteau-mural-bois--1.webp' },
+          { nom: "Noyer foncé", detail: "Bois foncé, chaleureux.", photo: 'images/produits/variantes/portemanteau-mural-bois--2.webp' }
         ] },
         { nom: "Patères", valeurs: [
-          { nom: "3 patères", prix: 3490 },
-          { nom: "4 patères", prix: 3990 },
-          { nom: "6 patères", prix: 4490 }
+          { nom: "3 patères", detail: "Compact, pour une petite entrée.", prix: 3490 },
+          { nom: "4 patères", detail: "Pour les manteaux de toute la famille.", prix: 3990 },
+          { nom: "6 patères", detail: "Grand modèle, pour une entrée très fréquentée.", prix: 4490 }
         ] }
       ]
     },
@@ -814,8 +814,8 @@ var CATALOGUE = {
           { nom: "Modèle B", photo: 'images/produits/variantes/etagere-murale-flottante--2.webp' }
         ] },
         { nom: "Longueur", valeurs: [
-          { nom: "27 cm", prix: 3490 },
-          { nom: "40 cm", prix: 5490 }
+          { nom: "27 cm", detail: "Pour une plante ou quelques petits objets.", prix: 3490 },
+          { nom: "40 cm", detail: "Pour des livres, des bougies et plusieurs objets.", prix: 5490 }
         ] }
       ]
     },
@@ -913,8 +913,8 @@ var CATALOGUE = {
       conseil: "Lavez la housse à l'envers, à froid, sans le coussin intérieur (non fourni).",
       options: [
         { nom: "Format", valeurs: [
-          { nom: "45 × 45 cm", photo: 'images/produits/variantes/housse-coussin-boheme--1.webp' },
-          { nom: "30 × 50 cm", photo: 'images/produits/variantes/housse-coussin-boheme--2.webp' }
+          { nom: "45 × 45 cm", detail: "Pour un coussin carré de 45 cm (non fourni).", photo: 'images/produits/variantes/housse-coussin-boheme--1.webp' },
+          { nom: "30 × 50 cm", detail: "Pour un coussin rectangulaire de 30 × 50 cm (non fourni).", photo: 'images/produits/variantes/housse-coussin-boheme--2.webp' }
         ] }
       ]
     },
@@ -1014,6 +1014,49 @@ CATALOGUE.libelleChoix = function (p, choix) {
   return (p.options || []).filter(function (o) { return o.valeurs.length > 1 && choix && choix[o.nom]; })
     .map(function (o) { return o.nom + ' : ' + choix[o.nom]; }).join(' · ');
 };
+/* Notes olfactives, affichées quand le client choisit un parfum (option « Parfum »).
+   La clé est le nom du parfum, sans ce qui suit la virgule (« Rose, pot noir » → « Rose »). */
+CATALOGUE.notesParfums = {
+  'Santal': 'boisé, chaud et crémeux', 'Rose': 'florale, douce et romantique', 'Rose sauvage': 'rose fraîche aux accents verts',
+  'Lavande': 'florale et apaisante, idéale le soir', 'Lavande & romarin': 'aromatique et apaisante', 'Jasmin': 'florale, lumineuse et enveloppante',
+  'Jasmin de printemps': 'florale, fraîche et lumineuse', 'Thé vert': 'frais, léger et vivifiant', 'Thé Darjeeling': 'thé noir délicat, légèrement fruité',
+  'Océan': 'fraîche et marine, comme une brise', 'Lotus': 'florale, aquatique et délicate', 'Osmanthe': "fleurie et fruitée, aux notes d'abricot",
+  'Osmanthe doré': "fleurie et fruitée, aux notes d'abricot", 'Pivoine': 'florale, fraîche et poudrée', 'Magnolia': 'florale, crémeuse et lumineuse',
+  'Lys': 'florale, intense et élégante', 'Tubéreuse': 'florale, riche et sensuelle', 'Tulipe': 'florale, verte et légère',
+  'Cerise': 'fruitée, gourmande et acidulée', 'Myrtille': 'fruitée et légèrement sucrée', 'Ambre gris': 'chaude, ambrée et enveloppante',
+  'Épices indiennes': 'épicée et boisée, esprit temple', 'Mélange de senteurs': 'un assortiment de plusieurs parfums pour varier les ambiances',
+  'Citron': 'hespéridée, fraîche et pétillante', 'Gardénia': 'florale, blanche et veloutée', 'Pomme': 'fruitée, croquante et fraîche',
+  'Poire & freesia': 'fruitée et florale, fraîche et lumineuse', 'Carillon bleu': 'fraîche et aérienne, aux notes marines',
+  'Source de montagne': "fraîche et minérale, comme l'air des sommets", 'Fleur poudrée': 'florale et poudrée, élégante',
+  "Côte d'Azur": 'fraîche, solaire et marine', 'Sauge & sel marin': 'herbacée et minérale, esprit bord de mer',
+  'Kaki du Japon': 'fruitée, douce et gourmande', 'Étoile de mer': 'fraîche et marine', 'Forêt noire': 'gourmande, cerise et chocolat',
+  'Crème vanille': 'gourmande, douce et réconfortante', 'Mousse de rosée': 'verte, fraîche et boisée',
+  'Citron vert, basilic & mandarine': 'hespéridée et aromatique, pétillante', 'Pêche blanche & thé oolong': 'fruitée et thé, douce et lumineuse',
+  'Oasis': 'fraîche et verte', 'Cerisier de Yoshino': 'florale et délicate, fleur de cerisier', 'Montagnes & eau claire': 'fraîche, verte et aquatique',
+  'Émeraude': 'verte et boisée', 'Figue verte & cèdre': 'verte, fruitée et boisée', 'Iris & mousse de chêne': 'poudrée et boisée',
+  'Mojito': 'fraîche, menthe et citron vert', 'Eucalyptus': "fraîche et mentholée, elle dégage l'atmosphère", 'Menthe poivrée': 'fraîche, vive et tonique',
+  'Arbre à thé': 'fraîche, herbacée et purifiante', 'Orange douce': 'hespéridée, douce et joyeuse', 'Bergamote': 'hespéridée, fraîche et élégante',
+  'Pamplemousse': 'hespéridée, acidulée et tonique', 'Citronnelle': 'fraîche, citronnée et herbacée', 'Romarin': 'aromatique et herbacée',
+  'Ylang-ylang': 'florale, exotique et sensuelle', 'Géranium': 'florale, verte et rosée', 'Camomille': 'douce, herbacée et apaisante',
+  "Fleur d'oranger": 'florale, blanche et lumineuse', 'Bois de cèdre': 'boisée, sèche et réconfortante', 'Encens (oliban)': 'résineuse, chaude et méditative',
+  'Cannelle': 'épicée, chaude et gourmande', 'Clou de girofle': 'épicée et chaude', 'Gingembre': 'épicée, fraîche et tonique',
+  'Vanille': 'gourmande, douce et réconfortante', 'Caramel': 'gourmande et sucrée', 'Café': 'gourmande et torréfiée',
+  'Noix de coco': 'gourmande et solaire', 'Pêche': 'fruitée, douce et juteuse', 'Fraise': 'fruitée et gourmande', 'Poire': 'fruitée, fraîche et juteuse'
+};
+/* Lignes « Votre choix » : la caractéristique de chaque valeur choisie (detail, ou note du parfum) */
+CATALOGUE.detailsChoix = function (p, choix) {
+  return (p.options || []).map(function (o) {
+    var v = o.valeurs.filter(function (x) { return choix && x.nom === choix[o.nom]; })[0];
+    if (!v) return null;
+    var detail = v.detail;
+    if (!detail && o.nom === 'Parfum') {
+      var note = CATALOGUE.notesParfums[v.nom] || CATALOGUE.notesParfums[v.nom.split(', ')[0]];
+      if (note) detail = note.charAt(0).toUpperCase() + note.slice(1) + '.';
+    }
+    return detail ? { option: o.nom, valeur: v.nom, detail: detail } : null;
+  }).filter(Boolean);
+};
+
 /* « 17 parfums », « 6 couleurs » : affiché sur les cartes produit */
 CATALOGUE.resumeOptions = function (p) {
   // l'option qui offre le plus de choix (ex. 10 parfums plutôt que 2 tailles)

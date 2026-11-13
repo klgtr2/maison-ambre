@@ -153,6 +153,12 @@
 .option-produit__valeurs .puce--photo { padding: 4px 14px 4px 4px; }
 .option-produit__valeurs .puce img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
 .option-produit__valeurs .puce[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--creme), 0 0 0 3px var(--encre); }
+.details-choix { padding: 14px 16px; border: 1px solid var(--trait); border-radius: var(--rayon-petit); background: var(--lin); }
+.details-choix[hidden] { display: none; }
+.details-choix__titre { margin-bottom: 8px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sauge-fonce); }
+.details-choix ul { display: grid; gap: 6px; font-size: 0.92rem; }
+.details-choix li { display: flex; gap: 10px; align-items: flex-start; }
+.details-choix svg { width: 18px; height: 18px; margin-top: 2px; color: var(--sauge-fonce); flex-shrink: 0; }
 /* Photo de la variante choisie, par-dessus le diaporama */
 .galerie__variante { position: absolute; inset: 0; z-index: 2; opacity: 0; pointer-events: none; transition: opacity 0.5s var(--courbe); background: var(--lin); }
 .galerie__variante.est-active { opacity: 1; }
