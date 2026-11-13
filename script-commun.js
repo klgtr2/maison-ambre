@@ -55,6 +55,11 @@
     brumes: '<path d="M8 10h7v10H8z"/><path d="M9.5 10V7h4v3"/><path d="M13.5 7.5H16M18 6l1.5-1M18 8.5h2M18 11l1.5 1"/>',
     fondants: '<path d="M6 10h12"/><path d="M7 10c0 3 2 4.5 5 4.5s5-1.5 5-4.5"/><path d="M8 14.5L7 20h10l-1-5.5"/><path d="M12 18v-1.5"/>',
     coffrets: '<rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 12.5h16M12 9v11"/><path d="M12 9c-2.5 0-4-1.2-4-2.6S9.5 4.3 12 9zM12 9c2.5 0 4-1.2 4-2.6S14.5 4.3 12 9z"/>',
+    lampes: '<path d="M5 11a7 7 0 0 1 14 0z"/><path d="M12 11v8M8.5 20h7"/>',
+    guirlandes: '<path d="M3 6c3 4 6 5.5 9 5.5S18 10 21 6"/><circle cx="7" cy="12" r="1.6"/><circle cx="12" cy="14.5" r="1.6"/><circle cx="17" cy="12" r="1.6"/>',
+    textile: '<path d="M4 7h16v10H4z"/><path d="M4 11h16M4 14h16M8 7v10M12 7v10M16 7v10"/>',
+    deco: '<path d="M9 9.5h6c0 2 2 3.5 2 6.5a5 5 0 0 1-10 0c0-3 2-4.5 2-6.5z"/><path d="M10 9.5V7h4v2.5"/><path d="M12 7c0-2 1-3.5 3-4.5"/>',
+    rangement: '<path d="M4 9h16l-1.5 11h-13z"/><path d="M8 9a4 4 0 0 1 8 0"/><path d="M5 13h14M5.5 16.5h13"/>',
     abonnements: '<rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/><path d="M9 14.5l2 2 4-4"/>'
   };
   var sprite = '<svg width="0" height="0" style="position:absolute" aria-hidden="true">' +
@@ -80,7 +85,7 @@
     var action = p.abonnement
       ? '<a class="bouton bouton--contour carte-produit__ajouter" href="' + lien + '">Découvrir</a>'
       : '<button class="bouton bouton--contour carte-produit__ajouter" type="button" data-ajouter="' + id + '">Ajouter au panier</button>';
-    return '<article class="carte-produit" style="--i:' + (index || 0) + '">' +
+    return '<article class="carte-produit" style="--i:' + (index || 0) + '" data-apparition>' +
       '<div class="carte-produit__visuel">' + visuelProduit(p) + '</div>' +
       '<p class="carte-produit__categorie">' + echapper(CATALOGUE.categories[p.categorie]) + '</p>' +
       '<h3 class="carte-produit__nom"><a href="' + lien + '">' + echapper(p.nom) + '</a></h3>' +
@@ -90,7 +95,7 @@
 
   /* ---------- 2. En-tête + menu mobile ---------- */
   var liensCollections = CATALOGUE.collections.map(function (c) {
-    return { href: CATALOGUE.lienCollection(c.id), texte: c.nom };
+    return { href: CATALOGUE.lienCollection(c.id), texte: c.nom, court: c.court }; // court : nom affiché dans le menu du haut
   }).concat([{ href: CATALOGUE.lienCollection('tous'), texte: 'Tous les produits' }]);
   var nom = echapper(CONFIG.nom);
   var seuil = euros(CONFIG.livraison.seuilOffert).replace(',00', '');
@@ -102,8 +107,8 @@
       '<button class="bouton-icone bouton-burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu-mobile">' + icone('menu') + '</button>' +
       '<a class="logo" href="index.html">' + nom + '</a>' +
       '<nav class="navigation" aria-label="Navigation principale">' +
-        liensCollections.map(function (l) { return '<a href="' + l.href + '">' + echapper(l.texte) + '</a>'; }).join('') +
-        '<a href="page-a-propos.html">À propos</a><a href="page-contact.html">Contact</a>' +
+        liensCollections.map(function (l) { return '<a href="' + l.href + '">' + echapper(l.court || l.texte) + '</a>'; }).join('') +
+        '<a class="navigation__secondaire" href="page-a-propos.html">À propos</a><a class="navigation__secondaire" href="page-contact.html">Contact</a>' +
       '</nav>' +
       '<button class="bouton-icone bouton-panier" type="button" aria-label="Panier, 0 article">' + icone('panier') + '<span class="panier__compteur">0</span></button>' +
     '</div></header>' +
@@ -305,6 +310,34 @@
     });
   };
 
+  /* Parallaxe des grandes photos + barre de progression de lecture */
+  var lancerEffetsScroll = function () {
+    if (reduit) return;
+    document.body.insertAdjacentHTML('beforeend', '<div class="progression-scroll" aria-hidden="true"></div>');
+    var barre = document.querySelector('.progression-scroll');
+    var photos = Array.prototype.slice.call(document.querySelectorAll(
+      '.banniere__image, .bandeau-collection img, .philosophie__image img, .photo-page img'));
+    photos.forEach(function (img) { img.setAttribute('data-parallaxe', ''); });
+    var enAttente = false;
+    var maj = function () {
+      enAttente = false;
+      var hauteurVue = window.innerHeight;
+      var max = document.documentElement.scrollHeight - hauteurVue;
+      barre.style.setProperty('--progression', max > 0 ? Math.min(1, window.scrollY / max) : 0);
+      photos.forEach(function (img) {
+        var cadre = img.parentElement.getBoundingClientRect();
+        if (cadre.bottom < 0 || cadre.top > hauteurVue) return;
+        // -1 quand le cadre arrive en bas de l'écran, +1 quand il sort en haut
+        var avancee = (hauteurVue - cadre.top) / (hauteurVue + cadre.height) * 2 - 1;
+        img.style.setProperty('--parallaxe', (avancee * cadre.height * 0.08).toFixed(1) + 'px');
+      });
+    };
+    var demander = function () { if (!enAttente) { enAttente = true; requestAnimationFrame(maj); } };
+    window.addEventListener('scroll', demander, { passive: true });
+    window.addEventListener('resize', demander);
+    maj();
+  };
+
   /* ---------- 8. Accordéons animés (FAQ, fiches produit) ---------- */
   window.BOUTIQUE.activerAccordeons = function (racine) {
     (racine || document).querySelectorAll('details.accordeon:not([data-pret])').forEach(function (details) {
@@ -384,5 +417,6 @@
   document.addEventListener('DOMContentLoaded', function () {
     window.BOUTIQUE.observerApparitions();
     window.BOUTIQUE.activerAccordeons();
+    lancerEffetsScroll();
   });
 })();

@@ -16,7 +16,7 @@
       if (categories.indexOf(c) < 0) categories.push(c);
     });
     envies.innerHTML = categories.map(function (c) {
-      return '<a class="envie" href="page-collection.html?collection=tous&amp;categorie=' + c + '">' +
+      return '<a class="envie" data-apparition href="page-collection.html?collection=tous&amp;categorie=' + c + '">' +
         '<span class="envie__icone">' + B.icone(c) + '</span>' + B.echapper(CATALOGUE.categories[c]) + '</a>';
     }).join('');
   }

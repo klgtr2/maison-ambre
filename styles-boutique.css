@@ -83,7 +83,7 @@
   background: var(--lin); font-size: 0.9rem;
 }
 .collection-vide { padding: 48px 0; text-align: center; color: var(--gris); }
-.grille-produits .carte-produit { animation: carte-entree 0.6s var(--courbe) both; animation-delay: calc(var(--i, 0) * 50ms); }
+/* Les cartes produit apparaissent au scroll : voir « Animations au scroll » dans styles-base.css */
 
 /* ---------- Page produit ---------- */
 .fiche { display: grid; gap: 28px; }

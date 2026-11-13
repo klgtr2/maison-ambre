@@ -49,13 +49,15 @@
 
   /* ---------- 1. Galerie : 4 emplacements carrés (photos des fournisseurs à venir) ---------- */
   var galerie = document.querySelector('[data-galerie]');
-  var nbVignettes = Math.max(4, p.photos.length);
+  // Une seule photo : pas de vignettes. Aucune photo : 4 emplacements « Photo à venir ».
+  var nbVignettes = p.photos.length === 1 ? 0 : Math.max(4, p.photos.length);
   var vignettes = '';
   for (var i = 0; i < nbVignettes; i++) {
     vignettes += '<button class="galerie__vignette" type="button" data-photo="' + i + '" aria-label="Voir la photo ' + (i + 1) + '"' +
       (i === 0 ? ' aria-current="true"' : '') + '>' + B.visuelProduit(p, i) + '</button>';
   }
-  galerie.innerHTML = '<div class="galerie__principale">' + B.visuelProduit(p, 0) + '</div><div class="galerie__vignettes">' + vignettes + '</div>';
+  galerie.innerHTML = '<div class="galerie__principale">' + B.visuelProduit(p, 0) + '</div>' +
+    (nbVignettes ? '<div class="galerie__vignettes">' + vignettes + '</div>' : '');
   galerie.addEventListener('click', function (e) {
     var vignette = e.target.closest('[data-photo]');
     if (!vignette || !p.photos[vignette.dataset.photo]) return;

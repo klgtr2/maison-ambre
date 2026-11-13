@@ -17,7 +17,7 @@
 
   /* ---------- En-tête de la collection ---------- */
   var nom = collection ? collection.nom : 'Tous les produits';
-  var accroche = collection ? collection.accroche : 'Encens, bougies, diffuseurs et coffrets : toute notre sélection.';
+  var accroche = collection ? collection.accroche : 'Encens, bougies, lumières, déco et coffrets : toute notre sélection.';
   document.title = nom + ' — ' + CONFIG.nom;
   var meta = document.querySelector('meta[name="description"]');
   if (meta) meta.setAttribute('content', nom + ' : ' + accroche);
@@ -77,6 +77,7 @@
     if (etat.tri === 'nom') ids.sort(function (a, b) { return CATALOGUE.produits[a].nom.localeCompare(CATALOGUE.produits[b].nom, 'fr'); });
 
     grille.innerHTML = ids.map(function (id, i) { return B.carteProduit(id, i); }).join('');
+    B.observerApparitions(grille); // les nouvelles cartes apparaissent au scroll
     vide.hidden = ids.length > 0;
     compte.textContent = ids.length + ' produit' + (ids.length > 1 ? 's' : '');
     document.querySelectorAll('.puce').forEach(function (b) {

@@ -180,9 +180,10 @@ h1, h2, h3, .titre-1, .titre-2, .titre-3 {
   .entete__interieur { grid-template-columns: auto 1fr auto; height: 76px; gap: 32px; }
   .logo { justify-self: start; font-size: 1.6rem; }
   .bouton-burger { display: none; }
-  .navigation { display: flex; justify-content: center; gap: 30px; }
+  .navigation { display: flex; justify-content: center; gap: clamp(16px, 1.8vw, 30px); }
+  .navigation__secondaire { display: none; } /* place limitée : À propos et Contact restent dans le pied de page */
   .navigation a {
-    position: relative; padding: 6px 0;
+    position: relative; padding: 6px 0; white-space: nowrap;
     font-size: 0.95rem; font-weight: 600; text-decoration: none;
   }
   .navigation a::after {
@@ -194,6 +195,7 @@ h1, h2, h3, .titre-1, .titre-2, .titre-3 {
   .navigation a:hover::after,
   .navigation a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
 }
+@media (min-width: 1360px) { .navigation__secondaire { display: inline; } }
 
 /* ---------- Pied de page ---------- */
 .pied { margin-top: var(--espace-section); padding: 56px 0 28px; background: var(--beige); }
@@ -281,6 +283,40 @@ h1, h2, h3, .titre-1, .titre-2, .titre-3 {
   transition: opacity 0.8s var(--courbe) var(--delai, 0s), transform 0.9s var(--courbe) var(--delai, 0s);
 }
 .avec-js [data-apparition].est-visible { opacity: 1; transform: none; }
+
+/* ---------- Animations au scroll (cartes, photos, barre de progression) ---------- */
+/* Cartes produit : la photo se dévoile de bas en haut, puis se dézoome doucement */
+.avec-js .carte-produit[data-apparition] .carte-produit__visuel {
+  clip-path: inset(22% 0 0 0 round var(--rayon));
+  transition: clip-path 1.1s var(--courbe) var(--delai, 0s);
+}
+.avec-js .carte-produit[data-apparition] .carte-produit__visuel img { scale: 1.18; transition: scale 1.4s var(--courbe) var(--delai, 0s), transform 0.9s var(--courbe); }
+.avec-js .carte-produit[data-apparition].est-visible .carte-produit__visuel { clip-path: inset(0 0 0 0 round var(--rayon)); }
+.avec-js .carte-produit[data-apparition].est-visible .carte-produit__visuel img { scale: 1; }
+.carte-produit { transition: translate 0.5s var(--courbe); }
+.carte-produit:hover { translate: 0 -4px; }
+
+/* Cartes collection : même effet de rideau, plus ample */
+.avec-js .carte-collection[data-apparition] { clip-path: inset(12% 4% 0 4% round var(--rayon)); transition: opacity 0.8s var(--courbe) var(--delai, 0s), transform 0.9s var(--courbe) var(--delai, 0s), clip-path 1.2s var(--courbe) var(--delai, 0s); }
+.avec-js .carte-collection[data-apparition].est-visible { clip-path: inset(0 0 0 0 round var(--rayon)); }
+
+/* Accès rapides : les pastilles arrivent l'une après l'autre */
+.avec-js .envie[data-apparition] { transform: translateY(14px) scale(0.94); }
+.avec-js .envie[data-apparition].est-visible:hover { transform: translateY(-2px); }
+
+/* Photos en parallaxe (bannières, grandes photos) : décalage réglé par script-commun.js */
+[data-parallaxe] { translate: 0 var(--parallaxe, 0px); will-change: translate; }
+/* La photo dépasse un peu de son cadre pour ne jamais laisser de bord vide en bougeant */
+.banniere__image[data-parallaxe], .bandeau-collection img[data-parallaxe] { top: -10%; height: 120%; }
+.philosophie__image img[data-parallaxe], .photo-page img[data-parallaxe] { height: 120%; margin-top: -10%; }
+
+/* Barre de progression de lecture, en haut de l'écran */
+.progression-scroll {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 70; height: 3px;
+  background: var(--terracotta);
+  transform: scaleX(var(--progression, 0)); transform-origin: left;
+  pointer-events: none;
+}
 
 @keyframes rebond { 0% { transform: scale(1); } 45% { transform: scale(1.45); } 100% { transform: scale(1); } }
 
