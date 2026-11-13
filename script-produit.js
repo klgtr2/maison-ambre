@@ -34,6 +34,14 @@
   var nom = B.echapper(p.nom);
   var options = (p.options || []).filter(function (o) { return o.valeurs.length; });
   var choix = CATALOGUE.choixParDefaut(p); // variante choisie par le client (parfum, couleur…)
+  // Variante demandée dans l'adresse (depuis la recherche) : ?produit=…&Parfum=Lavande
+  var parametresAdresse = new URLSearchParams(location.search);
+  var valeurDemandee = null;
+  options.forEach(function (o) {
+    var demande = parametresAdresse.get(o.nom);
+    var v = o.valeurs.filter(function (x) { return x.nom === demande; })[0];
+    if (v) { choix[o.nom] = v.nom; if (v.photo) valeurDemandee = v; }
+  });
   var prixActuel = function () { return CATALOGUE.prixVariante(p, choix); };
   var prixTexte = B.euros(prixActuel()) + (p.abonnement ? ' <small>/ mois</small>' : '');
   var remplacer = function (texte) {
@@ -237,6 +245,7 @@
       : '<button class="bouton bouton--plein" type="button" data-ajouter="' + id + '" data-choix="' + choixJson() + '" data-quantite="1">Ajouter au panier</button>');
 
   majDetails();
+  if (valeurDemandee) montrerVariante(valeurDemandee.photo);
 
   /* Après un choix (couleur, taille…), on remonte en douceur sur la photo du produit,
      sauf si elle est déjà entièrement visible (ordinateur : la photo reste fixe à côté). */

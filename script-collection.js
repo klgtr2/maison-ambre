@@ -14,10 +14,19 @@
   var idCollection = parametres.get('collection') || 'tous';
   var collection = CATALOGUE.collection(idCollection);
   if (!collection) idCollection = 'tous';
+  // Recherche depuis la loupe : page-collection.html?collection=tous&recherche=lavande
+  var texteRecherche = (parametres.get('recherche') || '').trim();
+  var resultatsRecherche = texteRecherche ? CATALOGUE.rechercher(texteRecherche).filter(function (r) {
+    return idCollection === 'tous' || CATALOGUE.produits[r.id].collection === idCollection;
+  }) : null;
+  if (resultatsRecherche) collection = null; // pas de grande photo de collection pour une recherche
 
   /* ---------- En-tête de la collection ---------- */
-  var nom = collection ? collection.nom : 'Tous les produits';
-  var accroche = collection ? collection.accroche : 'Encens, bougies, lumières, déco et coffrets : toute notre sélection.';
+  var nom = resultatsRecherche ? 'Résultats pour « ' + texteRecherche + ' »' : collection ? collection.nom : 'Tous les produits';
+  var accroche = resultatsRecherche
+    ? (resultatsRecherche.length ? resultatsRecherche.length + ' produit' + (resultatsRecherche.length > 1 ? 's correspondent' : ' correspond') + ' à votre recherche.' : 'Aucun produit ne correspond à votre recherche. Essayez un autre mot, ou parcourez nos collections.')
+    : collection ? collection.accroche : 'Encens, bougies, lumières, déco et coffrets : toute notre sélection.';
+  if (resultatsRecherche) document.querySelector('[data-bandeau-collection] .surtitre').textContent = 'Recherche';
   document.title = nom + ' — ' + CONFIG.nom;
   var meta = document.querySelector('meta[name="description"]');
   if (meta) meta.setAttribute('content', nom + ' : ' + accroche);
@@ -31,7 +40,9 @@
   }
 
   /* ---------- Filtres ---------- */
-  var idsCollection = CATALOGUE.produitsDeCollection(idCollection);
+  var idsCollection = resultatsRecherche
+    ? resultatsRecherche.map(function (r) { return r.id; }) // ordre : les plus pertinents d'abord
+    : CATALOGUE.produitsDeCollection(idCollection);
   var categories = [];
   idsCollection.forEach(function (id) {
     var c = CATALOGUE.produits[id].categorie;
@@ -59,6 +70,7 @@
   zonePrix.innerHTML = '<span class="groupe-filtres__titre">Prix</span>' +
     tranches.map(function (t) { return puce('prix', t.id, t.texte); }).join('');
   if (categories.length < 2) zoneCategories.hidden = true;
+  if (resultatsRecherche && !resultatsRecherche.length) document.querySelector('.barre-filtres').hidden = true;
 
   /* ---------- Affichage de la grille ---------- */
   var grille = document.querySelector('[data-grille]');
@@ -77,6 +89,11 @@
     if (etat.tri === 'nom') ids.sort(function (a, b) { return CATALOGUE.produits[a].nom.localeCompare(CATALOGUE.produits[b].nom, 'fr'); });
 
     grille.innerHTML = ids.map(function (id, i) { return B.carteProduit(id, i); }).join('');
+    // Recherche d'un parfum ou d'une couleur : la carte mène au produit avec cette variante déjà choisie
+    if (resultatsRecherche) resultatsRecherche.forEach(function (r) {
+      if (!r.variante) return;
+      grille.querySelectorAll('a[href="' + CATALOGUE.lienProduit(r.id) + '"]').forEach(function (a) { a.href = CATALOGUE.lienProduitVariante(r.id, r.variante); });
+    });
     B.observerApparitions(grille); // les nouvelles cartes apparaissent au scroll
     vide.hidden = ids.length > 0;
     compte.textContent = ids.length + ' produit' + (ids.length > 1 ? 's' : '');
@@ -86,6 +103,7 @@
 
     // L'adresse garde les filtres (lien partageable)
     var adresse = new URLSearchParams({ collection: idCollection });
+    if (texteRecherche) adresse.set('recherche', texteRecherche);
     if (etat.categorie !== 'toutes') adresse.set('categorie', etat.categorie);
     if (etat.prix !== 'tous') adresse.set('prix', etat.prix);
     history.replaceState(null, '', '?' + adresse.toString());
@@ -99,6 +117,7 @@
   });
   tri.addEventListener('change', function () { etat.tri = tri.value; rendre(); });
   document.querySelector('[data-reinitialiser]').addEventListener('click', function () {
+    if (resultatsRecherche && !resultatsRecherche.length) { location.href = CATALOGUE.lienCollection('tous'); return; }
     etat.categorie = 'toutes'; etat.prix = 'tous'; rendre();
   });
 

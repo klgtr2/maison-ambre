@@ -1057,6 +1057,51 @@ CATALOGUE.detailsChoix = function (p, choix) {
   }).filter(Boolean);
 };
 
+/* ---------- Recherche (loupe de l'en-tête et page collection ?recherche=…) ----------
+   Cherche dans le nom, la catégorie, la collection, les variantes (parfum, couleur…)
+   et les textes. Tous les mots tapés doivent être trouvés. Sans accents ni majuscules. */
+CATALOGUE.normaliser = function (texte) {
+  return String(texte || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/œ/g, 'oe').replace(/æ/g, 'ae').replace(/[^a-z0-9]+/g, ' ').trim();
+};
+CATALOGUE.rechercher = function (texte) {
+  var N = CATALOGUE.normaliser;
+  var mots = N(texte).split(' ').filter(function (m) { return m.length > 1; })
+    .map(function (m) { return m.length > 3 ? m.replace(/[sx]$/, '') : m; }); // bougies → bougie
+  if (!mots.length) return [];
+  var resultats = [];
+  Object.keys(CATALOGUE.produits).forEach(function (id, rang) {
+    var p = CATALOGUE.produits[id];
+    var collection = CATALOGUE.collection(p.collection);
+    var valeurs = [];
+    (p.options || []).forEach(function (o) { o.valeurs.forEach(function (v) { valeurs.push({ option: o.nom, valeur: v.nom, texte: N(v.nom) }); }); });
+    var champs = [
+      { poids: 6, texte: N(p.nom) },
+      { poids: 3, texte: N(CATALOGUE.categories[p.categorie] + ' ' + (collection ? collection.nom : '')) },
+      { poids: 4, texte: valeurs.map(function (v) { return v.texte; }).join(' ') },
+      { poids: 1, texte: N(p.accroche + ' ' + p.description + ' ' + p.pointsForts.join(' ')) }
+    ];
+    var score = 0;
+    var tousTrouves = mots.every(function (m) {
+      var meilleur = 0;
+      champs.forEach(function (c) { if (c.poids > meilleur && c.texte.indexOf(m) >= 0) meilleur = c.poids; });
+      score += meilleur;
+      return meilleur > 0;
+    });
+    if (!tousTrouves) return;
+    // Un mot correspond à une variante (« lavande », « rose », « 40 cm ») : on la propose directement
+    var variante = valeurs.filter(function (v) {
+      return mots.some(function (m) { return v.texte.indexOf(m) >= 0 && champs[0].texte.indexOf(m) < 0; });
+    })[0] || null;
+    resultats.push({ id: id, score: score, rang: rang, variante: variante ? { option: variante.option, valeur: variante.valeur } : null });
+  });
+  return resultats.sort(function (a, b) { return b.score - a.score || a.rang - b.rang; });
+};
+/* Lien vers un produit, avec une variante déjà choisie (ex. ?produit=…&Parfum=Lavande) */
+CATALOGUE.lienProduitVariante = function (id, variante) {
+  return CATALOGUE.lienProduit(id) + (variante ? '&' + encodeURIComponent(variante.option) + '=' + encodeURIComponent(variante.valeur) : '');
+};
+
 /* « 17 parfums », « 6 couleurs » : affiché sur les cartes produit */
 CATALOGUE.resumeOptions = function (p) {
   // l'option qui offre le plus de choix (ex. 10 parfums plutôt que 2 tailles)

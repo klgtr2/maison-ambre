@@ -31,6 +31,7 @@
   /* ---------- 1. Icônes (une seule fois par page) ---------- */
   var symboles = {
     panier: '<path d="M5.5 7.5h13l-1 12.5h-11z"/><path d="M9 7.5a3 3 0 0 1 6 0"/>',
+    loupe: '<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/>',
     menu: '<path d="M4 7h16M4 12h16M4 17h10"/>',
     fermer: '<path d="M6 6l12 12M18 6L6 18"/>',
     fleche: '<path d="M5 12h14M13 6l6 6-6 6"/>',
@@ -117,7 +118,10 @@
         liensCollections.map(function (l) { return '<a href="' + l.href + '">' + echapper(l.court || l.texte) + '</a>'; }).join('') +
         '<a class="navigation__secondaire" href="page-a-propos.html">À propos</a><a class="navigation__secondaire" href="page-contact.html">Contact</a>' +
       '</nav>' +
-      '<button class="bouton-icone bouton-panier" type="button" aria-label="Panier, 0 article">' + icone('panier') + '<span class="panier__compteur">0</span></button>' +
+      '<div class="entete__actions">' +
+        '<button class="bouton-icone bouton-recherche" type="button" aria-label="Rechercher un produit" aria-expanded="false" aria-controls="recherche">' + icone('loupe') + '</button>' +
+        '<button class="bouton-icone bouton-panier" type="button" aria-label="Panier, 0 article">' + icone('panier') + '<span class="panier__compteur">0</span></button>' +
+      '</div>' +
     '</div></header>' +
     '<div class="voile" data-voile></div>' +
     '<nav class="menu-mobile" id="menu-mobile" aria-label="Menu mobile">' +
@@ -165,6 +169,86 @@
   });
   document.querySelectorAll('.menu-mobile a').forEach(function (a) { a.addEventListener('click', fermerMenu); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fermerMenu(); });
+
+  /* ---------- Recherche : la loupe ouvre un panneau, les résultats s'affichent pendant la frappe ----------
+     Entrée = tous les résultats sur la page collection (page-collection.html?recherche=…) */
+  var idees = ['Bougie', 'Encens', 'Lavande', 'Diffuseur', 'Lampe', 'Guirlande', 'Vase', 'Céramique'];
+  document.body.insertAdjacentHTML('beforeend',
+    '<div class="recherche" id="recherche" role="dialog" aria-modal="true" aria-label="Rechercher un produit" aria-hidden="true">' +
+      '<div class="conteneur recherche__panneau">' +
+        '<form class="recherche__formulaire" role="search" action="page-collection.html">' +
+          '<input type="hidden" name="collection" value="tous">' +
+          icone('loupe', 'recherche__icone') +
+          '<input class="recherche__champ" type="search" name="recherche" placeholder="Un produit, un parfum, une couleur…" autocomplete="off" enterkeyhint="search" aria-label="Rechercher un produit">' +
+          '<button class="bouton-icone" type="button" data-fermer-recherche aria-label="Fermer la recherche">' + icone('fermer') + '</button>' +
+        '</form>' +
+        '<div class="recherche__idees"><span>Idées :</span>' + idees.map(function (m) { return '<button class="puce" type="button" data-idee="' + echapper(m) + '">' + echapper(m) + '</button>'; }).join('') + '</div>' +
+        '<p class="recherche__message" aria-live="polite"></p>' +
+        '<ul class="recherche__resultats"></ul>' +
+        '<a class="lien-fleche recherche__tout" hidden></a>' +
+      '</div>' +
+    '</div>');
+  var recherche = document.querySelector('.recherche');
+  var champ = recherche.querySelector('.recherche__champ');
+  var zoneResultats = recherche.querySelector('.recherche__resultats');
+  var message = recherche.querySelector('.recherche__message');
+  var lienTout = recherche.querySelector('.recherche__tout');
+  var boutonLoupe = document.querySelector('.bouton-recherche');
+  var MAX_RESULTATS = 6;
+
+  var afficherResultats = function () {
+    var texte = champ.value.trim();
+    var resultats = texte.length > 1 ? CATALOGUE.rechercher(texte) : [];
+    recherche.classList.toggle('a-texte', texte.length > 1);
+    message.textContent = texte.length < 2 ? '' : resultats.length
+      ? resultats.length + ' produit' + (resultats.length > 1 ? 's' : '') + ' trouvé' + (resultats.length > 1 ? 's' : '')
+      : 'Aucun produit pour « ' + texte + ' ». Essayez un autre mot : bougie, lampe, rose…';
+    zoneResultats.innerHTML = resultats.slice(0, MAX_RESULTATS).map(function (r) {
+      var p = CATALOGUE.produits[r.id];
+      var choix = r.variante ? (function () { var c = {}; c[r.variante.option] = r.variante.valeur; return c; })() : null;
+      var photo = (choix && CATALOGUE.photoVariante(p, choix)) || p.photos[0];
+      var prix = choix ? CATALOGUE.prixVariante(p, choix) : p.prix;
+      return '<li><a class="resultat" href="' + CATALOGUE.lienProduitVariante(r.id, r.variante) + '">' +
+        '<span class="resultat__visuel">' + (photo ? '<img src="' + echapper(photo) + '" alt="" loading="lazy" width="800" height="800">' : icone(p.categorie)) + '</span>' +
+        '<span class="resultat__texte"><strong>' + echapper(p.nom) + '</strong>' +
+          '<small>' + (r.variante ? echapper(r.variante.option + ' : ' + r.variante.valeur) : echapper(CATALOGUE.categories[p.categorie])) + '</small></span>' +
+        '<span class="resultat__prix">' + (!choix && CATALOGUE.prixVariables(p) ? 'dès ' : '') + euros(prix) + '</span>' +
+      '</a></li>';
+    }).join('');
+    lienTout.hidden = !resultats.length;
+    lienTout.href = 'page-collection.html?collection=tous&recherche=' + encodeURIComponent(texte);
+    lienTout.innerHTML = (resultats.length > MAX_RESULTATS ? 'Voir les ' + resultats.length + ' résultats' : 'Voir les résultats en grand') + ' ' + icone('fleche');
+  };
+  var ouvrirRecherche = function () {
+    html.classList.add('recherche-ouverte');
+    voile.classList.add('est-visible');
+    recherche.setAttribute('aria-hidden', 'false');
+    boutonLoupe.setAttribute('aria-expanded', 'true');
+    setTimeout(function () { champ.focus(); }, 60);
+  };
+  var fermerRecherche = function () {
+    if (!html.classList.contains('recherche-ouverte')) return;
+    html.classList.remove('recherche-ouverte');
+    if (!html.classList.contains('panier-ouvert') && !html.classList.contains('menu-ouvert')) voile.classList.remove('est-visible');
+    recherche.setAttribute('aria-hidden', 'true');
+    boutonLoupe.setAttribute('aria-expanded', 'false');
+    boutonLoupe.focus({ preventScroll: true });
+  };
+  boutonLoupe.addEventListener('click', ouvrirRecherche);
+  recherche.querySelector('[data-fermer-recherche]').addEventListener('click', fermerRecherche);
+  voile.addEventListener('click', fermerRecherche);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fermerRecherche(); });
+  champ.addEventListener('input', afficherResultats);
+  recherche.addEventListener('click', function (e) {
+    var idee = e.target.closest('[data-idee]');
+    if (!idee) return;
+    champ.value = idee.dataset.idee;
+    afficherResultats();
+    champ.focus();
+  });
+  recherche.querySelector('form').addEventListener('submit', function (e) {
+    if (champ.value.trim().length < 2) e.preventDefault();
+  });
 
   /* ---------- 3. Pied de page ---------- */
   var reseaux = Object.keys(CONFIG.reseaux).filter(function (r) { return CONFIG.reseaux[r]; }).map(function (r) {
