@@ -117,12 +117,13 @@ var CATALOGUE = {
       conseil: "Agitez, puis vaporisez à environ 30 cm de l'oreiller, des rideaux ou dans la pièce. Évitez le contact avec les yeux et testez d'abord sur une petite zone de tissu."
     },
     'fondants-parfumes-brule-parfum': {
-      nom: 'Fondants parfumés et brûle-parfum', prix: 2190, securite: true,
+      // Article Eprolo : lampe chauffe-bougie (réf. 28584765)
+      nom: 'Lampe chauffe-bougie et brûle-parfum', prix: 2190, securite: true,
       collection: 'encens-parfums-ambiance', categorie: 'fondants', photos: ['images/produits/fondants-parfumes-brule-parfum.webp', 'images/produits/fondants-parfumes-brule-parfum-2.webp', 'images/produits/fondants-parfumes-brule-parfum-3.webp'], associe: 'brume-oreiller-spray-ambiance',
-      accroche: "Le parfum d'une bougie, avec la douceur des fondants.",
-      description: "Faites chauffer un fondant dans le brûle-parfum : la cire fond doucement et libère son parfum dans toute la pièce. L'ensemble réunit le brûle-parfum et les fondants pour commencer tout de suite, et changer de senteur selon vos envies.",
-      pointsForts: ['Brûle-parfum et fondants réunis', 'Un parfum qui se diffuse en douceur', 'Facile de changer de senteur'],
-      conseil: "Déposez un fondant dans la coupelle du brûle-parfum et faites-le chauffer : la cire fond et libère son parfum. Laissez refroidir avant de changer de fondant et ne laissez jamais le brûle-parfum sans surveillance."
+      accroche: 'Le parfum de votre bougie, sans flamme, grâce à la chaleur de la lampe.',
+      description: "Posez votre bougie parfumée sous la lampe : la chaleur de l'ampoule fait fondre la cire par le dessus et diffuse son parfum dans toute la pièce, sans flamme ni fumée. Elle fonctionne aussi avec des fondants posés dans un petit pot, et sa lumière douce fait d'elle une jolie lampe d'appoint.",
+      pointsForts: ['Sans flamme ni fumée', 'Pour bougies en pot et fondants', "Fait aussi office de lampe d'ambiance"],
+      conseil: "Placez la bougie en pot sous l'ampoule et allumez la lampe : la cire fond en quelques minutes. Éteignez-la en quittant la pièce et laissez refroidir avant de déplacer la bougie."
     },
     'diffuseur-ultrasonique-effet-flamme': {
       nom: 'Diffuseur ultrasonique effet flamme', prix: 3490,
@@ -176,12 +177,13 @@ var CATALOGUE = {
       conseil: "Retirez le coussin intérieur avant de laver la housse à froid, à l'envers. Repassez à basse température si besoin."
     },
     'vase-ceramique-pampa': {
-      nom: 'Vase en céramique et fleurs séchées de pampa', prix: 3290,
+      // Article Eprolo : vase seul, sans fleurs (réf. 30241391) — prix à revoir sans le bouquet de pampa
+      nom: 'Vase en céramique design', prix: 3290,
       collection: 'deco-rangement', categorie: 'deco', photos: ['images/produits/vase-ceramique-pampa.webp', 'images/produits/vase-ceramique-pampa-2.webp', 'images/produits/vase-ceramique-pampa-3.webp'], associe: 'vide-poche-ceramique',
-      accroche: 'Un bouquet qui ne fane jamais, dans un vase tout en douceur.',
-      description: "Les plumeaux de pampa apportent du volume et de la légèreté, le vase en céramique leur donne un écrin sobre. Un duo qui réchauffe une console, une table basse ou un coin de chambre, sans entretien.",
-      pointsForts: ['Vase en céramique', 'Fleurs séchées sans entretien', 'Apporte du volume et de la douceur'],
-      conseil: "Placez le bouquet à l'abri du soleil direct et de l'humidité. Secouez-le légèrement de temps en temps pour enlever la poussière."
+      accroche: 'Une silhouette arrondie et colorée, belle même sans fleurs.',
+      description: "Sa forme ajourée et ses couleurs douces en font un objet déco à part entière. Glissez-y une tige de fleur séchée ou une branche, ou laissez-le seul sur une étagère, une console ou une table de chevet.",
+      pointsForts: ['En céramique', 'Forme ajourée originale', 'Joli seul ou avec une fleur séchée'],
+      conseil: "Pour des fleurs fraîches, changez l'eau régulièrement. Nettoyez le vase avec un chiffon doux et évitez les chocs : la céramique peut s'ébrécher."
     },
     'vide-poche-ceramique': {
       nom: 'Vide-poche et plateau en céramique', prix: 1690,
