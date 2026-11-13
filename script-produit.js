@@ -47,23 +47,81 @@
     (collection ? '<a href="' + CATALOGUE.lienCollection(collection.id) + '">' + B.echapper(collection.nom) + '</a><span aria-hidden="true">/</span>' : '') +
     '<span>' + nom + '</span>';
 
-  /* ---------- 1. Galerie : 4 emplacements carrés (photos des fournisseurs à venir) ---------- */
+  /* ---------- 1. Galerie : diaporama automatique ----------
+     Les photos défilent seules toutes les DUREE_PHOTO millisecondes, en fondu.
+     Le défilement se met en pause quand le client survole la photo, la touche,
+     choisit une vignette ou quand la galerie n'est plus visible à l'écran.
+     Désactivé si l'appareil demande de réduire les animations. */
+  var DUREE_PHOTO = 5000;
   var galerie = document.querySelector('[data-galerie]');
+  var nbPhotos = p.photos.length;
   // Une seule photo : pas de vignettes. Aucune photo : 4 emplacements « Photo à venir ».
-  var nbVignettes = p.photos.length === 1 ? 0 : (p.photos.length || 4);
+  var nbVignettes = nbPhotos === 1 ? 0 : (nbPhotos || 4);
   var vignettes = '';
   for (var i = 0; i < nbVignettes; i++) {
     vignettes += '<button class="galerie__vignette" type="button" data-photo="' + i + '" aria-label="Voir la photo ' + (i + 1) + '"' +
-      (i === 0 ? ' aria-current="true"' : '') + '>' + B.visuelProduit(p, i) + '</button>';
+      (i === 0 ? ' aria-current="true"' : '') + '>' + B.visuelProduit(p, i) + '<span class="galerie__minuteur" aria-hidden="true"></span></button>';
   }
-  galerie.innerHTML = '<div class="galerie__principale">' + B.visuelProduit(p, 0) + '</div>' +
+  var calques = '';
+  for (var j = 0; j < Math.max(1, nbPhotos); j++) {
+    calques += '<div class="galerie__calque' + (j === 0 ? ' est-active' : '') + '">' + B.visuelProduit(p, j) + '</div>';
+  }
+  var fleches = nbPhotos > 1
+    ? '<button class="galerie__fleche galerie__fleche--prec" type="button" data-sens="-1" aria-label="Photo précédente">' + B.icone('fleche') + '</button>' +
+      '<button class="galerie__fleche" type="button" data-sens="1" aria-label="Photo suivante">' + B.icone('fleche') + '</button>'
+    : '';
+  galerie.innerHTML = '<div class="galerie__principale">' + calques + fleches + '</div>' +
     (nbVignettes ? '<div class="galerie__vignettes">' + vignettes + '</div>' : '');
-  galerie.addEventListener('click', function (e) {
-    var vignette = e.target.closest('[data-photo]');
-    if (!vignette || !p.photos[vignette.dataset.photo]) return;
-    galerie.querySelector('.galerie__principale').innerHTML = B.visuelProduit(p, Number(vignette.dataset.photo));
-    galerie.querySelectorAll('[data-photo]').forEach(function (v) { v.setAttribute('aria-current', String(v === vignette)); });
-  });
+
+  if (nbPhotos > 1) {
+    var principale = galerie.querySelector('.galerie__principale');
+    var actuelle = 0;
+    var minuteur = null;
+    var enPause = false;
+    var visible = true;
+    var auto = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var afficher = function (n) {
+      actuelle = (n + nbPhotos) % nbPhotos;
+      galerie.querySelectorAll('.galerie__calque').forEach(function (c, k) { c.classList.toggle('est-active', k === actuelle); });
+      galerie.querySelectorAll('[data-photo]').forEach(function (v, k) { v.setAttribute('aria-current', String(k === actuelle)); });
+      relancer();
+    };
+    var relancer = function () {
+      clearTimeout(minuteur);
+      galerie.classList.remove('est-en-lecture');
+      if (!auto || enPause || !visible || document.hidden) return;
+      void galerie.offsetWidth; // redémarre la petite barre de temps sous la vignette
+      galerie.classList.add('est-en-lecture');
+      galerie.style.setProperty('--duree-photo', DUREE_PHOTO + 'ms');
+      minuteur = setTimeout(function () { afficher(actuelle + 1); }, DUREE_PHOTO);
+    };
+    var pause = function (oui) { enPause = oui; relancer(); };
+
+    galerie.addEventListener('click', function (e) {
+      var vignette = e.target.closest('[data-photo]');
+      var fleche = e.target.closest('[data-sens]');
+      if (vignette) afficher(Number(vignette.dataset.photo));
+      if (fleche) afficher(actuelle + Number(fleche.dataset.sens));
+    });
+    // Le client regarde la photo : on attend qu'il ait fini
+    principale.addEventListener('mouseenter', function () { pause(true); });
+    principale.addEventListener('mouseleave', function () { pause(false); });
+    // Glisser du doigt sur mobile
+    var departX = null;
+    principale.addEventListener('touchstart', function (e) { departX = e.touches[0].clientX; pause(true); }, { passive: true });
+    principale.addEventListener('touchend', function (e) {
+      var ecart = departX === null ? 0 : e.changedTouches[0].clientX - departX;
+      departX = null;
+      enPause = false;
+      if (Math.abs(ecart) > 40) afficher(actuelle + (ecart < 0 ? 1 : -1)); else relancer();
+    });
+    document.addEventListener('visibilitychange', relancer);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entrees) { visible = entrees[0].isIntersecting; relancer(); }, { threshold: 0.4 }).observe(principale);
+    }
+    relancer();
+  }
 
   /* ---------- 2. Livraison estimée (jours ouvrés, réglés dans configuration-boutique.js) ---------- */
   var ajouterJoursOuvres = function (n) {
