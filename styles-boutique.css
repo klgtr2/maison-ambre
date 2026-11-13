@@ -25,6 +25,7 @@
 .carte-produit__nom a::after { content: ""; position: absolute; inset: 0; z-index: 1; } /* toute la carte est cliquable */
 .carte-produit__prix { font-weight: 700; }
 .carte-produit__prix small { font-weight: 500; color: var(--gris); }
+.carte-produit__options { display: block; margin-top: 2px; font-size: 0.8rem; font-weight: 500; color: var(--sauge-fonce); }
 .carte-produit__ajouter { position: relative; z-index: 2; min-height: 44px; margin-top: auto; padding: 0 14px; font-size: 0.88rem; }
 
 /* Emplacement photo produit : carré à fond clair, en attendant les photos des fournisseurs */
@@ -142,6 +143,21 @@
   padding: 14px 16px; border-radius: var(--rayon-petit);
   background: var(--beige); font-size: 0.92rem;
 }
+/* Variantes : parfum, couleur, taille… */
+.options-produit { display: grid; gap: 16px; }
+.option-produit { display: grid; gap: 10px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.option-produit legend { padding: 0; margin-bottom: 10px; font-size: 0.92rem; color: var(--gris); }
+.option-produit legend strong { color: var(--encre); font-weight: 700; }
+.option-produit__valeurs { display: flex; flex-wrap: wrap; gap: 8px; }
+.option-produit__valeurs .puce { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; white-space: normal; text-align: left; line-height: 1.2; }
+.option-produit__valeurs .puce--photo { padding: 4px 14px 4px 4px; }
+.option-produit__valeurs .puce img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.option-produit__valeurs .puce[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--creme), 0 0 0 3px var(--encre); }
+/* Photo de la variante choisie, par-dessus le diaporama */
+.galerie__variante { position: absolute; inset: 0; z-index: 2; opacity: 0; pointer-events: none; transition: opacity 0.5s var(--courbe); background: var(--lin); }
+.galerie__variante.est-active { opacity: 1; }
+.galerie__variante.est-active ~ .galerie__fleche { z-index: 3; }
+
 .achat { display: flex; gap: 10px; }
 .achat .bouton { flex: 1; }
 .quantite {

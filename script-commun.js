@@ -81,10 +81,14 @@
   var carteProduit = function (id, index) {
     var p = CATALOGUE.produits[id];
     var lien = CATALOGUE.lienProduit(id);
-    var prix = euros(p.prix) + (p.abonnement ? ' <small>/ mois</small>' : '');
+    var aChoisir = CATALOGUE.resumeOptions(p);
+    var prix = (CATALOGUE.prixVariables(p) ? '<small>dès</small> ' : '') + euros(p.prix) + (p.abonnement ? ' <small>/ mois</small>' : '');
+    // Produit à variantes : le client choisit son parfum, sa couleur… sur la fiche produit
     var action = p.abonnement
       ? '<a class="bouton bouton--contour carte-produit__ajouter" href="' + lien + '">Découvrir</a>'
-      : '<button class="bouton bouton--contour carte-produit__ajouter" type="button" data-ajouter="' + id + '">Ajouter au panier</button>';
+      : aChoisir
+        ? '<a class="bouton bouton--contour carte-produit__ajouter" href="' + lien + '">Choisir</a>'
+        : '<button class="bouton bouton--contour carte-produit__ajouter" type="button" data-ajouter="' + id + '">Ajouter au panier</button>';
     return '<article class="carte-produit" style="--i:' + (index || 0) + '" data-apparition>' +
       '<div class="carte-produit__visuel">' + visuelProduit(p) +
         // 2e photo affichée au survol de la carte (ordinateur)
@@ -92,7 +96,7 @@
       '</div>' +
       '<p class="carte-produit__categorie">' + echapper(CATALOGUE.categories[p.categorie]) + '</p>' +
       '<h3 class="carte-produit__nom"><a href="' + lien + '">' + echapper(p.nom) + '</a></h3>' +
-      '<p class="carte-produit__prix">' + prix + '</p>' + action +
+      '<p class="carte-produit__prix">' + prix + (aChoisir ? '<span class="carte-produit__options">' + echapper(aChoisir) + '</span>' : '') + '</p>' + action +
       '</article>';
   };
 

@@ -32,7 +32,10 @@
   var collection = CATALOGUE.collection(p.collection);
   var categorie = CATALOGUE.categories[p.categorie];
   var nom = B.echapper(p.nom);
-  var prixTexte = B.euros(p.prix) + (p.abonnement ? ' <small>/ mois</small>' : '');
+  var options = (p.options || []).filter(function (o) { return o.valeurs.length; });
+  var choix = CATALOGUE.choixParDefaut(p); // variante choisie par le client (parfum, couleur…)
+  var prixActuel = function () { return CATALOGUE.prixVariante(p, choix); };
+  var prixTexte = B.euros(prixActuel()) + (p.abonnement ? ' <small>/ mois</small>' : '');
   var remplacer = function (texte) {
     return texte.replace('{min}', CONFIG.livraison.delaiMinJours).replace('{max}', CONFIG.livraison.delaiMaxJours)
       .replace('{zone}', CONFIG.livraison.zone).replace('{retour}', CONFIG.retourJours);
@@ -70,8 +73,23 @@
     ? '<button class="galerie__fleche galerie__fleche--prec" type="button" data-sens="-1" aria-label="Photo précédente">' + B.icone('fleche') + '</button>' +
       '<button class="galerie__fleche" type="button" data-sens="1" aria-label="Photo suivante">' + B.icone('fleche') + '</button>'
     : '';
-  galerie.innerHTML = '<div class="galerie__principale">' + calques + fleches + '</div>' +
+  // Calque supplémentaire : la photo de la variante choisie (couleur, modèle…)
+  var calqueVariante = options.some(function (o) { return o.valeurs.some(function (v) { return v.photo; }); })
+    ? '<div class="galerie__variante"><img src="" alt="" width="800" height="800"></div>' : '';
+  galerie.innerHTML = '<div class="galerie__principale">' + calques + calqueVariante + fleches + '</div>' +
     (nbVignettes ? '<div class="galerie__vignettes">' + vignettes + '</div>' : '');
+
+  var variante = galerie.querySelector('.galerie__variante');
+  var cacherVariante = function () { if (variante) variante.classList.remove('est-active'); };
+  var galerieControle = { pause: function () {} };
+  var montrerVariante = function (src) {
+    if (!variante || !src) return;
+    var img = variante.querySelector('img');
+    img.src = src;
+    img.alt = p.nom + ' : ' + CATALOGUE.libelleChoix(p, choix);
+    variante.classList.add('est-active');
+    galerieControle.pause(true);
+  };
 
   if (nbPhotos > 1) {
     var principale = galerie.querySelector('.galerie__principale');
@@ -82,6 +100,7 @@
     var auto = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     var afficher = function (n) {
+      cacherVariante();
       actuelle = (n + nbPhotos) % nbPhotos;
       galerie.querySelectorAll('.galerie__calque').forEach(function (c, k) { c.classList.toggle('est-active', k === actuelle); });
       galerie.querySelectorAll('[data-photo]').forEach(function (v, k) { v.setAttribute('aria-current', String(k === actuelle)); });
@@ -91,12 +110,15 @@
       clearTimeout(minuteur);
       galerie.classList.remove('est-en-lecture');
       if (!auto || enPause || !visible || document.hidden) return;
+      if (variante && variante.classList.contains('est-active')) return; // photo de variante affichée
       void galerie.offsetWidth; // redémarre la petite barre de temps sous la vignette
       galerie.classList.add('est-en-lecture');
       galerie.style.setProperty('--duree-photo', DUREE_PHOTO + 'ms');
       minuteur = setTimeout(function () { afficher(actuelle + 1); }, DUREE_PHOTO);
     };
     var pause = function (oui) { enPause = oui; relancer(); };
+    // Une photo de variante est affichée : le diaporama attend que le client reprenne la main
+    galerieControle.pause = function () { relancer(); };
 
     galerie.addEventListener('click', function (e) {
       var vignette = e.target.closest('[data-photo]');
@@ -145,21 +167,32 @@
     '<p>Tenir hors de portée des enfants et des animaux. Ne jamais laisser une flamme ou un appareil chauffant sans surveillance.</p>') : '';
   var faq = CATALOGUE.faqCommune.map(function (item) { return accordeon(B.echapper(item.q), '<p>' + B.echapper(remplacer(item.r)) + '</p>'); }).join('');
 
+  /* Choix des variantes : une rangée de pastilles par option (parfum, couleur, taille…) */
+  var blocOptions = options.length ? '<div class="options-produit">' + options.map(function (o, io) {
+    return '<fieldset class="option-produit"><legend>' + B.echapper(o.nom) + ' : <strong data-option-choisie="' + io + '">' + B.echapper(choix[o.nom]) + '</strong></legend>' +
+      '<div class="option-produit__valeurs">' + o.valeurs.map(function (v, iv) {
+        return '<button class="puce' + (v.photo ? ' puce--photo' : '') + '" type="button" data-option="' + io + '" data-valeur="' + iv + '" aria-pressed="' + (v.nom === choix[o.nom]) + '">' +
+          (v.photo ? '<img src="' + B.echapper(v.photo) + '" alt="" loading="lazy" width="68" height="68">' : '') + B.echapper(v.nom) + '</button>';
+      }).join('') + '</div></fieldset>';
+  }).join('') + '</div>' : '';
+  var choixJson = function () { return B.echapper(JSON.stringify(choix)); };
+
   var achat = p.abonnement
     ? '<div class="emplacement-abonnement"><strong>Emplacement de l\'application d\'abonnement</strong><br>' +
       'Sur Shopify, une application d\'abonnement affichera ici le choix de la formule (encens ou bougies) et la fréquence de livraison.</div>' +
       '<button class="bouton bouton--plein bouton--bloc" type="button" disabled data-bouton-principal>Bientôt disponible</button>'
     : '<div class="achat">' +
         '<div class="quantite"><button type="button" data-quantite-moins aria-label="Retirer un">−</button><output data-quantite-valeur>1</output><button type="button" data-quantite-plus aria-label="Ajouter un">+</button></div>' +
-        '<button class="bouton bouton--plein" type="button" data-ajouter="' + id + '" data-quantite="1" data-bouton-principal>Ajouter au panier</button>' +
+        '<button class="bouton bouton--plein" type="button" data-ajouter="' + id + '" data-choix="' + choixJson() + '" data-quantite="1" data-bouton-principal>Ajouter au panier</button>' +
       '</div>';
 
   document.querySelector('[data-infos]').innerHTML =
     '<p class="surtitre">' + B.echapper(categorie) + '</p>' +
     '<h1 class="fiche__nom">' + nom + '</h1>' +
-    '<p class="fiche__prix">' + prixTexte + '</p>' +
+    '<p class="fiche__prix" data-prix-fiche>' + prixTexte + '</p>' +
     '<p class="fiche__accroche">' + B.echapper(p.accroche) + '</p>' +
     '<ul class="points-forts">' + p.pointsForts.map(function (point) { return '<li>' + B.icone('coche') + '<span>' + B.echapper(point) + '</span></li>'; }).join('') + '</ul>' +
+    blocOptions +
     (p.abonnement ? '' : '<div class="livraison-estimee">' + B.icone('camion') + '<span>' + livraison + '</span></div>') +
     achat +
     '<ul class="reassurance-mini">' +
@@ -188,10 +221,26 @@
 
   /* ---------- 4. Barre d'achat collante (mobile) : visible tant que le bouton principal est hors de l'écran ---------- */
   var barre = document.querySelector('[data-barre-achat]');
-  barre.innerHTML = '<div class="barre-achat__infos"><p class="barre-achat__nom">' + nom + '</p><p class="barre-achat__prix">' + prixTexte + '</p></div>' +
+  barre.innerHTML = '<div class="barre-achat__infos"><p class="barre-achat__nom">' + nom + '</p><p class="barre-achat__prix" data-prix-barre>' + prixTexte + '</p></div>' +
     (p.abonnement
       ? '<button class="bouton bouton--plein" type="button" disabled>Bientôt disponible</button>'
-      : '<button class="bouton bouton--plein" type="button" data-ajouter="' + id + '" data-quantite="1">Ajouter au panier</button>');
+      : '<button class="bouton bouton--plein" type="button" data-ajouter="' + id + '" data-choix="' + choixJson() + '" data-quantite="1">Ajouter au panier</button>');
+
+  /* Le client choisit une variante : prix, libellé, photo et boutons d'achat suivent */
+  document.querySelector('[data-infos]').addEventListener('click', function (e) {
+    var bouton = e.target.closest('[data-option]');
+    if (!bouton) return;
+    var o = options[Number(bouton.dataset.option)];
+    var v = o.valeurs[Number(bouton.dataset.valeur)];
+    choix[o.nom] = v.nom;
+    bouton.parentNode.querySelectorAll('.puce').forEach(function (b) { b.setAttribute('aria-pressed', String(b === bouton)); });
+    document.querySelector('[data-option-choisie="' + bouton.dataset.option + '"]').textContent = v.nom;
+    var texte = B.euros(prixActuel());
+    document.querySelector('[data-prix-fiche]').innerHTML = texte;
+    document.querySelector('[data-prix-barre]').innerHTML = texte;
+    document.querySelectorAll('[data-ajouter="' + id + '"]').forEach(function (b) { b.dataset.choix = JSON.stringify(choix); });
+    if (v.photo) montrerVariante(v.photo);
+  });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (entrees) {
       var visible = !entrees[0].isIntersecting;
@@ -213,9 +262,19 @@
     duo.innerHTML = '<div class="duo" data-apparition>' +
       '<div><p class="surtitre">À associer avec</p><h2 class="titre-3">Le duo parfait</h2></div>' +
       '<div class="duo__produits">' + vignetteDuo(id, false) + '<span class="duo__plus" aria-hidden="true">+</span>' + vignetteDuo(p.associe, true) + '</div>' +
-      '<div class="duo__total"><p>Les deux : <strong>' + B.euros(p.prix + associe.prix) + '</strong></p>' +
-        '<button class="bouton bouton--plein" type="button" data-ajouter="' + id + ',' + p.associe + '">Ajouter les deux au panier</button></div>' +
+      '<div class="duo__total"><p>Les deux : <strong data-prix-duo>' + B.euros(prixActuel() + associe.prix) + '</strong></p>' +
+        '<button class="bouton bouton--plein" type="button" data-ajouter-duo>Ajouter les deux au panier</button></div>' +
     '</div>';
+    // Le produit de la page avec la variante choisie + le produit associé dans sa première variante
+    duo.querySelector('[data-ajouter-duo]').addEventListener('click', function () {
+      if (!window.PANIER) return;
+      window.PANIER.ajouter(id, 1, choix);
+      window.PANIER.ajouter(p.associe, 1, CATALOGUE.choixParDefaut(associe));
+      window.PANIER.ouvrir();
+    });
+    document.querySelector('[data-infos]').addEventListener('click', function (e) {
+      if (e.target.closest('[data-option]')) duo.querySelector('[data-prix-duo]').textContent = B.euros(prixActuel() + associe.prix);
+    });
   }
 
   /* ---------- 6. Produits similaires : même catégorie, puis même collection, puis le reste ---------- */
@@ -232,6 +291,11 @@
     brand: { '@type': 'Brand', name: CONFIG.nom },
     offers: { '@type': 'Offer', priceCurrency: 'EUR', price: (p.prix / 100).toFixed(2), url: location.href }
   };
+  if (CATALOGUE.prixVariables(p)) {
+    var tousLesPrix = [];
+    options.forEach(function (o) { o.valeurs.forEach(function (v) { if (typeof v.prix === 'number') tousLesPrix.push(v.prix); }); });
+    donnees.offers = { '@type': 'AggregateOffer', priceCurrency: 'EUR', lowPrice: (Math.min.apply(null, tousLesPrix) / 100).toFixed(2), highPrice: (Math.max.apply(null, tousLesPrix) / 100).toFixed(2), url: location.href };
+  }
   if (p.photos.length) donnees.image = p.photos.map(function (src) { return new URL(src, location.href).href; });
   if (CONFIG.paiementActif) donnees.offers.availability = 'https://schema.org/InStock';
   var fil = {

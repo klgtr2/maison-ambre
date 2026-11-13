@@ -26,27 +26,38 @@
   var message = tiroir.querySelector('.tiroir-panier__message');
 
   /* ---------- Contenu du panier ---------- */
+  // Une ligne du panier = un produit + une variante (parfum, couleur…) : { id, choix, quantite }
+  var cle = function (a) { return a.id + '|' + JSON.stringify(a.choix || {}); };
   var lire = function () {
     try {
       var donnees = JSON.parse(localStorage.getItem(CLE)) || [];
-      return donnees.filter(function (a) { return CATALOGUE.produits[a.id] && a.quantite > 0; });
+      return donnees.filter(function (a) { return CATALOGUE.produits[a.id] && a.quantite > 0; }).map(function (a) {
+        var p = CATALOGUE.produits[a.id];
+        // Variante absente ou disparue du catalogue : on reprend la première variante
+        if (!CATALOGUE.choixValide(p, a.choix)) a.choix = CATALOGUE.choixParDefaut(p);
+        return a;
+      });
     } catch (e) { return []; }
   };
   var articles = lire();
   var sauver = function () { try { localStorage.setItem(CLE, JSON.stringify(articles)); } catch (e) { /* rien */ } };
+  var prixArticle = function (a) { return CATALOGUE.prixVariante(CATALOGUE.produits[a.id], a.choix); };
   var total = function () {
-    return articles.reduce(function (somme, a) { return somme + CATALOGUE.produits[a.id].prix * a.quantite; }, 0);
+    return articles.reduce(function (somme, a) { return somme + prixArticle(a) * a.quantite; }, 0);
   };
   var nombre = function () { return articles.reduce(function (somme, a) { return somme + a.quantite; }, 0); };
 
   /* ---------- Affichage ---------- */
   var ligne = function (article, nouvelle) {
     var p = CATALOGUE.produits[article.id];
-    return '<li class="ligne-panier' + (nouvelle ? ' ligne-panier--nouvelle' : '') + '" data-id="' + article.id + '">' +
-      '<div class="ligne-panier__visuel">' + B.visuelProduit(p) + '</div>' +
+    var photo = CATALOGUE.photoVariante(p, article.choix);
+    var libelle = CATALOGUE.libelleChoix(p, article.choix);
+    return '<li class="ligne-panier' + (nouvelle ? ' ligne-panier--nouvelle' : '') + '" data-cle="' + B.echapper(cle(article)) + '">' +
+      '<div class="ligne-panier__visuel">' + (photo ? '<img src="' + B.echapper(photo) + '" alt="' + B.echapper(p.nom) + '" loading="lazy" width="800" height="800">' : B.visuelProduit(p)) + '</div>' +
       '<div class="ligne-panier__infos">' +
         '<a class="ligne-panier__nom" href="' + CATALOGUE.lienProduit(article.id) + '">' + B.echapper(p.nom) + '</a>' +
-        '<span class="ligne-panier__prix">' + B.euros(p.prix * article.quantite) + '</span>' +
+        (libelle ? '<span class="ligne-panier__variante">' + B.echapper(libelle) + '</span>' : '') +
+        '<span class="ligne-panier__prix">' + B.euros(prixArticle(article) * article.quantite) + '</span>' +
         '<div class="quantite">' +
           '<button type="button" data-action="moins" aria-label="Retirer un exemplaire">−</button>' +
           '<output>' + article.quantite + '</output>' +
@@ -57,8 +68,8 @@
     '</li>';
   };
 
-  var rendre = function (idNouveau) {
-    liste.innerHTML = articles.map(function (a) { return ligne(a, a.id === idNouveau); }).join('');
+  var rendre = function (cleNouvelle) {
+    liste.innerHTML = articles.map(function (a) { return ligne(a, cle(a) === cleNouvelle); }).join('');
     tiroir.classList.toggle('est-vide', articles.length === 0);
 
     var montant = total();
@@ -103,14 +114,16 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fermer(); });
 
   /* ---------- Ajouter, modifier, retirer ---------- */
-  var ajouter = function (id, quantite) {
+  // choix : variante voulue ({ Parfum: 'Rose' }) ; absent ou invalide = première variante
+  var ajouter = function (id, quantite, choix) {
     var produit = CATALOGUE.produits[id];
     if (!produit || produit.abonnement) return;
-    var article = articles.filter(function (a) { return a.id === id; })[0];
-    if (article) article.quantite = Math.min(article.quantite + quantite, MAX);
-    else articles.push({ id: id, quantite: Math.min(quantite, MAX) });
+    var nouvel = { id: id, choix: CATALOGUE.choixValide(produit, choix) ? choix : CATALOGUE.choixParDefaut(produit), quantite: 0 };
+    var article = articles.filter(function (a) { return cle(a) === cle(nouvel); })[0];
+    if (!article) { article = nouvel; articles.push(article); }
+    article.quantite = Math.min(article.quantite + (quantite || 1), MAX);
     sauver();
-    rendre(id);
+    rendre(cle(article));
     rebondir();
   };
 
@@ -119,15 +132,17 @@
     if (!declencheur) return;
     var ids = declencheur.dataset.ajouter.split(',');
     var quantite = parseInt(declencheur.dataset.quantite || '1', 10) || 1;
-    ids.forEach(function (id) { ajouter(id.trim(), quantite); });
+    var choix = null;
+    try { choix = declencheur.dataset.choix ? JSON.parse(declencheur.dataset.choix) : null; } catch (err) { choix = null; }
+    ids.forEach(function (id) { ajouter(id.trim(), quantite, ids.length === 1 ? choix : null); });
     ouvrir();
   });
 
   liste.addEventListener('click', function (e) {
     var action = e.target.closest('[data-action]');
     if (!action) return;
-    var id = action.closest('.ligne-panier').dataset.id;
-    var article = articles.filter(function (a) { return a.id === id; })[0];
+    var cleLigne = action.closest('.ligne-panier').dataset.cle;
+    var article = articles.filter(function (a) { return cle(a) === cleLigne; })[0];
     if (!article) return;
     if (action.dataset.action === 'plus') article.quantite = Math.min(article.quantite + 1, MAX);
     if (action.dataset.action === 'moins') article.quantite -= 1;

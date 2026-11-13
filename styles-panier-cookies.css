@@ -40,6 +40,7 @@
 .ligne-panier__infos { display: grid; gap: 6px; min-width: 0; }
 .ligne-panier__nom { font-size: 0.92rem; font-weight: 600; line-height: 1.35; text-decoration: none; }
 .ligne-panier__prix { font-size: 0.88rem; color: var(--gris); }
+.ligne-panier__variante { font-size: 0.8rem; line-height: 1.35; color: var(--sauge-fonce); }
 .ligne-panier .quantite { width: max-content; }
 .ligne-panier .quantite button { width: 34px; height: 36px; font-size: 1rem; }
 .ligne-panier__retirer { align-self: start; font-size: 0.8rem; color: var(--gris); text-decoration: underline; }
