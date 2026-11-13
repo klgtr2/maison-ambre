@@ -1,128 +1,149 @@
 /* =========================================================
-   MAISON AMBRE — Catalogue des produits et règles de livraison
-   SOURCE UNIQUE : ce fichier alimente le panier, les pages produits,
-   le menu des univers ET le paiement Stripe (netlify/functions/creer-paiement.js).
-   - Prix en centimes : 129000 = 1 290,00 €.
-   - Le « nom » doit rester identique au texte data-ajout-panier de index.html.
-   - type « meuble » ou « senteur » : sert au calcul de la livraison.
-   - image : illustration (dessin) ; photo : photo du produit (prioritaire si renseignée).
-
-   PHOTOS PROVISOIRES : photos gratuites Unsplash (licence Unsplash, usage commercial
-   autorisé), dans images/photos. Elles montrent des produits proches, pas les vôtres :
-   remplacez-les par vos propres photos (même nom de fichier) avant de vendre.
-   Sources (https://images.unsplash.com/...) : canapé photo-1638962502979-05d81dcaa096,
-   chaise photo-1705320678447-78c5fe2615a7, porte-manteau photo-1766634001794-b3003f486954,
-   enfilade photo-1696774278451-c6ee5d685839, table photo-1717416697617-35e85462f812,
-   diffuseur photo-1766984702326-1340e8dd38f0, bougie photo-1714228499605-367154d9bdb2,
-   encens photo-1627769916425-74c2344a3439.
+   CATALOGUE — collections et produits de la boutique
+   Source unique : il alimente l'accueil, les pages collection,
+   les pages produit et le panier.
+   - Prix en centimes : 1490 = 14,90 €.
+   - photos : laissez [] tant que vous n'avez pas les photos produits ;
+     ajoutez ensuite par exemple ['images/produits/fontaine-1.webp'].
+   - associe : le produit proposé dans le bloc « À associer avec ».
+   - securite : true = afficher le bloc « Informations de sécurité » (étiquetage CLP).
+   Les textes de vente complets, prêts pour Shopify, sont dans descriptions-produits.md.
    ========================================================= */
-var CATALOGUE_MAISON_AMBRE = {
-  /* Les univers, dans l'ordre du menu */
-  univers: [
-    { id: 'canapes', nom: 'Canapés' },
-    { id: 'chaises', nom: 'Chaises' },
-    { id: 'porte-manteaux', nom: 'Porte-manteaux' },
-    { id: 'meubles', nom: 'Meubles de maison' },
-    { id: 'parfums', nom: "Parfums d'ambiance" },
-    { id: 'encens', nom: 'Encens' }
+var CATALOGUE = {
+  collections: [
+    {
+      id: 'encens-parfums-ambiance',
+      nom: "Encens & parfums d'ambiance",
+      accroche: 'Fumées douces, bougies et senteurs pour faire de chaque pièce un cocon.',
+      image: 'images/ambiance/collection-encens-parfums.webp',
+      alt: "Deux cônes d'encens qui fument sur un fond sombre"
+    },
+    {
+      id: 'coffrets-cadeaux',
+      nom: 'Coffrets cadeaux',
+      accroche: "Des attentions toutes prêtes, à offrir ou à s'offrir.",
+      image: 'images/ambiance/collection-coffrets-cadeaux.webp',
+      alt: 'Deux bougies dans des pots en verre ambré'
+    }
   ],
 
+  categories: {
+    encens: 'Encens',
+    bruleurs: 'Brûle-encens & porte-encens',
+    bougies: 'Bougies',
+    diffuseurs: 'Diffuseurs',
+    brumes: 'Brumes & sprays',
+    fondants: 'Fondants',
+    coffrets: 'Coffrets',
+    abonnements: 'Abonnements'
+  },
+
   produits: {
-    'canape-nuage': {
-      nom: 'Canapé Nuage', prix: 129000, type: 'meuble', univers: 'canapes',
-      image: 'images/illustration-canape.svg', photo: 'images/photos/photo-canape-nuage.jpg',
-      accroche: "Un moelleux enveloppant pour s'y lover comme dans un nuage.",
-      description: "Trois places généreuses et un velours côtelé doux au toucher : Nuage invite à ralentir. Le canapé idéal pour se retrouver, lire ou recevoir, du café du matin aux longues soirées.",
-      details: [['Places', '3'], ['Revêtement', 'Velours côtelé']]
+    'cones-encens-reflux-lot-3': {
+      nom: "Lot de 3 boîtes de cônes d'encens à reflux", prix: 1490,
+      collection: 'encens-parfums-ambiance', categorie: 'encens', photos: [], associe: 'fontaine-encens-reflux-ceramique',
+      accroche: "Faites couler la fumée en cascade, comme une petite source apaisante.",
+      description: "Ces cônes à reflux libèrent une fumée qui descend au lieu de monter. Posés sur un brûle-encens à reflux, ils créent une cascade hypnotique qui transforme n'importe quel coin de la maison en espace de calme. Le lot réunit trois boîtes pour varier les plaisirs.",
+      pointsForts: ['Effet cascade avec un brûle-encens à reflux', 'Trois boîtes pour varier les ambiances', 'Idéal pour la détente et la méditation'],
+      conseil: "Allumez la pointe du cône, laissez la flamme prendre quelques secondes puis soufflez-la. Posez le cône sur un brûle-encens à reflux : la fumée s'écoule vers le bas. Utilisez-le dans une pièce aérée, à l'abri des courants d'air."
     },
-    'chaise-alba': {
-      nom: 'Chaise Alba', prix: 18900, type: 'meuble', univers: 'chaises',
-      image: 'images/illustration-chaise.svg', photo: 'images/photos/photo-chaise-alba.jpg',
-      accroche: "Le chêne et le lin réunis pour des repas qui s'éternisent.",
-      description: "Alba associe la robustesse du chêne à la douceur d'un lin couleur sauge. Une chaise pensée pour les repas qui s'éternisent, aussi belle autour de la table que seule dans une entrée.",
-      details: [['Matières', 'Chêne et lin'], ['Coloris', 'Sauge']]
+    'fontaine-encens-reflux-ceramique': {
+      nom: 'Fontaine brûle-encens à reflux en céramique', prix: 2490, vedette: true,
+      collection: 'encens-parfums-ambiance', categorie: 'bruleurs', photos: [], associe: 'cones-encens-reflux-lot-3',
+      accroche: 'Une cascade de fumée apaisante, sculptée dans la céramique.',
+      description: "Allumez un cône à reflux et posez-le au sommet : la fumée glisse lentement le long de la céramique, comme une source qui s'écoule. Un objet déco apaisant, aussi beau allumé qu'éteint, qui apporte une touche zen à votre salon ou à votre bureau.",
+      pointsForts: ['En céramique', 'Effet cascade avec les cônes à reflux', 'Bel objet déco, même éteint'],
+      conseil: "Posez un cône à reflux allumé (flamme soufflée) au sommet de la fontaine : la fumée glisse le long de la céramique. Placez-la sur une surface stable, à l'abri des courants d'air, et videz les cendres une fois refroidie."
     },
-    'porte-manteau-sylve': {
-      nom: 'Porte-manteau Sylve', prix: 14500, type: 'meuble', univers: 'porte-manteaux',
-      image: 'images/illustration-porte-manteau.svg', photo: 'images/photos/photo-porte-manteau-sylve.jpg',
-      accroche: "Il habille l'entrée et accueille vos manteaux avec élégance.",
-      description: "En frêne massif, Sylve accueille manteaux, sacs et écharpes dès l'entrée. Une pièce sobre et chaleureuse qui donne du caractère à votre intérieur, au premier regard.",
-      details: [['Bois', 'Frêne massif']]
+    'batonnets-encens-lot-3': {
+      nom: "Lot de 3 boîtes de bâtonnets d'encens", prix: 1390,
+      collection: 'encens-parfums-ambiance', categorie: 'encens', photos: [], associe: 'porte-encens-ceramique-bois',
+      accroche: 'Le rituel classique, en trois boîtes à alterner selon vos envies.',
+      description: "Le geste simple qui change l'ambiance d'une pièce : allumer un bâtonnet, souffler la flamme et laisser la fumée parfumer doucement l'air. Trois boîtes pour alterner selon les moments de la journée, de la lecture du matin au calme du soir.",
+      pointsForts: ['Trois boîtes de bâtonnets', 'Parfait pour lire, se détendre ou méditer', "S'utilise avec un porte-encens"],
+      conseil: "Allumez l'extrémité du bâtonnet, soufflez la flamme dès qu'elle a pris, puis plantez-le dans un porte-encens posé sur une surface résistante à la chaleur. Aérez la pièce après utilisation."
     },
-    'enfilade-lune': {
-      nom: 'Enfilade Lune', prix: 98000, type: 'meuble', univers: 'meubles',
-      image: 'images/illustration-enfilade.svg', photo: 'images/photos/photo-enfilade-lune.jpg',
-      accroche: 'Noyer et cannage : tout se range, tout reste beau.',
-      description: "La chaleur du noyer rencontre la légèreté du cannage. Lune range vaisselle, livres et souvenirs avec élégance, dans le salon comme dans la salle à manger.",
-      details: [['Matières', 'Noyer et cannage']]
+    'porte-encens-ceramique-bois': {
+      nom: 'Porte-encens en céramique ou en bois', prix: 1490,
+      collection: 'encens-parfums-ambiance', categorie: 'bruleurs', photos: [], associe: 'batonnets-encens-lot-3',
+      accroche: 'Le petit objet qui accueille vos bâtonnets avec élégance.',
+      description: "Sobre et pratique, ce porte-encens maintient le bâtonnet et recueille les cendres. En céramique ou en bois selon le modèle, il trouve naturellement sa place sur une étagère, un bureau ou une table de chevet.",
+      pointsForts: ['En céramique ou en bois, selon le modèle', 'Recueille les cendres', 'Format compact et discret'],
+      conseil: "Plantez le bâtonnet dans l'orifice et inclinez-le au-dessus du support pour que les cendres tombent dessus. Posez-le sur une surface stable, loin de tout objet inflammable."
     },
-    'table-appoint-galet': {
-      nom: "Table d'appoint Galet", prix: 26000, type: 'meuble', univers: 'meubles',
-      image: 'images/illustration-table-appoint.svg', photo: 'images/photos/photo-table-appoint-galet.jpg',
-      accroche: 'La touche minérale du travertin, toujours à portée de main.',
-      description: "Le travertin, pierre naturelle aux veinures uniques, donne à Galet une présence à la fois minérale et douce. À poser près du canapé ou du lit, pour une tasse, un livre ou une bougie.",
-      details: [['Matière', 'Travertin']]
+    'bougie-parfumee-cire-soja': {
+      nom: 'Bougie parfumée à la cire de soja', prix: 2190, vedette: true, securite: true,
+      collection: 'encens-parfums-ambiance', categorie: 'bougies', photos: [], associe: 'diffuseur-batonnets-100ml',
+      accroche: 'Une flamme douce et un parfum qui réchauffe toute la pièce.',
+      description: "Coulée dans une cire de soja, cette bougie diffuse une lumière douce et un parfum enveloppant. La compagne idéale des soirées cocooning, d'un bain chaud ou d'un dîner tranquille.",
+      pointsForts: ['Cire de soja', 'Lumière douce et chaleureuse', 'Parfaite pour les soirées cocooning'],
+      conseil: "Lors du premier allumage, laissez la cire fondre jusqu'aux bords pour éviter l'effet « tunnel ». Recoupez la mèche avant chaque utilisation et ne laissez jamais une bougie allumée sans surveillance."
     },
-    'diffuseur-figue-cedre': {
-      nom: 'Diffuseur Figue & Cèdre', prix: 3900, type: 'senteur', univers: 'parfums',
-      image: 'images/illustration-parfum-ambiance.svg', photo: 'images/photos/photo-diffuseur-figue-cedre.jpg',
-      accroche: 'La fraîcheur de la figue, la chaleur du cèdre, jour et nuit.',
-      description: "La fraîcheur verte de la figue rencontre la chaleur boisée du cèdre. Posé dans l'entrée ou le salon, ce diffuseur parfume votre intérieur en continu, sans flamme.",
-      details: [['Contenance', '200 ml'], ['Notes', 'Figue, cèdre']]
+    'diffuseur-batonnets-100ml': {
+      nom: 'Diffuseur à bâtonnets 100 ml', prix: 2190, vedette: true, securite: true,
+      collection: 'encens-parfums-ambiance', categorie: 'diffuseurs', photos: [], associe: 'bougie-parfumee-cire-soja',
+      accroche: 'Un parfum continu, sans flamme, pour une maison qui sent bon.',
+      description: "Plongez les bâtonnets dans le flacon de 100 ml : ils diffusent le parfum en continu, sans flamme ni électricité. Il suffit de les retourner de temps en temps pour raviver la senteur, dans l'entrée, le salon ou la salle de bain.",
+      pointsForts: ['Flacon de 100 ml', 'Diffusion continue, sans flamme', "Idéal pour l'entrée, le salon ou la salle de bain"],
+      conseil: "Plongez les bâtonnets dans le flacon et retournez-les après quelques heures pour lancer la diffusion. Retournez-les ensuite de temps en temps pour raviver le parfum. Gardez le flacon hors de portée des enfants."
     },
-    'bougie-ambre-vanille': {
-      nom: 'Bougie Ambre & Vanille', prix: 3200, type: 'senteur', univers: 'parfums',
-      image: 'images/illustration-bougie-parfumee.svg', photo: 'images/photos/photo-bougie-ambre-vanille.jpg',
-      accroche: "Une lumière douce et des notes chaudes d'ambre et de vanille.",
-      description: "Coulée dans une cire végétale, cette bougie diffuse des notes chaudes d'ambre et de vanille pendant 50 heures. Une lumière douce pour les soirées d'hiver comme pour les dîners entre amis.",
-      details: [['Cire', 'Végétale'], ['Durée de combustion', '50 h'], ['Notes', 'Ambre, vanille']]
+    'brume-oreiller-spray-ambiance': {
+      nom: "Brume d'oreiller et spray d'ambiance", prix: 1690, securite: true,
+      collection: 'encens-parfums-ambiance', categorie: 'brumes', photos: [], associe: 'bougie-parfumee-cire-soja',
+      accroche: 'Quelques pulvérisations pour un cocon de douceur.',
+      description: "Vaporisée sur l'oreiller, les rideaux ou dans l'air, cette brume installe une atmosphère douce en un instant. Un petit rituel avant de dormir, ou pour rafraîchir une pièce en quelques secondes.",
+      pointsForts: ["Sur l'oreiller, le linge ou dans l'air", 'Effet immédiat', 'Format pratique à garder près du lit'],
+      conseil: "Agitez, puis vaporisez à environ 30 cm de l'oreiller, des rideaux ou dans la pièce. Évitez le contact avec les yeux et testez d'abord sur une petite zone de tissu."
     },
-    'encens-santal-myrrhe': {
-      nom: 'Encens Santal & Myrrhe', prix: 1800, type: 'senteur', univers: 'encens',
-      image: 'images/illustration-encens.svg', photo: 'images/photos/photo-encens-santal-myrrhe.jpg',
-      accroche: 'Des notes profondes de santal et de myrrhe pour vos moments de calme.',
-      description: "Des notes profondes de santal et de myrrhe pour accompagner vos moments de calme : lecture, méditation ou fin de journée. Livré avec 40 bâtonnets et leur support.",
-      details: [['Contenu', '40 bâtonnets + support'], ['Notes', 'Santal, myrrhe']]
+    'fondants-parfumes-brule-parfum': {
+      nom: 'Fondants parfumés et brûle-parfum', prix: 2190, securite: true,
+      collection: 'encens-parfums-ambiance', categorie: 'fondants', photos: [], associe: 'brume-oreiller-spray-ambiance',
+      accroche: "Le parfum d'une bougie, avec la douceur des fondants.",
+      description: "Faites chauffer un fondant dans le brûle-parfum : la cire fond doucement et libère son parfum dans toute la pièce. L'ensemble réunit le brûle-parfum et les fondants pour commencer tout de suite, et changer de senteur selon vos envies.",
+      pointsForts: ['Brûle-parfum et fondants réunis', 'Un parfum qui se diffuse en douceur', 'Facile de changer de senteur'],
+      conseil: "Déposez un fondant dans la coupelle du brûle-parfum et faites-le chauffer : la cire fond et libère son parfum. Laissez refroidir avant de changer de fondant et ne laissez jamais le brûle-parfum sans surveillance."
+    },
+    'diffuseur-ultrasonique-effet-flamme': {
+      nom: 'Diffuseur ultrasonique effet flamme', prix: 3490,
+      collection: 'encens-parfums-ambiance', categorie: 'diffuseurs', photos: [], associe: 'brume-oreiller-spray-ambiance',
+      accroche: "La magie d'une flamme, la douceur d'une brume parfumée.",
+      description: "Ce diffuseur ultrasonique crée une fine brume éclairée par un effet flamme hypnotisant. Ajoutez quelques gouttes d'huile parfumée dans l'eau : la pièce se parfume doucement, dans une lumière apaisante.",
+      pointsForts: ['Effet flamme lumineux', 'Brume fine et parfumée', 'Ambiance apaisante, idéale le soir'],
+      conseil: "Remplissez le réservoir d'eau jusqu'au repère, ajoutez quelques gouttes d'huile parfumée, puis allumez. Videz et séchez le réservoir régulièrement."
+    },
+    'coffret-encens-pret-a-offrir': {
+      nom: 'Coffret encens tout prêt (encens et porte-encens)', prix: 2490, vedette: true,
+      collection: 'coffrets-cadeaux', categorie: 'coffrets', photos: [], associe: 'bougie-parfumee-cire-soja',
+      accroche: 'Le cadeau zen par excellence, prêt à offrir.',
+      description: "Tout ce qu'il faut pour commencer : de l'encens et son porte-encens, réunis dans un coffret prêt à offrir. Une attention douce pour un anniversaire, une crémaillère, ou simplement pour se faire plaisir.",
+      pointsForts: ['Encens et porte-encens réunis', 'Prêt à offrir', 'Idéal pour débuter'],
+      conseil: "Allumez un bâtonnet d'encens, soufflez la flamme et plantez-le dans le porte-encens fourni. Posez l'ensemble sur une surface stable, dans une pièce aérée."
+    },
+    'abonnement-mensuel-encens-bougies': {
+      nom: 'Abonnement mensuel encens ou bougies', prix: 2490, abonnement: true,
+      collection: 'coffrets-cadeaux', categorie: 'abonnements', photos: [], associe: 'coffret-encens-pret-a-offrir',
+      accroche: 'Chaque mois, une nouvelle ambiance livrée chez vous.',
+      description: "Encens ou bougies : choisissez votre univers et recevez chaque mois une sélection pour faire vivre votre intérieur. Une petite surprise mensuelle, pour vous ou à offrir.",
+      pointsForts: ['Encens ou bougies, au choix', 'Une sélection chaque mois', 'À garder pour soi ou à offrir'],
+      conseil: "Choisissez votre formule (encens ou bougies) pour recevoir une sélection chaque mois. La durée et les conditions de résiliation seront précisées à l'ouverture des abonnements."
     }
   },
 
-  livraison: {
-    seuilOffert: 30000,   // livraison offerte à partir de 300 € d'achat
-    tarifSenteurs: 490,   // commande avec uniquement parfums, bougies ou encens : 4,90 €
-    tarifMeubles: 3900,   // commande qui contient au moins un meuble : 39 €
-    pays: ['FR', 'BE']    // pays de livraison acceptés (France, Belgique)
-  },
-
-  quantiteMax: 10         // quantité maximale par produit dans le panier
+  /* Questions posées sur toutes les fiches produit ({min}, {max}, {zone}, {retour} sont remplacés) */
+  faqCommune: [
+    { q: 'Quand vais-je recevoir ma commande ?', r: 'La livraison est estimée entre {min} et {max} jours ouvrés après votre commande, en {zone}.' },
+    { q: "Puis-je changer d'avis ?", r: 'Oui : vous disposez de {retour} jours après la réception pour nous retourner un article, dans les conditions de notre politique de retour.' }
+  ]
 };
 
-/* Calcule sous-total, livraison et total (en centimes) d'une liste [{ id, quantite }] */
-CATALOGUE_MAISON_AMBRE.calculer = function (articles) {
-  var produits = CATALOGUE_MAISON_AMBRE.produits;
-  var regles = CATALOGUE_MAISON_AMBRE.livraison;
-  var sousTotal = 0;
-  var avecMeuble = false;
-  articles.forEach(function (article) {
-    var produit = produits[article.id];
-    if (!produit) return;
-    sousTotal += produit.prix * article.quantite;
-    if (produit.type === 'meuble') avecMeuble = true;
+/* ---------- Petits outils pour les pages ---------- */
+CATALOGUE.produitsDeCollection = function (idCollection) {
+  return Object.keys(CATALOGUE.produits).filter(function (id) {
+    return !idCollection || idCollection === 'tous' || CATALOGUE.produits[id].collection === idCollection;
   });
-  var livraison = 0;
-  if (sousTotal > 0 && sousTotal < regles.seuilOffert) {
-    livraison = avecMeuble ? regles.tarifMeubles : regles.tarifSenteurs;
-  }
-  return { sousTotal: sousTotal, livraison: livraison, total: sousTotal + livraison, avecMeuble: avecMeuble };
 };
-
-/* Outils partagés par les pages : visuel à afficher, lien de la page produit */
-CATALOGUE_MAISON_AMBRE.visuel = function (id) {
-  var produit = CATALOGUE_MAISON_AMBRE.produits[id];
-  return produit ? (produit.photo || produit.image) : '';
+CATALOGUE.collection = function (idCollection) {
+  return CATALOGUE.collections.filter(function (c) { return c.id === idCollection; })[0] || null;
 };
-CATALOGUE_MAISON_AMBRE.lienProduit = function (id) {
-  return 'page-produit.html?produit=' + encodeURIComponent(id);
-};
-
-/* Permet au paiement Stripe (côté serveur) de lire ce même fichier */
-if (typeof module !== 'undefined' && module.exports) module.exports = CATALOGUE_MAISON_AMBRE;
+CATALOGUE.lienProduit = function (id) { return 'page-produit.html?produit=' + encodeURIComponent(id); };
+CATALOGUE.lienCollection = function (id) { return 'page-collection.html?collection=' + encodeURIComponent(id); };

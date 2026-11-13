@@ -1,0 +1,128 @@
+/* =========================================================
+   ACCUEIL — bannière, envies, collections, incontournables,
+   philosophie, engagements, avis clients, newsletter
+   ========================================================= */
+.section { padding-top: var(--espace-section); }
+
+/* ---------- Grande bannière d'ambiance ---------- */
+.banniere {
+  position: relative; overflow: hidden;
+  display: grid; align-items: end;
+  min-height: 86vh; min-height: min(86svh, 780px);
+  color: #fff;
+  background: var(--encre);
+}
+.banniere__image {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  animation: zoom-doux 20s ease-in-out infinite alternate;
+}
+.banniere::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(30, 24, 20, 0.1) 0%, rgba(30, 24, 20, 0.18) 40%, rgba(30, 24, 20, 0.66) 100%);
+}
+.banniere__contenu { position: relative; z-index: 1; display: grid; gap: 18px; max-width: 640px; padding: 120px 0 56px; }
+.banniere__contenu > * { animation: monter 0.9s var(--courbe) both; animation-delay: calc(0.15s + var(--i, 0) * 0.12s); }
+.banniere .surtitre { color: #EADCC9; }
+.banniere h1 em { color: #F2C6A5; }
+.banniere__texte { max-width: 46ch; font-size: 1.05rem; color: #F4EBDF; }
+.banniere__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+@media (min-width: 900px) {
+  .banniere { align-items: center; }
+  .banniere__contenu { padding: 140px 0 120px; }
+}
+
+/* ---------- Envies : accès rapides par type de produit ---------- */
+.envies { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px; }
+.envies::-webkit-scrollbar { display: none; }
+.envie {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 50px; padding: 0 18px 0 8px;
+  border: 1px solid var(--trait); border-radius: 999px;
+  background: var(--lin);
+  font-size: 0.92rem; font-weight: 600; text-decoration: none;
+  transition: border-color 0.3s, transform 0.35s var(--courbe);
+}
+.envie:hover { border-color: var(--encre); transform: translateY(-2px); }
+.envie__icone { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--beige); color: var(--sauge-fonce); }
+.envie__icone svg { width: 20px; height: 20px; }
+@media (min-width: 900px) { .envies { flex-wrap: wrap; justify-content: center; } }
+
+/* ---------- Collections mises en avant ---------- */
+.collections { display: grid; gap: 16px; }
+@media (min-width: 768px) { .collections { grid-template-columns: 1fr 1fr; gap: 24px; } }
+.carte-collection {
+  position: relative; overflow: hidden;
+  display: grid; align-items: end;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--rayon);
+  background: var(--encre); color: #fff;
+  text-decoration: none;
+}
+@media (min-width: 768px) { .carte-collection { aspect-ratio: 1 / 1.08; } }
+.carte-collection img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--courbe); }
+.carte-collection:hover img { transform: scale(1.06); }
+.carte-collection::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(30, 24, 20, 0) 35%, rgba(30, 24, 20, 0.62));
+}
+.carte-collection__texte { position: relative; z-index: 1; display: grid; gap: 8px; padding: 26px; }
+.carte-collection__texte p { max-width: 36ch; color: #F4EBDF; }
+.carte-collection .surtitre { color: #EADCC9; }
+.carte-collection .lien-fleche { margin-top: 4px; color: #fff; }
+
+/* ---------- Philosophie (photo + texte) ---------- */
+.philosophie { display: grid; gap: 28px; align-items: center; }
+@media (min-width: 900px) { .philosophie { grid-template-columns: 1fr 1fr; gap: 64px; } }
+.philosophie__image { overflow: hidden; aspect-ratio: 4 / 5; border-radius: var(--rayon); }
+.philosophie__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--courbe); }
+.philosophie__image:hover img { transform: scale(1.04); }
+.philosophie__texte { display: grid; gap: 16px; justify-items: start; }
+
+/* ---------- Pourquoi nous choisir ---------- */
+.engagements { display: grid; gap: 14px; }
+@media (min-width: 768px) { .engagements { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+.engagement {
+  display: grid; gap: 10px; align-content: start;
+  padding: 26px;
+  border: 1px solid var(--trait); border-radius: var(--rayon);
+  background: var(--lin);
+  transition: transform 0.4s var(--courbe), box-shadow 0.4s;
+}
+.engagement:hover { transform: translateY(-4px); box-shadow: var(--ombre-douce); }
+.engagement__icone { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--beige); color: var(--terracotta); }
+.engagement__icone svg { width: 26px; height: 26px; }
+.engagement h3 { font-size: 1.25rem; }
+.engagement p { font-size: 0.95rem; color: var(--gris); }
+
+/* ---------- Avis clients : vide tant qu'il n'y a pas de vrais avis ---------- */
+.avis-vide {
+  display: grid; justify-items: center; gap: 14px;
+  padding: clamp(32px, 6vw, 56px);
+  border: 1px dashed var(--bois); border-radius: var(--rayon);
+  background: var(--lin); text-align: center;
+}
+.avis-vide__etoiles { display: flex; gap: 6px; color: var(--bois); }
+.avis-vide__etoiles svg { width: 22px; height: 22px; }
+.avis-vide p { max-width: 48ch; color: var(--gris); }
+
+/* ---------- Newsletter ---------- */
+.newsletter { display: grid; overflow: hidden; border-radius: var(--rayon); background: var(--beige); }
+@media (min-width: 900px) { .newsletter { grid-template-columns: 1fr 1fr; } }
+.newsletter__image { position: relative; min-height: 240px; }
+.newsletter__image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.newsletter__contenu { display: grid; gap: 16px; align-content: center; padding: clamp(26px, 5vw, 56px); }
+.formulaire-newsletter { display: grid; gap: 12px; }
+.formulaire-newsletter__ligne { display: flex; flex-direction: column; gap: 10px; }
+.formulaire-newsletter input[type="email"] {
+  min-height: 52px; padding: 0 20px;
+  border: 1px solid var(--sable); border-radius: 999px;
+  background: var(--lin); font-size: 16px;
+}
+.formulaire-newsletter input[type="email"]:focus { outline: none; border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(169, 92, 59, 0.15); }
+@media (min-width: 560px) {
+  .formulaire-newsletter__ligne { flex-direction: row; }
+  .formulaire-newsletter__ligne input { flex: 1; }
+}
+
+@keyframes monter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }

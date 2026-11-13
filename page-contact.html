@@ -3,298 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contact — Maison Ambre</title>
-  <meta name="description" content="Une question sur un meuble, une senteur ou une commande ? Contactez Maison Ambre par e-mail, par téléphone ou avec le formulaire.">
-  <meta name="theme-color" content="#000000">
-
-  <!-- Active les animations seulement si JavaScript fonctionne -->
+  <title>Contact — NOM_BOUTIQUE</title>
+  <meta name="description" content="Une question sur un produit ou une commande ? Contactez NOM_BOUTIQUE par e-mail ou avec notre formulaire.">
+  <meta name="theme-color" content="#F7F2EA">
   <script>
     document.documentElement.classList.add('avec-js');
-    setTimeout(function () {
-      if (!window.MaisonAmbre) document.documentElement.classList.remove('avec-js');
-    }, 4000);
+    setTimeout(function () { if (!window.BOUTIQUE) document.documentElement.classList.remove('avec-js'); }, 4000);
   </script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..500&display=swap">
-
-  <!-- Feuilles de style -->
-  <link rel="stylesheet" href="styles-base-entete.css">
-  <link rel="stylesheet" href="styles-senteurs-avis-pied-de-page.css">
-  <link rel="stylesheet" href="animations-apparitions-survol.css">
-  <link rel="stylesheet" href="styles-panier.css">
-  <link rel="stylesheet" href="styles-page-contact.css">
-  <link rel="stylesheet" href="styles-menu-univers.css">
-  <link rel="stylesheet" href="styles-responsive-mobile.css">
-
-  <!-- Scripts -->
-  <script src="script-chargement-curseur-entete.js" defer></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Manrope:wght@400..700&display=swap">
+  <link rel="stylesheet" href="styles-base.css">
+  <link rel="stylesheet" href="styles-pages.css">
+  <link rel="stylesheet" href="styles-panier-cookies.css">
+  <script src="configuration-boutique.js" defer></script>
   <script src="catalogue-produits.js" defer></script>
-  <script src="script-effets-scroll.js" defer></script>
-  <script src="script-panier-paiement.js" defer></script>
-  <script src="script-boutique-interactions.js" defer></script>
-  <script src="script-page-contact.js" defer></script>
-  <script src="script-menu-univers.js" defer></script>
+  <script src="script-commun.js" defer></script>
+  <script src="script-panier.js" defer></script>
 </head>
-<body>
+<body data-page="contact">
+  <div data-entete style="min-height: 99px"></div>
 
-  <!-- ============ ICÔNES ============ -->
-  <svg class="sprite" aria-hidden="true">
-    <symbol id="icone-marque" viewBox="0 0 32 32"><path d="M6 29V15a10 10 0 0 1 20 0v14M16 29V19" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
-    <symbol id="icone-fleche" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-    <symbol id="icone-sac" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 7.5h13l-1 12.5h-11z"/><path d="M9 7.5a3 3 0 0 1 6 0"/></g></symbol>
-    <symbol id="icone-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M4.5 7l7.5 6 7.5-6"/></g></symbol>
-    <symbol id="icone-telephone" viewBox="0 0 24 24"><path d="M7.2 3.8l2.3 3.6-1.6 1.7a12 12 0 0 0 7 7l1.7-1.6 3.6 2.3-1 2.6c-.3.7-1 1.1-1.8 1A16 16 0 0 1 3.6 7.2c-.1-.8.3-1.5 1-1.8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
-    <symbol id="icone-livraison" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5h11v9H3zM14 9.5h3.5l3 3v3H14"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></g></symbol>
-  </svg>
+  <main id="contenu" class="conteneur">
+    <header class="entete-page">
+      <p class="surtitre">Contact</p>
+      <h1 class="titre-1">Une question ? <em>Écrivez-nous</em></h1>
+      <p>Un conseil sur un produit, une question sur votre commande ? Nous vous répondons avec plaisir, dans les meilleurs délais.</p>
+    </header>
 
-  <!-- Curseur personnalisé + barre de progression du scroll -->
-  <div class="curseur" aria-hidden="true">
-    <span class="curseur__anneau"><span class="curseur__texte">Voir</span></span>
-    <span class="curseur__point"></span>
-  </div>
-  <div class="barre-progression" aria-hidden="true"></div>
-
-  <!-- ============ EN-TÊTE ============ -->
-  <header class="entete">
-    <div class="entete__interieur">
-      <a href="index.html" class="marque" aria-label="Maison Ambre, retour à l'accueil">
-        <svg class="icone"><use href="#icone-marque"/></svg>
-      </a>
-
-      <nav class="navigation" aria-label="Navigation principale">
-        <a href="index.html#univers" class="nav-groupe">
-          <span class="nav-groupe__label">Boutique</span>
-          <span class="roulant"><span data-texte="Nos meubles">Nos meubles</span></span>
+    <div class="contact">
+      <!-- Coordonnées : renseignez-les dans configuration-boutique.js -->
+      <div class="contact__infos">
+        <a class="info-contact" href="page-contact.html" data-apparition>
+          <span class="info-contact__icone"><svg class="icone" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><use href="#i-email"/></svg></span>
+          <span><small>E-mail</small><strong data-config="email">[À COMPLÉTER : e-mail de contact]</strong></span>
         </a>
-        <a href="index.html#senteurs" class="nav-groupe">
-          <span class="nav-groupe__label">Senteurs</span>
-          <span class="roulant"><span data-texte="Parfums &amp; encens">Parfums &amp; encens</span></span>
+        <a class="info-contact" href="page-contact.html" data-apparition>
+          <span class="info-contact__icone"><svg class="icone" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><use href="#i-telephone"/></svg></span>
+          <span><small>Téléphone (facultatif)</small><strong data-config="telephone">[À COMPLÉTER : téléphone]</strong></span>
         </a>
-        <a href="page-contact.html" class="nav-groupe" aria-current="page">
-          <span class="nav-groupe__label">Maison</span>
-          <span class="roulant"><span data-texte="Nous contacter">Nous contacter</span></span>
+        <a class="info-contact" href="page-suivi-commande.html" data-apparition>
+          <span class="info-contact__icone"><svg class="icone" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><use href="#i-colis"/></svg></span>
+          <span><small>Une commande en cours ?</small><strong>Suivre mon colis</strong></span>
         </a>
-      </nav>
-
-      <div class="entete__actions">
-        <button class="icone-bouton panier" type="button" aria-label="Panier, 0 article">
-          <svg class="icone"><use href="#icone-sac"/></svg>
-          <span class="panier__compteur">0</span>
-        </button>
-        <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu-mobile">
-          <span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Menu plein écran (mobile) -->
-  <div class="menu-mobile" id="menu-mobile">
-    <nav class="menu-mobile__liens" aria-label="Menu mobile">
-      <a href="index.html" style="--i:0">Accueil</a>
-      <a href="index.html#univers" style="--i:1">Nos univers</a>
-      <a href="index.html#boutique" style="--i:2">Boutique</a>
-      <a href="index.html#senteurs" style="--i:3">Parfums &amp; encens</a>
-      <a href="page-contact.html" style="--i:4">Contact</a>
-    </nav>
-    <p class="menu-mobile__note">Livraison offerte dès 300 €</p>
-  </div>
-
-  <main class="page-contact">
-    <!-- ============ TITRE ============ -->
-    <section class="contact-hero">
-      <div class="bloc-titre">
-        <p class="bloc-titre__label" data-apparition="haut">Contact</p>
-        <h1 class="bloc-titre__mot" data-decoupe>Parlons de votre intérieur</h1>
-      </div>
-      <p class="contact-hero__texte" data-apparition="haut">Une question sur un meuble, une senteur ou une commande ? Écrivez-nous, appelez-nous ou laissez-nous un message : nous vous répondons avec plaisir.</p>
-    </section>
-
-    <!-- ============ COORDONNÉES + FORMULAIRE ============ -->
-    <section class="contact-grille">
-      <div class="contact-cartes" data-apparition-groupe="0.1">
-        <a class="carte-contact" href="mailto:maisonambre@gmail.com" data-apparition="haut">
-          <span class="carte-contact__icone"><svg class="icone"><use href="#icone-mail"/></svg></span>
-          <span class="carte-contact__label">E-mail</span>
-          <span class="carte-contact__valeur">maisonambre@gmail.com</span>
-          <span class="carte-contact__fleche" aria-hidden="true"><svg class="icone"><use href="#icone-fleche"/></svg></span>
+        <a class="info-contact" href="page-faq.html" data-apparition>
+          <span class="info-contact__icone"><svg class="icone" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><use href="#i-info"/></svg></span>
+          <span><small>Réponse immédiate</small><strong>Questions fréquentes</strong></span>
         </a>
-        <a class="carte-contact" href="tel:+33662488337" data-apparition="haut">
-          <span class="carte-contact__icone"><svg class="icone"><use href="#icone-telephone"/></svg></span>
-          <span class="carte-contact__label">Téléphone</span>
-          <span class="carte-contact__valeur">06 62 48 83 37</span>
-          <span class="carte-contact__fleche" aria-hidden="true"><svg class="icone"><use href="#icone-fleche"/></svg></span>
-        </a>
-        <div class="carte-contact" data-apparition="haut">
-          <span class="carte-contact__icone"><svg class="icone"><use href="#icone-livraison"/></svg></span>
-          <span class="carte-contact__label">Livraison</span>
-          <span class="carte-contact__valeur">France et Belgique</span>
-          <span class="carte-contact__detail">Expédition sous 48 h · Offerte dès 300 €</span>
-        </div>
       </div>
 
-      <!-- Formulaire : envoyé par Netlify Forms une fois le site sur Netlify ;
-           en attendant, il ouvre la messagerie du visiteur avec le message prêt -->
-      <form class="formulaire-contact" name="contact" method="POST" data-netlify="true" netlify-honeypot="champ-robot" data-apparition="haut">
-        <input type="hidden" name="form-name" value="contact">
-        <p class="visuellement-cache"><label>Ne pas remplir ce champ : <input name="champ-robot" tabindex="-1" autocomplete="off"></label></p>
-
-        <p class="formulaire-contact__titre">Écrivez-nous</p>
-
+      <!-- Formulaire : relié à Shopify au lancement (en attendant, il ouvre la messagerie du visiteur si l'e-mail est renseigné) -->
+      <form class="formulaire-page formulaire-contact" data-apparition>
+        <h2 class="titre-3">Envoyer un message</h2>
         <div class="champ">
-          <input id="contact-nom" name="nom" type="text" autocomplete="name" placeholder=" " required>
           <label for="contact-nom">Votre nom</label>
+          <input id="contact-nom" name="nom" type="text" autocomplete="name" required>
         </div>
         <div class="champ">
-          <input id="contact-courriel" name="courriel" type="email" autocomplete="email" placeholder=" " required>
-          <label for="contact-courriel">Votre e-mail</label>
+          <label for="contact-email">Votre e-mail</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required>
         </div>
-
-        <fieldset class="choix-sujet">
-          <legend>Votre demande concerne</legend>
-          <div class="choix-sujet__pastilles">
-            <label class="pastille-choix"><input type="radio" name="sujet" value="Un produit" checked><span>Un produit</span></label>
-            <label class="pastille-choix"><input type="radio" name="sujet" value="Une commande"><span>Une commande</span></label>
-            <label class="pastille-choix"><input type="radio" name="sujet" value="La livraison"><span>La livraison</span></label>
-            <label class="pastille-choix"><input type="radio" name="sujet" value="Autre chose"><span>Autre chose</span></label>
-          </div>
-        </fieldset>
-
         <div class="champ">
-          <textarea id="contact-message" name="message" rows="5" placeholder=" " required></textarea>
+          <label for="contact-sujet">Sujet</label>
+          <select id="contact-sujet" name="sujet">
+            <option>Question sur un produit</option>
+            <option>Ma commande</option>
+            <option>Retour ou remboursement</option>
+            <option>Autre demande</option>
+          </select>
+        </div>
+        <div class="champ">
           <label for="contact-message">Votre message</label>
+          <textarea id="contact-message" name="message" required></textarea>
         </div>
-
-        <label class="consentement">
-          <input type="checkbox" name="consentement" value="oui" required>
-          <span>J'accepte que Maison Ambre utilise ces informations pour répondre à ma demande.</span>
+        <label class="case">
+          <input type="checkbox" name="accord" required>
+          <span>J'accepte que mes informations soient utilisées pour répondre à ma demande (voir notre <a href="page-confidentialite.html">politique de confidentialité</a>).</span>
         </label>
-
-        <button class="pilule formulaire-contact__envoyer" type="submit" data-magnetique="0.2">
-          <span class="roulant"><span data-texte="Envoyer le message">Envoyer le message</span></span>
-        </button>
-        <p class="formulaire-contact__etat" role="status"></p>
-
-        <!-- Message affiché après l'envoi -->
-        <div class="contact-merci">
-          <span class="contact-merci__coche" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <p class="formulaire-contact__titre">Merci, message envoyé</p>
-          <p class="contact-merci__texte">Nous revenons vers vous très vite par e-mail.</p>
-        </div>
+        <button class="bouton bouton--plein" type="submit">Envoyer</button>
+        <p class="message-formulaire" role="status"></p>
       </form>
-    </section>
-
-    <!-- ============ QUESTIONS FRÉQUENTES (section claire) ============ -->
-    <section class="faq section-claire">
-      <div class="bloc-titre">
-        <p class="bloc-titre__label" data-apparition="haut">Questions fréquentes</p>
-        <h2 class="bloc-titre__mot" data-decoupe>Bon à savoir</h2>
-      </div>
-      <div class="faq__liste" data-apparition-groupe="0.08">
-        <details class="faq__question" data-apparition="haut">
-          <summary>Où livrez-vous ?<span class="faq__signe" aria-hidden="true"></span></summary>
-          <div class="faq__reponse"><p>Nous livrons en France et en Belgique.</p></div>
-        </details>
-        <details class="faq__question" data-apparition="haut">
-          <summary>Combien coûte la livraison ?<span class="faq__signe" aria-hidden="true"></span></summary>
-          <div class="faq__reponse"><p>Elle est offerte dès 300 € d'achat. En dessous, elle coûte 4,90 € pour une commande de parfums, bougies ou encens, et 39 € dès que la commande contient un meuble.</p></div>
-        </details>
-        <details class="faq__question" data-apparition="haut">
-          <summary>Sous quel délai ma commande est-elle expédiée ?<span class="faq__signe" aria-hidden="true"></span></summary>
-          <div class="faq__reponse"><p>Votre commande est expédiée sous 48 h.</p></div>
-        </details>
-        <details class="faq__question" data-apparition="haut">
-          <summary>Comment suivre vos nouveautés ?<span class="faq__signe" aria-hidden="true"></span></summary>
-          <div class="faq__reponse"><p>Inscrivez-vous à notre newsletter en bas de la <a class="lien-souligne" href="index.html#newsletter">page d'accueil</a> : nouveautés, senteurs de saison, ventes privées et -10 % sur votre première commande.</p></div>
-        </details>
-      </div>
-    </section>
+    </div>
   </main>
 
-  <!-- ============ PIED DE PAGE ============ -->
-  <footer class="pied" id="contact">
-    <div class="pied__grille">
-      <div class="pied__colonne">
-        <a href="index.html" class="marque" aria-label="Maison Ambre, retour à l'accueil"><svg class="icone"><use href="#icone-marque"/></svg></a>
-        <p class="pied__slogan">Des meubles qui durent, des parfums qui apaisent.</p>
-      </div>
-      <div class="pied__colonne">
-        <p class="pied__titre">Meubles</p>
-        <ul class="pied__liens">
-          <li><a class="lien-souligne" href="page-produit.html?produit=canape-nuage">Canapés</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=chaise-alba">Chaises</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=porte-manteau-sylve">Porte-manteaux</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=enfilade-lune">Meubles de maison</a></li>
-        </ul>
-      </div>
-      <div class="pied__colonne">
-        <p class="pied__titre">Senteurs</p>
-        <ul class="pied__liens">
-          <li><a class="lien-souligne" href="page-produit.html?produit=diffuseur-figue-cedre">Parfums d'ambiance</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=bougie-ambre-vanille">Bougies parfumées</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=encens-santal-myrrhe">Encens</a></li>
-        </ul>
-      </div>
-      <div class="pied__colonne">
-        <p class="pied__titre">Contact</p>
-        <ul class="pied__liens">
-          <li><a class="lien-souligne" href="mailto:maisonambre@gmail.com">maisonambre@gmail.com</a></li>
-          <li><a class="lien-souligne" href="tel:+33662488337">06 62 48 83 37</a></li>
-          <li><a class="lien-souligne" href="page-contact.html">Formulaire de contact</a></li>
-          <li class="pied__info">Expédition sous 48 h</li>
-        </ul>
-      </div>
-    </div>
-
-    <p class="pied__marque" aria-hidden="true">Maison Ambre</p>
-
-    <div class="pied__bas">
-      <p>© 2026 Maison Ambre — Tous droits réservés</p>
-      <a href="#" class="haut-de-page">Retour en haut <svg class="icone"><use href="#icone-fleche"/></svg></a>
-    </div>
-  </footer>
-
-  <!-- ============ PANIER (tiroir latéral) ============ -->
-  <div class="voile-panier" data-fermer-panier></div>
-  <aside class="tiroir-panier" id="tiroir-panier" aria-label="Votre panier" aria-hidden="true">
-    <div class="tiroir-panier__entete">
-      <p class="tiroir-panier__titre">Votre panier <span class="tiroir-panier__nombre">0</span></p>
-      <button class="tiroir-panier__fermer" type="button" aria-label="Fermer le panier" data-fermer-panier>
-        <span></span><span></span>
-      </button>
-    </div>
-
-    <ul class="tiroir-panier__liste" aria-live="polite"></ul>
-
-    <div class="tiroir-panier__vide">
-      <p>Votre panier est vide pour le moment.</p>
-      <a href="index.html#boutique" class="pilule" data-fermer-panier>
-        <span class="roulant"><span data-texte="Découvrir la boutique">Découvrir la boutique</span></span>
-      </a>
-    </div>
-
-    <div class="tiroir-panier__pied">
-      <div class="tiroir-panier__jauge" aria-hidden="true"><span></span></div>
-      <p class="tiroir-panier__astuce"></p>
-      <div class="tiroir-panier__ligne"><span>Sous-total</span><span data-montant="sousTotal">0 €</span></div>
-      <div class="tiroir-panier__ligne"><span>Livraison</span><span data-montant="livraison">Offerte</span></div>
-      <div class="tiroir-panier__ligne tiroir-panier__ligne--total"><span>Total</span><span data-montant="total">0 €</span></div>
-      <button class="pilule tiroir-panier__payer" type="button" data-payer>
-        <span class="roulant"><span data-texte="Payer en toute sécurité">Payer en toute sécurité</span></span>
-      </button>
-      <p class="tiroir-panier__message" role="status"></p>
-      <p class="note">Paiement sécurisé par Stripe · Livraison en France et en Belgique</p>
-    </div>
-  </aside>
-
-  <!-- Notification -->
-  <div class="notification" role="status" aria-live="polite">
-    <span class="notification__texte"></span>
-  </div>
-
+  <div data-pied></div>
 </body>
 </html>

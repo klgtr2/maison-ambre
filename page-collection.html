@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tous les produits — NOM_BOUTIQUE</title>
+  <meta name="description" content="Encens, brûle-encens, bougies, diffuseurs, brumes et coffrets cadeaux NOM_BOUTIQUE pour une maison cosy.">
+  <meta name="theme-color" content="#F7F2EA">
+  <script>
+    document.documentElement.classList.add('avec-js');
+    setTimeout(function () { if (!window.BOUTIQUE) document.documentElement.classList.remove('avec-js'); }, 4000);
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Manrope:wght@400..700&display=swap">
+  <link rel="stylesheet" href="styles-base.css">
+  <link rel="stylesheet" href="styles-boutique.css">
+  <link rel="stylesheet" href="styles-panier-cookies.css">
+  <script src="configuration-boutique.js" defer></script>
+  <script src="catalogue-produits.js" defer></script>
+  <script src="script-commun.js" defer></script>
+  <script src="script-panier.js" defer></script>
+  <script src="script-collection.js" defer></script>
+</head>
+<body data-page="collection">
+  <div data-entete style="min-height: 99px"></div>
+
+  <main id="contenu">
+    <!-- Bandeau de la collection (photo d'ambiance, titre, accroche) -->
+    <section class="bandeau-collection bandeau-collection--simple" data-bandeau-collection>
+      <div class="conteneur bandeau-collection__texte">
+        <p class="surtitre">Collection</p>
+        <h1 class="titre-1" data-titre-collection>Tous les produits</h1>
+        <p data-accroche-collection>Encens, bougies, diffuseurs et coffrets : toute notre sélection.</p>
+      </div>
+    </section>
+
+    <div class="conteneur">
+      <nav class="fil-ariane" aria-label="Fil d'Ariane">
+        <a href="index.html">Accueil</a><span aria-hidden="true">/</span><span data-fil-collection>Tous les produits</span>
+      </nav>
+
+      <!-- Filtres : catégorie, prix, tri -->
+      <div class="barre-filtres">
+        <div class="groupe-filtres" role="group" aria-label="Filtrer par catégorie" data-filtres-categories></div>
+        <div class="groupe-filtres" role="group" aria-label="Filtrer par prix" data-filtres-prix></div>
+        <div class="barre-filtres__bas">
+          <p data-compte aria-live="polite"></p>
+          <label class="tri">Trier
+            <select data-tri>
+              <option value="selection">Notre sélection</option>
+              <option value="prix-croissant">Prix croissant</option>
+              <option value="prix-decroissant">Prix décroissant</option>
+              <option value="nom">Nom (A à Z)</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="grille-produits grille-produits--4" data-grille></div>
+      <div class="collection-vide" data-vide hidden>
+        <p>Aucun produit ne correspond à ces filtres.</p>
+        <button class="bouton bouton--contour" type="button" data-reinitialiser style="margin-top: 16px;">Voir tous les produits</button>
+      </div>
+    </div>
+  </main>
+
+  <div data-pied></div>
+</body>
+</html>

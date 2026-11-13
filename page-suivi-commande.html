@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suivi de commande — NOM_BOUTIQUE</title>
+  <meta name="description" content="Suivez votre commande NOM_BOUTIQUE avec votre numéro de commande et votre adresse e-mail.">
+  <meta name="theme-color" content="#F7F2EA">
+  <script>
+    document.documentElement.classList.add('avec-js');
+    setTimeout(function () { if (!window.BOUTIQUE) document.documentElement.classList.remove('avec-js'); }, 4000);
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Manrope:wght@400..700&display=swap">
+  <link rel="stylesheet" href="styles-base.css">
+  <link rel="stylesheet" href="styles-pages.css">
+  <link rel="stylesheet" href="styles-panier-cookies.css">
+  <script src="configuration-boutique.js" defer></script>
+  <script src="catalogue-produits.js" defer></script>
+  <script src="script-commun.js" defer></script>
+  <script src="script-panier.js" defer></script>
+</head>
+<body data-page="suivi">
+  <div data-entete style="min-height: 99px"></div>
+
+  <main id="contenu" class="conteneur">
+    <header class="entete-page">
+      <p class="surtitre">Suivi de commande</p>
+      <h1 class="titre-1">Où en est mon <em>colis</em> ?</h1>
+      <p>Saisissez votre numéro de commande et l'adresse e-mail utilisée lors de l'achat. Votre numéro de commande figure dans l'e-mail de confirmation.</p>
+    </header>
+
+    <!-- Sur Shopify : remplacez ce formulaire par celui de votre application de suivi de colis -->
+    <form class="formulaire-page formulaire-suivi suivi" data-apparition>
+      <div class="champ">
+        <label for="suivi-numero">Numéro de commande</label>
+        <input id="suivi-numero" name="numero" type="text" placeholder="Exemple : #1001" required>
+      </div>
+      <div class="champ">
+        <label for="suivi-email">Adresse e-mail</label>
+        <input id="suivi-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <button class="bouton bouton--plein" type="submit">Suivre ma commande</button>
+      <p class="message-formulaire" role="status"></p>
+      <p class="texte-doux" style="font-size: 0.9rem;">Une question sur votre livraison ? Consultez la <a href="page-faq.html#livraison">FAQ livraison</a> ou <a href="page-contact.html">contactez-nous</a>.</p>
+    </form>
+  </main>
+
+  <div data-pied></div>
+</body>
+</html>

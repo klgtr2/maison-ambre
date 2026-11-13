@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>À propos — NOM_BOUTIQUE</title>
+  <meta name="description" content="NOM_BOUTIQUE sélectionne encens, bougies et parfums d'ambiance dans un esprit japandi : simple, doux et naturel, pour une maison apaisante.">
+  <meta name="theme-color" content="#F7F2EA">
+  <script>
+    document.documentElement.classList.add('avec-js');
+    setTimeout(function () { if (!window.BOUTIQUE) document.documentElement.classList.remove('avec-js'); }, 4000);
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Manrope:wght@400..700&display=swap">
+  <link rel="stylesheet" href="styles-base.css">
+  <link rel="stylesheet" href="styles-pages.css">
+  <link rel="stylesheet" href="styles-panier-cookies.css">
+  <script src="configuration-boutique.js" defer></script>
+  <script src="catalogue-produits.js" defer></script>
+  <script src="script-commun.js" defer></script>
+  <script src="script-panier.js" defer></script>
+</head>
+<body data-page="a-propos">
+  <div data-entete style="min-height: 99px"></div>
+
+  <main id="contenu" class="conteneur">
+    <header class="entete-page">
+      <p class="surtitre">À propos</p>
+      <h1 class="titre-1">Une maison qui <em>respire</em></h1>
+      <p>Nous croyons qu'un intérieur apaisant tient à peu de choses : une fumée qui danse, une flamme qui vacille, un parfum qui enveloppe.</p>
+    </header>
+
+    <div class="photo-page" data-apparition>
+      <img src="images/ambiance/a-propos-banniere.webp" alt="Salon lumineux avec canapé gris et table basse en bois" width="1920" height="820" fetchpriority="high">
+    </div>
+
+    <!-- Notre histoire -->
+    <section class="section">
+      <div class="recit">
+        <div class="recit__image" data-apparition>
+          <img src="images/ambiance/a-propos-interieur.webp" alt="Salon baigné de lumière naturelle, avec des accents de bois" loading="lazy" width="1200" height="1500">
+        </div>
+        <div class="recit__texte" data-apparition>
+          <p class="surtitre">Notre histoire</p>
+          <h2 class="titre-2">Né d'une envie de douceur</h2>
+          <p><span data-nom-boutique>NOM_BOUTIQUE</span> est née d'une envie simple : retrouver chez soi le calme d'un matin d'automne au Japon et la chaleur d'un soir d'hiver en Scandinavie. C'est l'esprit japandi : peu d'objets, mais des objets qui comptent.</p>
+          <p><mark class="a-completer">[À COMPLÉTER : quelques lignes sur vous — qui vous êtes, pourquoi vous avez lancé la boutique, ce qui vous inspire.]</mark></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notre sélection -->
+    <section class="section">
+      <div class="recit recit--inverse">
+        <div class="recit__image" data-apparition>
+          <img src="images/ambiance/a-propos-ceramique.webp" alt="Trois vases en argile sur une table claire" loading="lazy" width="1200" height="1500">
+        </div>
+        <div class="recit__texte" data-apparition>
+          <p class="surtitre">Notre sélection</p>
+          <h2 class="titre-2">Des objets simples, des senteurs douces</h2>
+          <p>Encens, brûle-encens à reflux, bougies, diffuseurs, brumes : nous choisissons chaque produit pour sa beauté sobre et pour l'atmosphère qu'il crée.</p>
+          <p>Vos commandes sont préparées et expédiées directement par nos fournisseurs partenaires, ce qui nous permet de vous proposer une large sélection à prix doux.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nos valeurs -->
+    <section class="section">
+      <div class="entete-section entete-section--centre" data-apparition>
+        <p class="surtitre">Nos valeurs</p>
+        <h2 class="titre-2">Ce qui nous guide</h2>
+      </div>
+      <div class="valeurs">
+        <article class="valeur" data-apparition>
+          <h3>Simplicité</h3>
+          <p>Des objets utiles et beaux, sans superflu, qui se fondent dans votre intérieur.</p>
+        </article>
+        <article class="valeur" data-apparition>
+          <h3>Douceur</h3>
+          <p>Des senteurs délicates et des lumières chaleureuses pour ralentir au quotidien.</p>
+        </article>
+        <article class="valeur" data-apparition>
+          <h3>Transparence</h3>
+          <p>Des prix clairs, de vrais avis, et jamais de fausse urgence pour vous pousser à acheter.</p>
+        </article>
+      </div>
+      <p style="margin-top: 40px; text-align: center;">
+        <a class="bouton bouton--plein" href="page-collection.html?collection=tous">Découvrir la boutique</a>
+      </p>
+    </section>
+  </main>
+
+  <div data-pied></div>
+</body>
+</html>

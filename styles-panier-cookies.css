@@ -1,0 +1,122 @@
+/* =========================================================
+   PANIER COULISSANT + BANDEAU COOKIES (RGPD)
+   ========================================================= */
+
+/* ---------- Panier coulissant (depuis la droite) ---------- */
+.tiroir-panier {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 70;
+  width: min(420px, 100vw);
+  display: flex; flex-direction: column;
+  background: var(--lin);
+  box-shadow: -20px 0 60px -40px rgba(58, 51, 45, 0.6);
+  transform: translateX(102%); visibility: hidden;
+  transition: transform 0.5s var(--courbe), visibility 0s linear 0.5s;
+}
+.panier-ouvert .tiroir-panier { transform: none; visibility: visible; transition: transform 0.5s var(--courbe), visibility 0s; }
+.panier-ouvert body { overflow: hidden; }
+.tiroir-panier__entete { display: flex; justify-content: space-between; align-items: center; padding: 16px 22px; border-bottom: 1px solid var(--trait); }
+.tiroir-panier__titre { font-family: var(--police-titre); font-size: 1.4rem; }
+
+/* Barre « Plus que X € pour la livraison offerte » */
+.livraison-offerte { display: grid; gap: 8px; padding: 14px 22px; background: var(--beige); font-size: 0.9rem; }
+.livraison-offerte__jauge { height: 6px; overflow: hidden; border-radius: 999px; background: rgba(58, 51, 45, 0.1); }
+.livraison-offerte__jauge span {
+  display: block; height: 100%; border-radius: inherit;
+  background: var(--sauge-fonce);
+  transform-origin: left; transform: scaleX(0);
+  transition: transform 0.8s var(--courbe);
+}
+
+.tiroir-panier__liste { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 4px 22px; }
+.ligne-panier {
+  display: grid; grid-template-columns: 72px 1fr auto; align-items: center; gap: 14px;
+  padding: 16px 0; border-bottom: 1px solid var(--trait);
+}
+.ligne-panier--nouvelle { animation: ligne-entree 0.5s var(--courbe) both; }
+.ligne-panier__visuel { position: relative; overflow: hidden; width: 72px; aspect-ratio: 1 / 1; border-radius: var(--rayon-petit); background: #F2EBE0; }
+.ligne-panier__visuel img { width: 100%; height: 100%; object-fit: cover; }
+.ligne-panier__visuel .emplacement-photo svg { width: 50%; }
+.ligne-panier__visuel .emplacement-photo span { display: none; }
+.ligne-panier__infos { display: grid; gap: 6px; min-width: 0; }
+.ligne-panier__nom { font-size: 0.92rem; font-weight: 600; line-height: 1.35; text-decoration: none; }
+.ligne-panier__prix { font-size: 0.88rem; color: var(--gris); }
+.ligne-panier .quantite { width: max-content; }
+.ligne-panier .quantite button { width: 34px; height: 36px; font-size: 1rem; }
+.ligne-panier__retirer { align-self: start; font-size: 0.8rem; color: var(--gris); text-decoration: underline; }
+
+.tiroir-panier__vide {
+  flex: 1; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 16px;
+  padding: 22px; text-align: center; color: var(--gris);
+}
+.tiroir-panier.est-vide .tiroir-panier__vide { display: flex; }
+.tiroir-panier.est-vide .tiroir-panier__liste,
+.tiroir-panier.est-vide .tiroir-panier__pied { display: none; }
+.tiroir-panier__pied {
+  display: grid; gap: 12px;
+  padding: 18px 22px calc(18px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--trait);
+}
+.tiroir-panier__total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; }
+.tiroir-panier__note { font-size: 0.8rem; color: var(--gris); }
+.tiroir-panier__message { padding: 10px 12px; border-radius: var(--rayon-petit); background: var(--beige); font-size: 0.85rem; }
+.tiroir-panier__message:empty { display: none; }
+
+/* ---------- Bandeau cookies : refuser est aussi simple qu'accepter ---------- */
+.bandeau-cookies {
+  position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 80;
+  display: grid; gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--trait); border-radius: var(--rayon);
+  background: var(--lin);
+  box-shadow: 0 24px 60px -30px rgba(58, 51, 45, 0.55);
+  transform: translateY(130%); visibility: hidden;
+  transition: transform 0.6s var(--courbe), visibility 0s linear 0.6s;
+}
+.bandeau-cookies.est-visible { transform: none; visibility: visible; transition: transform 0.6s var(--courbe), visibility 0s; }
+.bandeau-cookies__titre { font-family: var(--police-titre); font-size: 1.2rem; }
+.bandeau-cookies p { font-size: 0.88rem; color: var(--gris); }
+.bandeau-cookies p a { color: var(--encre); }
+.bandeau-cookies__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.bandeau-cookies__actions .bouton { min-height: 46px; padding: 0 12px; font-size: 0.9rem; }
+.bandeau-cookies__personnaliser { grid-column: 1 / -1; justify-self: center; padding: 6px; font-size: 0.88rem; font-weight: 600; text-decoration: underline; }
+@media (min-width: 768px) { .bandeau-cookies { left: auto; right: 24px; bottom: 24px; width: 440px; } }
+
+/* Fenêtre « Personnaliser » */
+.fenetre-cookies {
+  position: fixed; inset: 0; z-index: 85;
+  display: grid; place-items: center; padding: 16px;
+  background: rgba(58, 51, 45, 0.45);
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s, visibility 0s linear 0.3s;
+}
+.fenetre-cookies.est-visible { opacity: 1; visibility: visible; transition: opacity 0.3s, visibility 0s; }
+.fenetre-cookies__boite {
+  width: min(520px, 100%); max-height: 90vh; overflow-y: auto;
+  display: grid; gap: 14px;
+  padding: 24px; border-radius: var(--rayon);
+  background: var(--lin);
+  transform: translateY(20px); transition: transform 0.4s var(--courbe);
+}
+.fenetre-cookies.est-visible .fenetre-cookies__boite { transform: none; }
+.choix-cookie { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding-top: 14px; border-top: 1px solid var(--trait); }
+.choix-cookie strong { display: block; margin-bottom: 4px; }
+.choix-cookie p { font-size: 0.85rem; color: var(--gris); }
+
+/* Interrupteur oui / non */
+.interrupteur {
+  appearance: none; flex-shrink: 0; position: relative;
+  width: 48px; height: 28px; border-radius: 999px;
+  background: var(--sable); cursor: pointer;
+  transition: background-color 0.3s;
+}
+.interrupteur::after {
+  content: ""; position: absolute; top: 3px; left: 3px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: translate 0.3s var(--courbe);
+}
+.interrupteur:checked { background: var(--sauge-fonce); }
+.interrupteur:checked::after { translate: 20px 0; }
+.interrupteur:disabled { opacity: 0.6; cursor: not-allowed; }
+
+@keyframes ligne-entree { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: none; } }

@@ -3,257 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Produit — Maison Ambre</title>
-  <meta name="description" content="Meubles, parfums d'ambiance et encens Maison Ambre.">
-  <meta name="theme-color" content="#000000">
-
-  <!-- Active les animations seulement si JavaScript fonctionne -->
+  <title>Produit — NOM_BOUTIQUE</title>
+  <meta name="description" content="Encens, bougies et parfums d'ambiance NOM_BOUTIQUE.">
+  <meta name="theme-color" content="#F7F2EA">
   <script>
     document.documentElement.classList.add('avec-js');
-    setTimeout(function () {
-      if (!window.MaisonAmbre) document.documentElement.classList.remove('avec-js');
-    }, 4000);
+    setTimeout(function () { if (!window.BOUTIQUE) document.documentElement.classList.remove('avec-js'); }, 4000);
   </script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..500&display=swap">
-
-  <!-- Feuilles de style (les mêmes que l'accueil + celles de la page produit) -->
-  <link rel="stylesheet" href="styles-base-entete.css">
-  <link rel="stylesheet" href="styles-collection-boutique.css">
-  <link rel="stylesheet" href="styles-senteurs-avis-pied-de-page.css">
-  <link rel="stylesheet" href="animations-apparitions-survol.css">
-  <link rel="stylesheet" href="styles-panier.css">
-  <link rel="stylesheet" href="styles-page-produit.css">
-  <link rel="stylesheet" href="styles-menu-univers.css">
-  <link rel="stylesheet" href="styles-responsive-mobile.css">
-
-  <!-- Scripts : la fiche est remplie avant les animations de scroll -->
-  <script src="script-chargement-curseur-entete.js" defer></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Manrope:wght@400..700&display=swap">
+  <link rel="stylesheet" href="styles-base.css">
+  <link rel="stylesheet" href="styles-boutique.css">
+  <link rel="stylesheet" href="styles-panier-cookies.css">
+  <script src="configuration-boutique.js" defer></script>
   <script src="catalogue-produits.js" defer></script>
-  <script src="script-page-produit.js" defer></script>
-  <script src="script-effets-scroll.js" defer></script>
-  <script src="script-panier-paiement.js" defer></script>
-  <script src="script-boutique-interactions.js" defer></script>
-  <script src="script-menu-univers.js" defer></script>
+  <script src="script-commun.js" defer></script>
+  <script src="script-panier.js" defer></script>
+  <script src="script-produit.js" defer></script>
 </head>
-<body>
+<body data-page="produit">
+  <div data-entete style="min-height: 99px"></div>
 
-  <!-- ============ ICÔNES ============ -->
-  <svg class="sprite" aria-hidden="true">
-    <symbol id="icone-marque" viewBox="0 0 32 32"><path d="M6 29V15a10 10 0 0 1 20 0v14M16 29V19" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
-    <symbol id="icone-fleche" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-    <symbol id="icone-sac" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 7.5h13l-1 12.5h-11z"/><path d="M9 7.5a3 3 0 0 1 6 0"/></g></symbol>
-    <symbol id="icone-coeur" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.1 4.1 0 0 1 12 7.4a4.1 4.1 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z"/></symbol>
-  </svg>
-
-  <!-- Curseur personnalisé + barre de progression du scroll -->
-  <div class="curseur" aria-hidden="true">
-    <span class="curseur__anneau"><span class="curseur__texte">Voir</span></span>
-    <span class="curseur__point"></span>
-  </div>
-  <div class="barre-progression" aria-hidden="true"></div>
-
-  <!-- ============ EN-TÊTE ============ -->
-  <header class="entete">
-    <div class="entete__interieur">
-      <a href="index.html" class="marque" aria-label="Maison Ambre, retour à l'accueil">
-        <svg class="icone"><use href="#icone-marque"/></svg>
-      </a>
-
-      <nav class="navigation" aria-label="Navigation principale">
-        <a href="index.html#univers" class="nav-groupe">
-          <span class="nav-groupe__label">Boutique</span>
-          <span class="roulant"><span data-texte="Nos meubles">Nos meubles</span></span>
-        </a>
-        <a href="index.html#senteurs" class="nav-groupe">
-          <span class="nav-groupe__label">Senteurs</span>
-          <span class="roulant"><span data-texte="Parfums &amp; encens">Parfums &amp; encens</span></span>
-        </a>
-        <a href="page-contact.html" class="nav-groupe">
-          <span class="nav-groupe__label">Maison</span>
-          <span class="roulant"><span data-texte="Nous contacter">Nous contacter</span></span>
-        </a>
-      </nav>
-
-      <div class="entete__actions">
-        <button class="icone-bouton panier" type="button" aria-label="Panier, 0 article">
-          <svg class="icone"><use href="#icone-sac"/></svg>
-          <span class="panier__compteur">0</span>
-        </button>
-        <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu-mobile">
-          <span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Menu plein écran (mobile) -->
-  <div class="menu-mobile" id="menu-mobile">
-    <nav class="menu-mobile__liens" aria-label="Menu mobile">
-      <a href="index.html" style="--i:0">Accueil</a>
-      <a href="index.html#univers" style="--i:1">Nos univers</a>
-      <a href="index.html#boutique" style="--i:2">Boutique</a>
-      <a href="index.html#senteurs" style="--i:3">Parfums &amp; encens</a>
-      <a href="page-contact.html" style="--i:4">Contact</a>
-    </nav>
-    <p class="menu-mobile__note">Livraison offerte dès 300 €</p>
-  </div>
-
-  <main class="page-produit">
-    <!-- Fil d'Ariane -->
-    <nav class="fil-ariane" aria-label="Fil d'Ariane">
-      <a class="lien-souligne" href="index.html">Accueil</a>
-      <span aria-hidden="true">/</span>
-      <a class="lien-souligne" href="index.html#boutique">Boutique</a>
-      <span aria-hidden="true">/</span>
-      <span data-champ="nom">Produit</span>
+  <main id="contenu" class="conteneur">
+    <nav class="fil-ariane" aria-label="Fil d'Ariane" data-fil>
+      <a href="index.html">Accueil</a><span aria-hidden="true">/</span><span>Produit</span>
     </nav>
 
-    <!-- ============ FICHE PRODUIT (remplie par script-page-produit.js) ============ -->
-    <article class="fiche" data-fiche>
-      <div class="fiche__visuel">
-        <div class="fiche__scene" data-scene-produit>
-          <img class="fiche__image" src="images/illustration-canape.svg" alt="" data-champ="image">
-        </div>
-      </div>
-
-      <div class="fiche__infos">
-        <p class="bloc-titre__label fiche__univers" data-champ="univers" data-apparition="haut">Maison Ambre</p>
-        <h1 class="fiche__nom" data-champ="nom" data-decoupe>Produit</h1>
-        <p class="fiche__prix" data-champ="prix" data-apparition="haut"></p>
-        <p class="fiche__accroche" data-champ="accroche" data-apparition="haut"></p>
-        <p class="fiche__description" data-champ="description" data-apparition="haut"></p>
-        <dl class="fiche__details" data-champ="details" data-apparition="haut"></dl>
-        <div class="fiche__achat" data-apparition="haut">
-          <button class="pilule fiche__ajout" type="button" data-ajout-panier="" data-magnetique="0.15">
-            <svg class="icone"><use href="#icone-sac"/></svg>
-            <span class="roulant"><span data-texte="Ajouter au panier">Ajouter au panier</span></span>
-          </button>
-          <button class="bouton-favori fiche__favori" type="button" aria-label="Ajouter aux favoris" aria-pressed="false">
-            <svg class="icone"><use href="#icone-coeur"/></svg>
-          </button>
-        </div>
-        <ul class="fiche__garanties" data-apparition="haut">
-          <li>Livraison offerte dès 300 €</li>
-          <li>Expédition sous 48 h</li>
-          <li>Paiement sécurisé par Stripe</li>
-          <li>Livraison en France et en Belgique</li>
-        </ul>
-      </div>
-    </article>
-
-    <!-- Produit introuvable (lien erroné) -->
-    <div class="introuvable" hidden>
-      <p class="bloc-titre__label">Oups</p>
-      <p class="bloc-titre__mot">Produit introuvable</p>
-      <a href="index.html#boutique" class="pilule">
-        <span class="roulant"><span data-texte="Retour à la boutique">Retour à la boutique</span></span>
-      </a>
+    <!-- Fiche produit (remplie par script-produit.js à partir du catalogue) -->
+    <div class="fiche">
+      <div class="galerie" data-galerie></div>
+      <div class="fiche__infos" data-infos></div>
     </div>
 
-    <!-- Produit précédent / suivant -->
-    <nav class="fiche__suite" aria-label="Autres produits">
-      <a class="fiche__voisin fiche__voisin--precedent" data-voisin="precedent" href="index.html#boutique">
-        <small>← Produit précédent</small><strong>—</strong>
-      </a>
-      <a class="fiche__voisin fiche__voisin--suivant" data-voisin="suivant" href="index.html#boutique">
-        <small>Produit suivant →</small><strong>—</strong>
-      </a>
-    </nav>
+    <!-- « À associer avec » -->
+    <section class="section" data-duo hidden></section>
 
-    <!-- ============ PRODUITS SIMILAIRES (section claire) ============ -->
-    <section class="similaires section-claire">
-      <div class="bloc-titre">
-        <p class="bloc-titre__label" data-apparition="haut">Vous aimerez aussi</p>
-        <h2 class="bloc-titre__mot" data-decoupe>Dans le même esprit</h2>
+    <!-- Produits similaires -->
+    <section class="section">
+      <div class="entete-section" data-apparition>
+        <p class="surtitre">Vous aimerez aussi</p>
+        <h2 class="titre-2">Dans le même esprit</h2>
       </div>
-      <ul class="produits similaires__grille" data-apparition-groupe="0.08"></ul>
+      <div class="grille-produits grille-produits--4" data-similaires></div>
     </section>
   </main>
 
-  <!-- ============ PIED DE PAGE ============ -->
-  <footer class="pied" id="contact">
-    <div class="pied__grille">
-      <div class="pied__colonne">
-        <a href="index.html" class="marque" aria-label="Maison Ambre, retour à l'accueil"><svg class="icone"><use href="#icone-marque"/></svg></a>
-        <p class="pied__slogan">Des meubles qui durent, des parfums qui apaisent.</p>
-      </div>
-      <div class="pied__colonne">
-        <p class="pied__titre">Meubles</p>
-        <ul class="pied__liens">
-          <li><a class="lien-souligne" href="page-produit.html?produit=canape-nuage">Canapés</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=chaise-alba">Chaises</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=porte-manteau-sylve">Porte-manteaux</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=enfilade-lune">Meubles de maison</a></li>
-        </ul>
-      </div>
-      <div class="pied__colonne">
-        <p class="pied__titre">Senteurs</p>
-        <ul class="pied__liens">
-          <li><a class="lien-souligne" href="page-produit.html?produit=diffuseur-figue-cedre">Parfums d'ambiance</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=bougie-ambre-vanille">Bougies parfumées</a></li>
-          <li><a class="lien-souligne" href="page-produit.html?produit=encens-santal-myrrhe">Encens</a></li>
-        </ul>
-      </div>
-      <div class="pied__colonne">
-        <p class="pied__titre">Contact</p>
-        <ul class="pied__liens">
-          <li><a class="lien-souligne" href="mailto:maisonambre@gmail.com">maisonambre@gmail.com</a></li>
-          <li><a class="lien-souligne" href="tel:+33662488337">06 62 48 83 37</a></li>
-          <li><a class="lien-souligne" href="page-contact.html">Formulaire de contact</a></li>
-          <li class="pied__info">Livraison offerte dès 300 €</li>
-          <li class="pied__info">Expédition sous 48 h</li>
-        </ul>
-      </div>
-    </div>
+  <!-- Barre d'achat toujours visible en bas de l'écran sur mobile -->
+  <div class="barre-achat" data-barre-achat aria-hidden="true"></div>
 
-    <p class="pied__marque" aria-hidden="true">Maison Ambre</p>
-
-    <div class="pied__bas">
-      <p>© 2026 Maison Ambre — Tous droits réservés</p>
-      <a href="#" class="haut-de-page">Retour en haut <svg class="icone"><use href="#icone-fleche"/></svg></a>
-    </div>
-  </footer>
-
-  <!-- ============ PANIER (tiroir latéral) ============ -->
-  <div class="voile-panier" data-fermer-panier></div>
-  <aside class="tiroir-panier" id="tiroir-panier" aria-label="Votre panier" aria-hidden="true">
-    <div class="tiroir-panier__entete">
-      <p class="tiroir-panier__titre">Votre panier <span class="tiroir-panier__nombre">0</span></p>
-      <button class="tiroir-panier__fermer" type="button" aria-label="Fermer le panier" data-fermer-panier>
-        <span></span><span></span>
-      </button>
-    </div>
-
-    <ul class="tiroir-panier__liste" aria-live="polite"></ul>
-
-    <div class="tiroir-panier__vide">
-      <p>Votre panier est vide pour le moment.</p>
-      <a href="index.html#boutique" class="pilule" data-fermer-panier>
-        <span class="roulant"><span data-texte="Découvrir la boutique">Découvrir la boutique</span></span>
-      </a>
-    </div>
-
-    <div class="tiroir-panier__pied">
-      <div class="tiroir-panier__jauge" aria-hidden="true"><span></span></div>
-      <p class="tiroir-panier__astuce"></p>
-      <div class="tiroir-panier__ligne"><span>Sous-total</span><span data-montant="sousTotal">0 €</span></div>
-      <div class="tiroir-panier__ligne"><span>Livraison</span><span data-montant="livraison">Offerte</span></div>
-      <div class="tiroir-panier__ligne tiroir-panier__ligne--total"><span>Total</span><span data-montant="total">0 €</span></div>
-      <button class="pilule tiroir-panier__payer" type="button" data-payer>
-        <span class="roulant"><span data-texte="Payer en toute sécurité">Payer en toute sécurité</span></span>
-      </button>
-      <p class="tiroir-panier__message" role="status"></p>
-      <p class="note">Paiement sécurisé par Stripe · Livraison en France et en Belgique</p>
-    </div>
-  </aside>
-
-  <!-- Notification (ajout au panier, favoris…) -->
-  <div class="notification" role="status" aria-live="polite">
-    <span class="notification__texte"></span>
-  </div>
-
+  <div data-pied></div>
 </body>
 </html>
