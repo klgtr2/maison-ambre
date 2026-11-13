@@ -86,7 +86,10 @@
       ? '<a class="bouton bouton--contour carte-produit__ajouter" href="' + lien + '">Découvrir</a>'
       : '<button class="bouton bouton--contour carte-produit__ajouter" type="button" data-ajouter="' + id + '">Ajouter au panier</button>';
     return '<article class="carte-produit" style="--i:' + (index || 0) + '" data-apparition>' +
-      '<div class="carte-produit__visuel">' + visuelProduit(p) + '</div>' +
+      '<div class="carte-produit__visuel">' + visuelProduit(p) +
+        // 2e photo affichée au survol de la carte (ordinateur)
+        (p.photos && p.photos[1] ? '<img class="carte-produit__survol" src="' + echapper(p.photos[1]) + '" alt="" loading="lazy" width="800" height="800">' : '') +
+      '</div>' +
       '<p class="carte-produit__categorie">' + echapper(CATALOGUE.categories[p.categorie]) + '</p>' +
       '<h3 class="carte-produit__nom"><a href="' + lien + '">' + echapper(p.nom) + '</a></h3>' +
       '<p class="carte-produit__prix">' + prix + '</p>' + action +

@@ -50,7 +50,7 @@
   /* ---------- 1. Galerie : 4 emplacements carrés (photos des fournisseurs à venir) ---------- */
   var galerie = document.querySelector('[data-galerie]');
   // Une seule photo : pas de vignettes. Aucune photo : 4 emplacements « Photo à venir ».
-  var nbVignettes = p.photos.length === 1 ? 0 : Math.max(4, p.photos.length);
+  var nbVignettes = p.photos.length === 1 ? 0 : (p.photos.length || 4);
   var vignettes = '';
   for (var i = 0; i < nbVignettes; i++) {
     vignettes += '<button class="galerie__vignette" type="button" data-photo="' + i + '" aria-label="Voir la photo ' + (i + 1) + '"' +
