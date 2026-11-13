@@ -76,5 +76,7 @@ a.info-contact:hover { transform: translateY(-3px); box-shadow: var(--ombre-douc
 .texte-legal .mise-a-jour { font-size: 0.9rem; color: var(--gris); }
 .texte-legal a { color: var(--terracotta); }
 mark.a-completer { padding: 0 4px; border-radius: 4px; background: #F3DDC2; color: var(--encre); }
+.encadre-garantie { margin: 16px 0; padding: 18px 20px; border: 1px solid var(--terracotta); border-radius: var(--rayon-petit); font-size: 0.92rem; }
+.texte-legal .encadre-garantie ul { list-style: none; padding-left: 0; }
 
 @keyframes zoom-doux { from { transform: scale(1.02); } to { transform: scale(1.12); } }

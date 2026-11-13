@@ -20,9 +20,9 @@ var CONFIG_BOUTIQUE = {
   },
 
   livraison: {
-    seuilOffert: 3900,   // livraison offerte dès 39 € (en centimes) [À CONFIRMER]
-    delaiMinJours: 3,    // délai de livraison estimé, en jours ouvrés [À CONFIRMER avec vos fournisseurs]
-    delaiMaxJours: 7,
+    seuilOffert: 3900,   // livraison offerte dès 39 € (en centimes) ; sinon 4,90 € (texte dans la FAQ et les CGV)
+    delaiMinJours: 7,    // délai de livraison estimé, en jours ouvrés (envois Eprolo depuis la Chine)
+    delaiMaxJours: 14,
     zone: 'France métropolitaine'
   },
 
