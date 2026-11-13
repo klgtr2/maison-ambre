@@ -1,11 +1,11 @@
 /* =========================================================
    CONFIGURATION DE LA BOUTIQUE — c'est ici que vous personnalisez
    - Tout ce qui est marqué [À COMPLÉTER] ou [À CONFIRMER] attend vos informations.
-   - Le nom « NOM_BOUTIQUE » se remplace partout en une fois avec
-     l'outil outil-remplacer-nom-boutique.ps1 (clic droit > Exécuter avec PowerShell).
+   - Le nom ci-dessous s'affiche dans l'en-tête, le menu et le pied de page.
+     Les titres des pages (onglet du navigateur, Google) l'écrivent aussi en dur.
    ========================================================= */
 var CONFIG_BOUTIQUE = {
-  nom: 'NOM_BOUTIQUE',
+  nom: 'Maison Ambre',
   slogan: "Encens, bougies et parfums d'ambiance pour une maison cosy",
 
   // Coordonnées affichées sur le site (laisser vide tant que ce n'est pas prêt)
