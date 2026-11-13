@@ -198,7 +198,7 @@
     '<ul class="reassurance-mini">' +
       '<li>' + B.icone('cadenas') + 'Paiement sécurisé</li>' +
       '<li>' + B.icone('retour') + CONFIG.retourJours + " jours pour changer d'avis</li>" +
-      '<li>' + B.icone('europe') + "Expédié depuis l'Europe</li>" +
+      '<li>' + B.icone('colis') + 'Livraison suivie</li>' +
     '</ul>' +
     '<div class="fiche__description"><h2 class="titre-3" style="margin-bottom: 8px;">Description</h2><p>' + B.echapper(p.description) + '</p></div>' +
     '<div>' + accordeon("Conseils d'utilisation", '<p>' + B.echapper(p.conseil) + '</p>') + securite + faq + '</div>';
