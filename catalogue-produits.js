@@ -774,13 +774,23 @@ var CATALOGUE = {
         ] }
       ]
     },
-    'miroir-forme-organique': {
-      nom: 'Miroir de forme organique', prix: 5490,
-      collection: 'deco-rangement', categorie: 'deco', photos: ['images/produits/miroir-forme-organique.webp', 'images/produits/miroir-forme-organique-2.webp', 'images/produits/miroir-forme-organique-3.webp'], associe: 'etagere-murale-flottante',
-      accroche: 'Des courbes douces qui agrandissent et éclairent la pièce.',
-      description: "Sa silhouette irrégulière casse les lignes droites et apporte une touche artistique à un mur. Il reflète la lumière et donne de la profondeur à une entrée, un salon ou une chambre.",
-      pointsForts: ['Forme organique originale', 'Agrandit visuellement la pièce', "Pour l'entrée, le salon ou la chambre"],
-      conseil: "Fixez-le sur un mur plein avec des vis et chevilles adaptées à son poids. Nettoyez-le avec un chiffon doux et un produit pour vitres."
+    'miroir-macrame-boheme': {
+      // Article Eprolo réf. 21916979 (miroir décoratif en macramé, plusieurs modèles)
+      nom: 'Miroir bohème en macramé', prix: 2990,
+      collection: 'deco-rangement', categorie: 'deco', photos: ['images/produits/miroir-macrame-boheme.webp', 'images/produits/miroir-macrame-boheme-2.webp', 'images/produits/miroir-macrame-boheme-3.webp'], associe: 'panier-tresse',
+      accroche: 'Un miroir tissé à la main, doux comme un attrape-rêves.',
+      description: "Entouré de franges et de perles de bois, ce miroir en macramé de coton apporte une touche bohème et lumineuse à un mur. C'est un miroir décoratif : on l'accroche dans une chambre, une entrée ou un coin lecture, seul ou en duo avec un autre modèle.",
+      pointsForts: ['Macramé de coton tissé à la main', '5 modèles au choix', 'Se suspend à un simple clou'],
+      conseil: "Suspendez-le à un clou ou un crochet par sa boucle. Dépoussiérez les franges en secouant doucement le miroir, et nettoyez la glace avec un chiffon sec.",
+      options: [
+        { nom: "Modèle", valeurs: [
+          { nom: "Feuilles suspendues", detail: "Hauteur 50 cm, miroir de 16 cm.", prix: 3490, photo: 'images/produits/variantes/miroir-macrame-boheme--1.webp' },
+          { nom: "Franges", detail: "Diamètre 50 cm, miroir de 16 cm.", prix: 2990, photo: 'images/produits/variantes/miroir-macrame-boheme--2.webp' },
+          { nom: "Perles de bois", detail: "Diamètre 25 cm, miroir de 16 cm.", prix: 2990, photo: 'images/produits/variantes/miroir-macrame-boheme--3.webp' },
+          { nom: "Fleur", detail: "Hauteur 32 cm, miroir de 15 cm.", prix: 2990, photo: 'images/produits/variantes/miroir-macrame-boheme--4.webp' },
+          { nom: "Grand soleil", detail: "Diamètre 40 cm, grand miroir de 25 cm.", prix: 3990, photo: 'images/produits/variantes/miroir-macrame-boheme--5.webp' }
+        ] }
+      ]
     },
     'portemanteau-mural-bois': {
       nom: 'Portemanteau mural en bois', prix: 3490,
