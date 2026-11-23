@@ -9,7 +9,7 @@ var CONFIG_BOUTIQUE = {
   slogan: "Encens, bougies et parfums d'ambiance pour une maison cosy",
 
   // Coordonnées affichées sur le site (laisser vide tant que ce n'est pas prêt)
-  email: '',        // [À COMPLÉTER] exemple : contact@votre-boutique.fr
+  email: 'boutiquemaisonambre.contact@gmail.com',
   telephone: '',    // [À COMPLÉTER] facultatif, exemple : 06 00 00 00 00
 
   // Réseaux sociaux : mettez l'adresse complète (https://...) pour afficher l'icône
