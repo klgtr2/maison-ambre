@@ -980,14 +980,14 @@ CATALOGUE.produitsMasques = [
   'porte-encens-ceramique-bois',
   'coffret-encens-pret-a-offrir',
   'diffuseur-batonnets-100ml',
-  'brume-oreiller-spray-ambiance'
+  'brume-oreiller-spray-ambiance',
+  'abonnement-mensuel-encens-bougies' // retiré : pas d'abonnement au lancement
 ];
 // Produit proposé à la place dans « À associer avec » quand le produit associé est masqué
 CATALOGUE.associeDeSecours = {
   'bougie-parfumee-cire-soja': 'diffuseur-pierre-parfumee',
   'fondants-parfumes-brule-parfum': 'bougie-parfumee-cire-soja',
-  'diffuseur-ultrasonique-effet-flamme': 'huile-parfumee-10ml',
-  'abonnement-mensuel-encens-bougies': 'bougie-parfumee-pot-elegant'
+  'diffuseur-ultrasonique-effet-flamme': 'huile-parfumee-10ml'
 };
 CATALOGUE.produitsMasques.forEach(function (id) { delete CATALOGUE.produits[id]; });
 Object.keys(CATALOGUE.produits).forEach(function (id) {
@@ -996,6 +996,10 @@ Object.keys(CATALOGUE.produits).forEach(function (id) {
     var secours = CATALOGUE.associeDeSecours[id];
     if (secours && CATALOGUE.produits[secours]) p.associe = secours; else delete p.associe;
   }
+});
+// Une collection sans aucun produit visible disparaît du menu, de l'accueil et des filtres
+CATALOGUE.collections = CATALOGUE.collections.filter(function (c) {
+  return Object.keys(CATALOGUE.produits).some(function (id) { return CATALOGUE.produits[id].collection === c.id; });
 });
 
 /* ---------- Petits outils pour les pages ---------- */
